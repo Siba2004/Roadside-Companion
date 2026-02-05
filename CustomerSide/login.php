@@ -3,7 +3,6 @@
     <title>Customer Login</title>
 </head>
 <body>
-    //write your code here
     <form action="post">
         <div>
             Enter your email : 
