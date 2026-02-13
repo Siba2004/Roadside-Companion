@@ -1,8 +1,8 @@
-<html>
-<head>
-    <title>HomePage</title>
-</head>
-<body>
-    //add your code here
-</body>
-</html>
+<?php
+include_once 'navbar.php';
+require_once '../dbcon.php';
+?>
+
+<?php
+include_once 'footer.php';
+?>
