@@ -10,3 +10,10 @@ require_once '../dbcon.php';
     }
 </style>
 
+<form action="register.php" method="POST">
+    
+</form>
+
+<?php
+include_once 'footer.php';
+?>
