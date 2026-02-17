@@ -1,29 +1,3 @@
-<?php
-session_start();
-include_once 'navbar.php';
-require_once '../dbcon.php';
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $name=$_POST['fullname'];
-    $email=$_POST['email'];
-    $phone=$_POST['phone'];
-    $accounttype=$_POST['account'];
-    $password=$_POST['password'];
-
-    $sql="INSERT INTO users_details (name,email,phone_number,accounttype,password) VALUES (?,?,?,?,?)";
-    $stmt=$conn->prepare($sql);
-    $stmt->bind_param("ssiss",$name,$email,$phone,$accounttype,$password);
-    if($stmt->execute()){
-        echo "<script>
-        alert('Registration successful! Please login.');
-        window.location='./login.php';<script>";
-    }else{
-        echo"<script>alert('Registration failed!');
-        window.location='./register.php';<script>";
-    }
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -328,10 +302,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 padding: 40px 30px;
             }
         }
-        .error{
-        color: red;
-        display:block;
-        }
     </style>
 </head>
 <body>
@@ -370,19 +340,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     <h3>Create Account</h3>
                     <p>Fill in your details to get started</p>
                 </div>
-                <?php 
-                if(isset($_SESSION['msg'])) {
-                    echo '<div class="alert alert-custom alert-info">' . $_SESSION['msg'] . '</div>';
-                    unset($_SESSION['msg']);
-                }
-                ?>
-                <form action="register.php" method="POST" id="regForm" onsubmit="return validate(event)">
+                
+                <form>
                     <div class="form-group">
                         <label class="form-label">Full Name</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            <input type="text" class="form-control" placeholder="Enter your full name" name="fullname">
-                            <small class="error" id="nameError"></small>
+                            <input type="text" class="form-control" placeholder="Enter your full name">
                         </div>
                     </div>
                     
@@ -390,8 +354,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <label class="form-label">Email Address</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" class="form-control" placeholder="Enter your email" name="email">
-                            <small class="error" id="emailError"></small>
+                            <input type="email" class="form-control" placeholder="Enter your email">
                         </div>
                     </div>
                     
@@ -399,8 +362,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <label class="form-label">Phone Number</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            <input type="tel" class="form-control" placeholder="Enter your phone number" name="phone">
-                                <small class="error" id="phoneError"></small>
+                            <input type="tel" class="form-control" placeholder="Enter your phone number">
                         </div>
                     </div>
                     
@@ -408,8 +370,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <label class="form-label">Password</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" class="form-control" placeholder="Create a password" name="password">
-                            <small class="error" id="passError"></small>
+                            <input type="password" class="form-control" placeholder="Create a password">
                         </div>
                         <div class="password-strength">
                             <div class="strength-bar" style="width: 60%; background: #20B2AA;"></div>
@@ -421,38 +382,26 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                         <label class="form-label">Confirm Password</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" class="form-control" placeholder="Confirm your password" name="cpassword">
-                            <small class="error" id="cpassError"></small>
+                            <input type="password" class="form-control" placeholder="Confirm your password">
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label">Account Type</label>
                         <div class="d-flex gap-3">
-                            <!-- <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="administrator" value="administrator">
-                                <label class="form-check-label" for="provider">Administrator</label>
-                            </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="customer" value="customer">
+                                <input class="form-check-input" type="radio" name="accountType" id="customer" checked>
                                 <label class="form-check-label" for="customer">Customer</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="provider" value="provider">
+                                <input class="form-check-input" type="radio" name="accountType" id="provider">
                                 <label class="form-check-label" for="provider">Service Provider</label>
-                            </div> -->
-                            <select class="form-select" name="account" id="account">
-                                <option value="">--SELECT--</option>
-                                <option value="administrator">Administrator</option>
-                                <option value="customer">Customer</option>
-                                <option value="service-provider">Service-Provider</option>
-                            </select>
-                            <small class="error" id="accountError"></small>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="terms-check">
-                        <input type="checkbox" id="terms" name="terms">
+                        <input type="checkbox" id="terms">
                         <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
                     </div>
                     
@@ -476,7 +425,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </div>
         </div>
     </div>
-    <script src="./jsfiles/register-validator.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -484,8 +433,3 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </script>
 </body>
 </html>
-
-<?php
-include_once 'footer.php';
-?>
-
