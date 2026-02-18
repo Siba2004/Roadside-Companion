@@ -3,92 +3,692 @@ include_once 'navbar.php';
 require_once '../dbcon.php';
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadSide Companion</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Scroll Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* =====================
+           GLOBAL / VARIABLES
+        ===================== */
+        :root {
+            --primary:    #0B4F6C;
+            --accent:     #1B98F5;
+            --success:    #20B2AA;
+            --warning:    #FFA500;
+            --gray:       #4A5568;
+            --light-bg:   #F8FBFE;
+            --border:     #E2E8F0;
+            --dark-blue:  #0A2472;
+        }
+
+        * { font-family: 'Montserrat', sans-serif; }
+
+        body {
+            background: var(--light-bg);
+            color: var(--gray);
+        }
+
+        /* =====================
+           NAVBAR
+        ===================== */
+        .navbar {
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(11, 79, 108, 0.05);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--primary) !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand i { color: var(--accent); }
+
+        .nav-link {
+            color: var(--gray) !important;
+            font-weight: 600;
+            margin: 0 10px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link:hover { color: var(--primary) !important; }
+
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            border-radius: 4px;
+            padding: 10px 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover { background: var(--dark-blue); }
+
+        .btn-outline-primary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 4px;
+            padding: 10px 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* =====================
+           BANNER SLIDER
+        ===================== */
+        .banner-slider-container {
+            margin-top: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 20px 0;
+        }
+
+        .banner-slider {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .slide { min-width: 100%; position: relative; }
+
+        .slide img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-content {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(11,79,108,0.9) 0%, rgba(27,152,245,0.6) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .slide-text { max-width: 55%; }
+
+        .slide-text h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .slide-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .offer-badge {
+            display: inline-block;
+            background: var(--warning);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .btn-slide {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 10px 25px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-slide:hover {
+            background: var(--warning);
+            color: white;
+        }
+
+        .slide-icon {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 10rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 38px;
+            height: 38px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            z-index: 10;
+            transition: 0.3s;
+        }
+
+        .slider-arrow:hover { background: white; color: var(--primary); }
+        .slider-arrow.left  { left: 15px; }
+        .slider-arrow.right { right: 15px; }
+
+        .slider-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            z-index: 10;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--warning);
+            width: 0%;
+        }
+
+        /* =====================
+           SECTION COMMON
+        ===================== */
+        section { padding: 70px 0; }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+
+        /* =====================
+           SERVICE CARDS
+        ===================== */
+        .service-card {
+            background: white;
+            padding: 35px;
+            border: 1px solid var(--border);
+            position: relative;
+            height: 100%;
+            transition: 0.3s;
+        }
+
+        .service-card:hover { border-color: var(--accent); box-shadow: 0 10px 30px rgba(11,79,108,0.08); }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--accent);
+            transition: 0.3s;
+        }
+
+        .service-card:hover::before { height: 100%; }
+
+        .service-icon {
+            width: 55px;
+            height: 55px;
+            background: #F0F7FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .service-icon i { font-size: 1.6rem; color: var(--accent); }
+
+        .service-title {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .service-list { list-style: none; padding: 0; }
+
+        .service-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .service-list li i { color: var(--success); margin-right: 10px; }
+
+        /* =====================
+           FEATURE CARDS (Why Choose Us)
+        ===================== */
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: white;
+            border: 1px solid var(--border);
+            height: 100%;
+            transition: 0.2s;
+        }
+
+        .feature-card:hover { border-color: var(--accent); background: var(--light-bg); }
+
+        .feature-icon {
+            width: 65px;
+            height: 65px;
+            background: #F0F7FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+
+        .feature-title {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        /* =====================
+           ✅ NEW: ASSIST CARDS
+           Used in Emergency & Tracking sections
+        ===================== */
+        .assist-card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 30px 25px;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Animated bottom border on hover — matches the left-border effect on service-card */
+        .assist-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: width 0.35s ease;
+        }
+
+        .assist-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 25px rgba(11,79,108,0.09);
+            transform: translateY(-4px);
+        }
+
+        .assist-card:hover::after { width: 100%; }
+
+        .assist-icon {
+            width: 58px;
+            height: 58px;
+            background: #F0F7FF;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .assist-icon i {
+            font-size: 1.45rem;
+            color: var(--accent);
+            transition: color 0.3s;
+        }
+
+        /* Icon flips to white on hover — matches service-card color shift */
+        .assist-card:hover .assist-icon {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .assist-card:hover .assist-icon i { color: white; }
+
+        .assist-title {
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.88rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .assist-text {
+            font-size: 0.875rem;
+            color: var(--gray);
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        /* =====================
+           REVIEW CARDS
+        ===================== */
+        .review-card {
+            background: white;
+            padding: 30px;
+            border: 1px solid var(--border);
+            text-align: center;
+            height: 100%;
+            transition: 0.2s;
+        }
+
+        .review-card:hover { border-color: var(--accent); background: var(--light-bg); }
+
+        .reviewer-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .review-rating { color: var(--warning); margin-bottom: 10px; }
+        .review-text   { font-size: 0.9rem; margin-bottom: 15px; }
+
+        .reviewer-name {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .reviewer-role { font-size: 0.8rem; color: var(--gray); }
+
+        /* =====================
+           SOS BUTTON (fixed)
+        ===================== */
+        .sos-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: #DC2626;
+            border: none;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(220,38,38,0.4);
+            z-index: 999;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .sos-btn i     { font-size: 1.5rem; margin-bottom: 3px; }
+        .sos-btn:hover { background: #B91C1C; transform: scale(1.05); }
+
+        /* =====================
+           FOOTER
+        ===================== */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 60px 0 30px;
+            border-top: 4px solid var(--accent);
+        }
+
+        .footer-title {
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            position: relative;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 35px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .footer-links { list-style: none; padding: 0; }
+        .footer-links li { margin-bottom: 10px; }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover { color: white; padding-left: 5px; }
+
+        .social-links { display: flex; gap: 10px; }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .social-links a:hover { background: var(--accent); transform: translateY(-2px); }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 40px;
+            padding-top: 20px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* =====================
+           RESPONSIVE
+        ===================== */
+        @media (max-width: 768px) {
+            .slide img       { height: 200px; }
+            .slide-content   { padding: 20px; }
+            .slide-text      { max-width: 100%; }
+            .slide-text h2   { font-size: 1.4rem; }
+            .slide-icon      { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-tools me-2"></i>RoadSide Companion
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="#why-us">Why Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item ms-2">
+                    <a class="btn btn-primary" href="login.php">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================================================
+     BANNER SLIDER
+============================================================ -->
 <div class="banner-slider-container">
     <div class="container-fluid px-4">
         <div class="banner-slider">
             <div class="slider-track" id="sliderTrack">
-                <!-- Slide 1: Emergency Service Offer -->
+
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Emergency Service">
+                    <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=1600&q=80" alt="Emergency Service">
                     <div class="slide-content">
                         <div class="slide-text">
                             <span class="offer-badge">🎉 FLAT 30% OFF</span>
                             <h2>Emergency<br>Roadside Service</h2>
                             <p>24/7 assistance at your fingertips. First service at 30% off!</p>
-                            <button class="btn-offer">Book Now <i class="fas fa-arrow-right ms-2"></i></button>
+                            <button class="btn-slide">Book Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <div class="slide-image">
-                            <i class="fas fa-ambulance"></i>
-                        </div>
+                        <i class="fas fa-ambulance slide-icon"></i>
                     </div>
                 </div>
-                
-                <!-- Slide 2: Battery Service Offer -->
+
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Battery Service">
+                    <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?auto=format&fit=crop&w=1600&q=80" alt="Battery Service">
                     <div class="slide-content">
                         <div class="slide-text">
                             <span class="offer-badge">⚡ 20% OFF</span>
                             <h2>Battery<br>Boosting Service</h2>
-                            <p>Jump start or replace battery. Get 20% off on battery service</p>
-                            <button class="btn-offer">Avail Offer <i class="fas fa-arrow-right ms-2"></i></button>
+                            <p>Jump start or replace battery. Get 20% off on battery service.</p>
+                            <button class="btn-slide">Avail Offer <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <div class="slide-image">
-                            <i class="fas fa-car-battery"></i>
-                        </div>
+                        <i class="fas fa-car-battery slide-icon"></i>
                     </div>
                 </div>
-                
-                <!-- Slide 3: Fuel Delivery Offer -->
+
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1591886960571-74d43a9d4166?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Fuel Delivery">
+                    <img src="https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=1600&q=80" alt="Fuel Delivery">
                     <div class="slide-content">
                         <div class="slide-text">
                             <span class="offer-badge">⛽ FREE DELIVERY</span>
                             <h2>Emergency<br>Fuel Delivery</h2>
-                            <p>Running out of fuel? Get free delivery on first order</p>
-                            <button class="btn-offer">Order Now <i class="fas fa-arrow-right ms-2"></i></button>
+                            <p>Running out of fuel? Get free delivery on your first order.</p>
+                            <button class="btn-slide">Order Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <div class="slide-image">
-                            <i class="fas fa-gas-pump"></i>
-                        </div>
+                        <i class="fas fa-gas-pump slide-icon"></i>
                     </div>
                 </div>
-                
-                <!-- Slide 4: Flat Tyre Offer -->
+
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Flat Tyre">
+                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1600&q=80" alt="Flat Tyre">
                     <div class="slide-content">
                         <div class="slide-text">
-                            <span class="offer-badge">🛞 FLAT 25% OFF</span>
+                            <span class="offer-badge">🛞 25% OFF</span>
                             <h2>Flat Tyre<br>Assistance</h2>
-                            <p>Quick tyre change or repair. Special discount for members</p>
-                            <button class="btn-offer">Get Help <i class="fas fa-arrow-right ms-2"></i></button>
+                            <p>Quick tyre change or repair. Special discount for members.</p>
+                            <button class="btn-slide">Get Help <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <div class="slide-image">
-                            <i class="fas fa-tire"></i>
-                        </div>
+                        <i class="fas fa-circle slide-icon"></i>
                     </div>
                 </div>
-                
-                <!-- Slide 5: Towing Service Offer -->
+
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1603745713042-00b57d8d9e2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Towing">
+                    <img src="https://images.unsplash.com/photo-1603745713042-00b57d8d9e2a?auto=format&fit=crop&w=1600&q=80" alt="Towing">
                     <div class="slide-content">
                         <div class="slide-text">
                             <span class="offer-badge">🚛 SAVE 40%</span>
                             <h2>Towing<br>Services</h2>
-                            <p>Professional towing at best prices. Limited period offer</p>
-                            <button class="btn-offer">Call Now <i class="fas fa-arrow-right ms-2"></i></button>
+                            <p>Professional towing at best prices. Limited period offer.</p>
+                            <button class="btn-slide">Call Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <div class="slide-image">
-                            <i class="fas fa-truck"></i>
-                        </div>
+                        <i class="fas fa-truck slide-icon"></i>
                     </div>
                 </div>
+
             </div>
-            
-            <!-- Navigation Dots -->
+
             <div class="slider-dots" id="sliderDots">
                 <span class="dot active"></span>
                 <span class="dot"></span>
@@ -96,41 +696,36 @@ require_once '../dbcon.php';
                 <span class="dot"></span>
                 <span class="dot"></span>
             </div>
-            
-            <!-- Navigation Arrows -->
-            <div class="slider-arrow left" id="prevSlide">
-                <i class="fas fa-chevron-left"></i>
-            </div>
-            <div class="slider-arrow right" id="nextSlide">
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            
-            <!-- Progress Bar -->
+
+            <div class="slider-arrow left"  id="prevSlide"><i class="fas fa-chevron-left"></i></div>
+            <div class="slider-arrow right" id="nextSlide"><i class="fas fa-chevron-right"></i></div>
+
             <div class="slider-progress">
-                <div class="progress-bar" id="progressBar"></div>
+                <div class="progress-fill" id="progressFill"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Four Wheelers Services -->
-<section id="services" class="service-section">
+<!-- ============================================================
+     SERVICES SECTION
+============================================================ -->
+<section id="services">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
             <h2 class="section-title">Our Services</h2>
             <p class="section-subtitle">Comprehensive roadside assistance for all vehicle types</p>
         </div>
-        
+
         <div class="row g-4">
+            <!-- Four Wheelers -->
             <div class="col-lg-6" data-aos="fade-right">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-car"></i>
-                    </div>
-                    <h3 class="service-title">Four Wheelers Services</h3>
+                    <div class="service-icon"><i class="fas fa-car"></i></div>
+                    <h3 class="service-title">Four Wheeler Services</h3>
                     <ul class="service-list row">
                         <div class="col-md-6">
-                            <li><i class="fas fa-check-circle"></i> Emergency Roadside Repairs</li>
+                            <li><i class="fas fa-check-circle"></i> Emergency Repairs</li>
                             <li><i class="fas fa-check-circle"></i> Fuel Delivery</li>
                             <li><i class="fas fa-check-circle"></i> Flat Tyre</li>
                             <li><i class="fas fa-check-circle"></i> Towing Services</li>
@@ -144,16 +739,15 @@ require_once '../dbcon.php';
                     </ul>
                 </div>
             </div>
-            
+
+            <!-- Two Wheelers -->
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-motorcycle"></i>
-                    </div>
-                    <h3 class="service-title">Two Wheelers Services</h3>
+                    <div class="service-icon"><i class="fas fa-motorcycle"></i></div>
+                    <h3 class="service-title">Two Wheeler Services</h3>
                     <ul class="service-list row">
                         <div class="col-md-6">
-                            <li><i class="fas fa-check-circle"></i> Emergency Roadside Repairs</li>
+                            <li><i class="fas fa-check-circle"></i> Emergency Repairs</li>
                             <li><i class="fas fa-check-circle"></i> Fuel Delivery</li>
                             <li><i class="fas fa-check-circle"></i> Flat Tyre</li>
                             <li><i class="fas fa-check-circle"></i> Towing Services</li>
@@ -171,128 +765,188 @@ require_once '../dbcon.php';
     </div>
 </section>
 
-<!-- Why Choose Us Section -->
-<section class="why-choose-section">
+<!-- ============================================================
+     ✅ NEW SECTION 1 — EMERGENCY ROADSIDE ASSISTANCE
+     Background: white (alternates with the light-bg of Our Services)
+============================================================ -->
+<section id="emergency-assistance" style="background: white;">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
-            <h2 class="section-title">Why Choose Us?</h2>
-            <p class="section-subtitle">We provide the best roadside assistance experience</p>
+            <h2 class="section-title">Emergency Roadside Assistance</h2>
+            <p class="section-subtitle">Rapid on-ground help when you need it most — day or night</p>
         </div>
-        
+
         <div class="row g-4">
-            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="100">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h4 class="feature-title">Faster Service</h4>
-                    <p class="feature-text">Average response time under 20 minutes with real-time tracking</p>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="assist-card">
+                    <div class="assist-icon"><i class="fas fa-tools"></i></div>
+                    <h4 class="assist-title">On-Site Repairs</h4>
+                    <p class="assist-text">Minor mechanical issues fixed right at your breakdown spot — no garage visit needed.</p>
                 </div>
             </div>
-            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-medal"></i>
-                    </div>
-                    <h4 class="feature-title">Quality Services</h4>
-                    <p class="feature-text">Certified mechanics and verified service providers</p>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="assist-card">
+                    <div class="assist-icon"><i class="fas fa-truck-pickup"></i></div>
+                    <h4 class="assist-title">Towing Service</h4>
+                    <p class="assist-text">Safe and swift towing to the nearest verified garage or your preferred service centre.</p>
                 </div>
             </div>
-            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="300">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-car-battery"></i>
-                    </div>
-                    <h4 class="feature-title">Genuine Parts</h4>
-                    <p class="feature-text">100% authentic spare parts with warranty</p>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="assist-card">
+                    <div class="assist-icon"><i class="fas fa-car-battery"></i></div>
+                    <h4 class="assist-title">Battery Jump Start</h4>
+                    <p class="assist-text">Instant battery boosting or on-spot replacement so you're back on the road in minutes.</p>
                 </div>
             </div>
-            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="400">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-tag"></i>
-                    </div>
-                    <h4 class="feature-title">Affordable Prices</h4>
-                    <p class="feature-text">Transparent pricing with no hidden charges</p>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="assist-card">
+                    <div class="assist-icon"><i class="fas fa-gas-pump"></i></div>
+                    <h4 class="assist-title">Fuel Delivery</h4>
+                    <p class="assist-text">Stranded with an empty tank? We deliver fuel directly to your location — fast and hassle-free.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Reviews & Feedback Section -->
-<section class="reviews-section">
+<!-- ============================================================
+     ✅ NEW SECTION 2 — REAL-TIME TRACKING & SUPPORT
+     Background: light-bg (alternates back for visual rhythm)
+============================================================ -->
+<section id="tracking-support" style="background: var(--light-bg);">
+    <div class="container">
+        <div class="text-center" data-aos="fade-up">
+            <h2 class="section-title">Real-Time Tracking & Support</h2>
+            <p class="section-subtitle">Smart technology that keeps you informed, safe, and in control</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="assist-card">
+                    <div class="assist-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h4 class="assist-title">Live Location Tracking</h4>
+                    <p class="assist-text">Track your assigned mechanic on a live map and get accurate ETA updates in real time.</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="assist-card">
+                    <div class="assist-icon"><i class="fas fa-headset"></i></div>
+                    <h4 class="assist-title">24/7 Helpline</h4>
+                    <p class="assist-text">Round-the-clock support via call, chat, or app — a trained agent is always ready to assist.</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="assist-card">
+                    <div class="assist-icon"><i class="fas fa-search-location"></i></div>
+                    <h4 class="assist-title">Nearest Garage Finder</h4>
+                    <p class="assist-text">Instantly locate the closest verified and rated service centre near your breakdown spot.</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="assist-card">
+                    <div class="assist-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <h4 class="assist-title">Service History Logs</h4>
+                    <p class="assist-text">Access a full record of all past breakdowns, repairs, and service costs — anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     WHY CHOOSE US SECTION
+============================================================ -->
+<section id="why-us" style="background: white;">
+    <div class="container">
+        <div class="text-center" data-aos="fade-up">
+            <h2 class="section-title">Why Choose Us?</h2>
+            <p class="section-subtitle">We provide the best roadside assistance experience</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="100">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h4 class="feature-title">Faster Service</h4>
+                    <p class="small">Average response time under 20 minutes with real-time tracking</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-medal"></i></div>
+                    <h4 class="feature-title">Quality Services</h4>
+                    <p class="small">Certified mechanics and verified service providers</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-car-battery"></i></div>
+                    <h4 class="feature-title">Genuine Parts</h4>
+                    <p class="small">100% authentic spare parts with warranty</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="400">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-tag"></i></div>
+                    <h4 class="feature-title">Affordable Prices</h4>
+                    <p class="small">Transparent pricing with no hidden charges</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     REVIEWS SECTION
+============================================================ -->
+<section id="reviews">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
             <h2 class="section-title">What Our Customers Say</h2>
             <p class="section-subtitle">Trusted by thousands of happy customers</p>
         </div>
-        
+
         <div class="row g-4">
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="review-card">
-                    <div class="text-center">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Reviewer" class="reviewer-img">
-                        <div class="review-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="review-text">
-                            "Excellent service! My car broke down on the highway, and they reached within 15 minutes. 
-                            Fixed the issue quickly and charged a fair price."
-                        </p>
-                        <h5 class="reviewer-name">Rajesh Kumar</h5>
-                        <p class="reviewer-role">Car Owner</p>
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Kumar" class="reviewer-img">
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
+                    <p class="review-text">"My car broke down on the highway and they reached within 15 minutes. Fixed the issue quickly and charged a fair price."</p>
+                    <h5 class="reviewer-name">Rajesh Kumar</h5>
+                    <p class="reviewer-role">Car Owner</p>
                 </div>
             </div>
-            
+
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="review-card">
-                    <div class="text-center">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Reviewer" class="reviewer-img">
-                        <div class="review-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="review-text">
-                            "The battery boosting service for my bike was super quick. The mechanic was professional 
-                            and even checked other parts. Highly recommended!"
-                        </p>
-                        <h5 class="reviewer-name">Priya Sharma</h5>
-                        <p class="reviewer-role">Bike Rider</p>
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma" class="reviewer-img">
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
+                    <p class="review-text">"Battery boosting service for my bike was super quick. The mechanic was professional and even checked other parts. Highly recommended!"</p>
+                    <h5 class="reviewer-name">Priya Sharma</h5>
+                    <p class="reviewer-role">Bike Rider</p>
                 </div>
             </div>
-            
+
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                 <div class="review-card">
-                    <div class="text-center">
-                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Reviewer" class="reviewer-img">
-                        <div class="review-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <p class="review-text">
-                            "Fuel delivery service saved me during a late-night emergency. Easy to use app and 
-                            transparent pricing. Will definitely use again."
-                        </p>
-                        <h5 class="reviewer-name">Amit Patel</h5>
-                        <p class="reviewer-role">SUV Owner</p>
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Amit Patel" class="reviewer-img">
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                     </div>
+                    <p class="review-text">"Fuel delivery service saved me during a late-night emergency. Easy to use and transparent pricing. Will definitely use again."</p>
+                    <h5 class="reviewer-name">Amit Patel</h5>
+                    <p class="reviewer-role">SUV Owner</p>
                 </div>
             </div>
         </div>
-        
+
         <div class="text-center mt-5" data-aos="fade-up">
             <a href="#" class="btn btn-outline-primary btn-lg">
                 View All Reviews <i class="fas fa-arrow-right ms-2"></i>
@@ -301,53 +955,48 @@ require_once '../dbcon.php';
     </div>
 </section>
 
-<!-- About Us Section -->
-<section class="why-choose-section">
+<!-- ============================================================
+     ABOUT SECTION
+============================================================ -->
+<section id="about" style="background: white;">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center g-5">
             <div class="col-lg-6" data-aos="fade-right">
                 <h2 class="section-title">About RoadSide Companion</h2>
-                <p class="lead mb-4">
-                    We're on a mission to make roadside assistance accessible, reliable, and affordable for everyone.
-                </p>
+                <p class="lead mb-3">We're on a mission to make roadside assistance accessible, reliable, and affordable for everyone.</p>
                 <p class="text-muted mb-4">
-                    Founded in 2024, RoadSide Companion has grown to become one of the most trusted vehicle breakdown 
-                    assistance platforms. We connect stranded motorists with professional mechanics and service providers 
-                    within minutes, ensuring you're never alone on the road.
+                    Founded in 2024, RoadSide Companion connects stranded motorists with professional mechanics
+                    and service providers within minutes — ensuring you're never alone on the road.
                 </p>
-                <div class="row g-4 mt-3">
-                    <div class="col-6">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-users fa-2x text-primary me-3"></i>
-                            <div>
-                                <h3 class="h2 mb-0 fw-bold">10K+</h3>
-                                <p class="text-muted mb-0">Happy Customers</p>
-                            </div>
+                <div class="row g-3">
+                    <div class="col-6 d-flex align-items-center">
+                        <i class="fas fa-users fa-2x text-primary me-3"></i>
+                        <div>
+                            <h3 class="h2 fw-bold mb-0">10K+</h3>
+                            <small class="text-muted">Happy Customers</small>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-tools fa-2x text-primary me-3"></i>
-                            <div>
-                                <h3 class="h2 mb-0 fw-bold">500+</h3>
-                                <p class="text-muted mb-0">Service Providers</p>
-                            </div>
+                    <div class="col-6 d-flex align-items-center">
+                        <i class="fas fa-tools fa-2x text-primary me-3"></i>
+                        <div>
+                            <h3 class="h2 fw-bold mb-0">500+</h3>
+                            <small class="text-muted">Service Providers</small>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="position-relative">
-                    <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" 
+                    <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=1170&q=80"
                          alt="About Us" class="img-fluid rounded-4 shadow-lg">
-                    <div class="position-absolute bottom-0 end-0 bg-white p-4 rounded-4 shadow m-4">
+                    <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow m-3">
                         <div class="d-flex align-items-center">
-                            <div class="sos-button-small me-3" style="width: 50px; height: 50px; background: linear-gradient(135deg, #FF6B6B, #FF8E53); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                            <div style="width:45px;height:45px;background:#FF6B6B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;" class="me-3">
                                 <i class="fas fa-phone-alt"></i>
                             </div>
                             <div>
-                                <p class="text-muted mb-1">24/7 Emergency</p>
-                                <h5 class="mb-0 fw-bold">1800-123-4567</h5>
+                                <small class="text-muted d-block">24/7 Emergency</small>
+                                <strong>1800-123-4567</strong>
                             </div>
                         </div>
                     </div>
@@ -357,13 +1006,99 @@ require_once '../dbcon.php';
     </div>
 </section>
 
-<!-- SOS Emergency Button -->
-<div class="sos-button">
+<!-- ============================================================
+     SOS BUTTON (Fixed, bottom-right)
+============================================================ -->
+<button class="sos-btn" id="sosBtn">
     <i class="fas fa-exclamation-triangle"></i>
     <span>SOS</span>
-</div>
+</button>
 
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 900, once: true, offset: 80 });
 
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.navbar');
+        nav.style.boxShadow = window.scrollY > 50
+            ? '0 2px 20px rgba(0,0,0,0.12)'
+            : '0 2px 15px rgba(11,79,108,0.05)';
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', e => {
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+        });
+    });
+
+    document.getElementById('sosBtn').addEventListener('click', () => {
+        if (confirm('🚨 EMERGENCY SOS 🚨\n\nDo you need immediate roadside assistance?')) {
+            alert('Emergency services have been notified! Help is on the way.');
+        }
+    });
+
+    const track        = document.getElementById('sliderTrack');
+    const dots         = document.querySelectorAll('.dot');
+    const progressFill = document.getElementById('progressFill');
+
+    let current        = 0;
+    const total        = dots.length;
+    const INTERVAL     = 2000;
+    let autoPlayTimer, progressTimer, progressStart;
+
+    function goToSlide(index) {
+        current = (index + total) % total;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        resetProgress();
+    }
+
+    function resetProgress() {
+        progressFill.style.width = '0%';
+        clearInterval(progressTimer);
+        progressStart = Date.now();
+        progressTimer = setInterval(() => {
+            const pct = ((Date.now() - progressStart) / INTERVAL) * 100;
+            progressFill.style.width = Math.min(pct, 100) + '%';
+        }, 50);
+    }
+
+    function startAuto() {
+        autoPlayTimer = setInterval(() => goToSlide(current + 1), INTERVAL);
+        resetProgress();
+    }
+
+    function stopAuto() {
+        clearInterval(autoPlayTimer);
+        clearInterval(progressTimer);
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', () => { stopAuto(); goToSlide(current + 1); startAuto(); });
+    document.getElementById('prevSlide').addEventListener('click', () => { stopAuto(); goToSlide(current - 1); startAuto(); });
+
+    dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAuto(); goToSlide(i); startAuto(); }));
+
+    track.addEventListener('mouseenter', stopAuto);
+    track.addEventListener('mouseleave', startAuto);
+
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; stopAuto(); });
+    track.addEventListener('touchend',   e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) goToSlide(diff > 0 ? current + 1 : current - 1);
+        startAuto();
+    });
+
+    goToSlide(0);
+    startAuto();
+</script>
+
+</body>
+</html>
 <?php
-include_once 'footer.php';
-?>
+include_once 'footer.php'; ?>

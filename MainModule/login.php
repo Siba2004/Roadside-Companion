@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../dbcon.php';
+include_once 'navbar.php';
 
 if($_SERVER['REQUEST_METHOD']=="POST"){
     $login_id=$_POST['login_id'];
@@ -49,22 +50,49 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
         * {
             font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             background: linear-gradient(135deg, rgb(255, 255, 255) 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 0;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Navbar spacing fix */
+        .navbar {
+            margin-bottom: 30px !important;
+            position: relative !important;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        /* Add padding to account for fixed navbar if it's fixed */
+        .navbar.fixed-top {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        /* If navbar is fixed, add padding to body */
+        body.has-fixed-navbar {
+            padding-top: 80px; /* Adjust based on your navbar height */
         }
 
         .login-wrapper {
             max-width: 1100px;
             width: 100%;
-            margin: 0 auto;
+            margin: 20px auto 40px; /* Reduced top margin to account for navbar */
             padding: 0 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .login-card {
@@ -74,6 +102,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             display: flex;
             flex-wrap: wrap;
+            margin-bottom: 30px;
         }
 
         /* Left Side - Image Container (45%) */
@@ -460,6 +489,95 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             text-decoration: underline;
         }
 
+        /* Footer Styling */
+        .main-footer {
+            background: var(--primary);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-title {
+            color: var(--warning);
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--warning);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contact-info li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--warning);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .error{
+            color:red;
+            display: block;
+        }
+
         @media (max-width: 992px) {
             .login-left {
                 flex: 0 0 100%;
@@ -468,6 +586,14 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             .login-right {
                 flex: 0 0 100%;
                 padding: 50px 30px;
+            }
+            
+            .navbar {
+                margin-bottom: 20px !important;
+            }
+            
+            body.has-fixed-navbar {
+                padding-top: 70px;
             }
         }
 
@@ -486,14 +612,20 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 flex-direction: column;
                 gap: 10px;
             }
-        }
-        .error{
-                color:red;
-                display: block;
+            
+            .navbar {
+                margin-bottom: 15px !important;
             }
+            
+            body.has-fixed-navbar {
+                padding-top: 60px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Navbar is already included at the top via include_once 'navbar.php' -->
+    
     <div class="login-wrapper">
         <div class="login-card" data-aos="fade-up">
             <!-- Left Side - Image with Testimonial (45%) -->
@@ -582,9 +714,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                         <label class="form-label">Email Address</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" class="form-control" placeholder="Enter your email address" name="login_id"><br>
-                            <label class="error" id="login_idError"></label><br>
+                            <input type="email" class="form-control" placeholder="Enter your email address" name="login_id">
                         </div>
+                        <label class="error" id="login_idError"></label>
                     </div>
                     
                     <!-- Phone Field (hidden by default) -->
@@ -592,21 +724,21 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                         <label class="form-label">Phone Number</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            <input type="tel" class="form-control" placeholder="Enter your phone number" name="login_id"><br>
-                            <label class="error" id="login_idError"></label><br>
+                            <input type="tel" class="form-control" placeholder="Enter your phone number" name="login_id">
                         </div>
+                        <label class="error" id="login_idError"></label>
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label">Password</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" class="form-control" placeholder="Enter your password" id="passwordField" name="password"><br>
-                            <label class="error" id="login_idError"></label><br>
+                            <input type="password" class="form-control" placeholder="Enter your password" id="passwordField" name="password">
                             <span class="input-group-text" style="cursor: pointer;" onclick="togglePassword()">
                                 <i class="fas fa-eye" id="toggleIcon"></i>
                             </span>
                         </div>
+                        <label class="error" id="passwordError"></label>
                     </div>
                     
                     <div class="remember-forgot">
@@ -642,11 +774,67 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         </div>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="login-validation.js">
+    <script>
+        AOS.init({ duration: 1000 });
+        
+        // Check if navbar is fixed and add padding to body
+        document.addEventListener('DOMContentLoaded', function() {
+            var navbar = document.querySelector('.navbar');
+            if (navbar) {
+                if (window.getComputedStyle(navbar).position === 'fixed') {
+                    document.body.classList.add('has-fixed-navbar');
+                }
+            }
+        });
+        
+        function togglePassword() {
+            var passwordField = document.getElementById("passwordField");
+            var toggleIcon = document.getElementById("toggleIcon");
+            
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+
+        function switchLoginOption(option) {
+            var emailField = document.getElementById("emailField");
+            var phoneField = document.getElementById("phoneField");
+            var emailOption = document.getElementById("emailOption");
+            var phoneOption = document.getElementById("phoneOption");
+            
+            if (option === 'email') {
+                emailField.style.display = "block";
+                phoneField.style.display = "none";
+                emailOption.classList.add("active");
+                phoneOption.classList.remove("active");
+            } else {
+                emailField.style.display = "none";
+                phoneField.style.display = "block";
+                phoneOption.classList.add("active");
+                emailOption.classList.remove("active");
+            }
+        }
+        
+        function validate(event) {
+            event.preventDefault();
+            // Add your validation logic here
+            return true;
+        }
     </script>
+    <script src="login-validation.js"></script>
 </body>
 </html>
 
-<?php include_once 'footer.php'; ?>
+<?php
+// Include the footer file (if you have a separate footer.php file)
+include_once 'footer.php';
+?>
