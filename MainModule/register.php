@@ -605,12 +605,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Account Type</label>
+                        <label class="form-label">User Type</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                             <select class="form-control" name="account" id="account">
                                 <option value="">-- SELECT ACCOUNT TYPE --</option>
-                                <option value="administrator">Administrator</option>
+                                <!-- <option value="administrator">Administrator</option> -->
                                 <option value="customer">Customer</option>
                                 <option value="service-provider">Service Provider</option>
                             </select>
@@ -728,7 +728,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             if (phone === '') {
                 document.getElementById('phoneError').innerHTML = 'Phone number is required';
                 isValid = false;
-            } else if (!phonePattern.test(phone)) {
+            }else if (phone.length < 10) {
+                document.getElementById('phoneError').innerHTML = 'Phone number must be 10 digits';
+                isValid = false;
+            }else if (!phonePattern.test(phone)) {
                 document.getElementById('phoneError').innerHTML = 'Please enter a valid 10-digit phone number';
                 isValid = false;
             }
@@ -774,7 +777,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             return false;
         }
     </script>
-    <script src="./jsfiles/register-validator.js"></script>
+    <!-- <script src="./jsfiles/register-validator.js"></script> -->
 </body>
 </html>
 

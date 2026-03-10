@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-
 <html>
 <head>
     <meta charset="UTF-8">

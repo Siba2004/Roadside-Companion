@@ -1,15 +1,15 @@
 <?php
 session_start();
 require_once '../dbcon.php';
-include_once 'navbar.php';
+
 
 if($_SERVER['REQUEST_METHOD']=="POST"){
     $login_id=$_POST['login_id'];
     $password=$_POST['password'];
-
-    $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND password=?";
+    $type=$_POST['account'];
+    $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND password=? AND accounttype=?";
     $stmt=$conn->prepare($qry);
-    $stmt->bind_param("sss",$login_id,$login_id,$password);
+    $stmt->bind_param("ssss",$login_id,$login_id,$password,$type);
     $stmt->execute();
     $result=$stmt->get_result();
 
@@ -17,9 +17,17 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $data=$result->fetch_assoc();
         $_SESSION['name']=$data['name'];
         $_SESSION['id']=$data['id'];
-        header("location:home.php");
-        exit();
-    }else {
+        $_SESSION['type']=$data['accounttype'];
+        $stmt->close();
+        $conn->close();
+        if($data['accounttype']=='customer'){
+            header("location: home.php");
+        }elseif($data['accounttype']=='service-provider'){
+            header("location: ../ServiceProvider/service_home.php");
+        }elseif($data['type']=='administrator'){
+            header("location: ../Admin/admin_home.php");
+        }exit();
+    }else{
         $_SESSION['login_error'] = "Incorrect Login_id or Password !";
         header("location:login.php");
     }
@@ -624,6 +632,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     </style>
 </head>
 <body>
+    <?php include_once 'navbar.php'; ?>
     <!-- Navbar is already included at the top via include_once 'navbar.php' -->
     
     <div class="login-wrapper">
@@ -714,7 +723,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                         <label class="form-label">Email Address</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" class="form-control" placeholder="Enter your email address" name="login_id">
+                            <input type="text" class="form-control" placeholder="Enter your email address" name="login_id">
                         </div>
                         <label class="error" id="login_idError"></label>
                     </div>
@@ -724,11 +733,25 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                         <label class="form-label">Phone Number</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            <input type="tel" class="form-control" placeholder="Enter your phone number" name="login_id">
+                            <input type="text" class="form-control" placeholder="Enter your phone number" name="login_id">
                         </div>
-                        <label class="error" id="login_idError"></label>
+                        <!-- <label class="error" id="login_idError"></label> -->
                     </div>
-                    
+
+                    <div class="form-group">
+                        <label class="form-label">User Type</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                            <select class="form-control" name="account" id="account">
+                                <option value="">-- SELECT ACCOUNT TYPE --</option>
+                                <option value="administrator">Administrator</option>
+                                <option value="customer">Customer</option>
+                                <option value="service-provider">Service Provider</option>
+                            </select>
+                        </div>
+                        <small class="error" id="accountError"></small>
+                    </div>
+
                     <div class="form-group">
                         <label class="form-label">Password</label>
                         <div class="input-group">
@@ -825,7 +848,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         }
         
         function validate(event) {
-            event.preventDefault();
+            //event.preventDefault();
             // Add your validation logic here
             return true;
         }
