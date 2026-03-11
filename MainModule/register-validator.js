@@ -1,4 +1,13 @@
+AOS.init({ duration: 1000 });
 function validate(e){
+    document.addEventListener('DOMContentLoaded', function() {
+        var navbar = document.querySelector('.navbar');
+        if (navbar) {
+            if (window.getComputedStyle(navbar).position === 'fixed') {
+                document.body.classList.add('has-fixed-navbar');
+            }
+        }
+    });
     let error=false;
 
     let form=document.getElementById("regForm");
@@ -41,6 +50,9 @@ function validate(e){
     }else if(!phoneRegx.test(phone)){
         phoneError.innerHTML="Please enter a 10 digit valid mobile number"
         error=true
+    }else if(phone.length<10){
+        phoneError.innerHTML="Phone number must be 10 digits"
+        error=true
     }else{
         phoneError.innerHTML=""
     }
@@ -68,7 +80,7 @@ function validate(e){
     }if(!/[@#$%^&]/.test(password)){
         passErrMsg+="Password should have 1 special character<br>"
         error=true
-    }if(password.length<8 || password.length >15){
+    }if(password.length>8 && password.length <15){
         passErrMsg+="Password length should be between 8 -15<br>"
         error=true
     }
@@ -86,7 +98,11 @@ function validate(e){
     }else{
         cpassError.innerHTML=""
     }
-
+    var terms = document.getElementById('terms').checked;
+    if (!terms) {
+        document.getElementById('termsError').innerHTML = 'You must agree to the terms and conditions';
+        error = true;
+    }
     if(error){
         e.preventDefault();
         return false;

@@ -1,7 +1,7 @@
 AOS.init({ duration: 1000 });
 function validate(e){
         let error=false;
-        let form=document.getElementById('loginForm');
+        let form=document.getElementById('regForm');
         let login_id=form.elements['login_id'].value
         let password=form.elements['password'].value
 
@@ -25,8 +25,9 @@ function validate(e){
             passwordError.innerHTML = passErrMsg
         }
         if(error){
-            e.preventDefault();
+            return false;
         }
+        return true;
 }
 function switchLoginOption(option) {
             const emailOption = document.getElementById('emailOption');
