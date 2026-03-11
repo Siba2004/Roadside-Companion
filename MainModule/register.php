@@ -4,15 +4,15 @@ include_once 'navbar.php';
 require_once '../dbcon.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $name=$_POST['fullname'];
+    $name=$_POST['name'];
     $email=$_POST['email'];
     $phone=$_POST['phone'];
-    $accounttype=$_POST['account'];
+    $account=$_POST['account'];
     $password=$_POST['password'];
 
     $sql="INSERT INTO users_details (name,email,phone_number,accounttype,password) VALUES (?,?,?,?,?)";
     $stmt=$conn->prepare($sql);
-    $stmt->bind_param("ssiss",$name,$email,$phone,$accounttype,$password);
+    $stmt->bind_param("ssiss",$name,$email,$phone,$account,$password);
     if($stmt->execute()){
         echo "<script>
         alert('Registration successful! Please login.');
@@ -208,12 +208,25 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <form method="POST">
                 <div class="mb-3 text-start">
                     <label>Username</label>
-                    <input type="text" name="username" class="form-control" required>
+                    <input type="text" name="name" class="form-control">
                 </div>
                 <div class="mb-3 text-start">
                     <label>Email</label>
-                    <input type="email" name="email" class="form-control" required>
+                    <input type="text" name="email" class="form-control">
                 </div>
+                <div class="mb-3 text-start">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" class="form-control">
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label">Account Type</label>
+                            <select class="form-select" name="account" id="account">
+                                <option value="">--SELECT--</option>
+                                <option value="customer">Customer</option>
+                                <option value="service-provider">Service-Provider</option>
+                            </select>
+                            <small class="error" id="accountError"></small>
+                    </div>
                 <div class="mb-3 text-start password-box">
                     <label>Password</label>
                     <input type="password" id="password" name="password" class="form-control" required>
