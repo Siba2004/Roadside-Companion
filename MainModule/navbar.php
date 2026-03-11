@@ -78,31 +78,30 @@ if (session_status() === PHP_SESSION_NONE) {
     .slide img {
         height: 200px;
     }
-    
-    .sli
+}
     </style>
 </head>
 <body>
   <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="home.php">
             <i class="fas fa-tools me-2"></i>RoadSide Companion
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="#reviews">Your Location</a></li>
-                <li class="nav-item ms-2">
-                    <a class="btn btn-primary" href="login.php">
-                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                    </a>
-                </li>
-            </ul>
+         <ul class="navbar-nav ms-auto align-items-center">
+    <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="services.php">Services</a></li>
+    <li class="nav-item"><a class="nav-link" href="reviews.php">Your Location</a></li>
+    <li class="nav-item ms-2">
+        <a class="btn btn-primary" href="login.php">
+            <i class="fas fa-sign-in-alt me-2"></i>Login
+        </a>
+    </li>
+</ul>
         </div>
     </div>
 </nav>

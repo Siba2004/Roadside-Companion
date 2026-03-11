@@ -3,11 +3,10 @@ session_start();
 require_once '../dbcon.php';
 
 
-if($_SERVER['REQUEST_METHOD']=="POST"){
-    $type=$_POST['usertype'];
+if(isset($_POST['login'])){
     $login_id=$_POST['login_id'];
     $password=$_POST['password'];
-    $type=$_POST['account'];
+    $type=$_POST['usertype'];
     $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND password=? AND accounttype=?";
     $stmt=$conn->prepare($qry);
     $stmt->bind_param("ssss",$login_id,$login_id,$password,$type);
@@ -25,7 +24,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             header("location: home.php");
         }elseif($data['accounttype']=='service-provider'){
             header("location: ../ServiceProvider/service_home.php");
-        }elseif($data['type']=='administrator'){
+        }elseif($data['accounttype']=='administrator'){
             header("location: ../Admin/admin_home.php");
         }exit();
     }else{

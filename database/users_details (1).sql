@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2026 at 11:57 PM
+-- Generation Time: Mar 11, 2026 at 03:56 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,7 +31,7 @@ CREATE TABLE `users_details` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `phone_number` varchar(15) NOT NULL,
+  `phone_number` varchar(10) NOT NULL,
   `password` varchar(16) NOT NULL,
   `accounttype` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -42,7 +42,13 @@ CREATE TABLE `users_details` (
 
 INSERT INTO `users_details` (`id`, `name`, `email`, `phone_number`, `password`, `accounttype`) VALUES
 (1, 'SIBA SANKAR DASH', 'siba@gmail.com', '8338018281', 'Siba@2004', 'administrator'),
-(4, 'Ajaya', 'ajaya@gmail.com', '891762820', 'Ajaya@2003', 'administrator');
+(4, 'Ajaya', 'ajaya@gmail.com', '8917628204', 'Ajaya@2003', 'administrator'),
+(5, 'Bhabani Sankar Nanda', 'bhabani@gmail.com', '7008736659', 'Bhabani@2004', 'administrator'),
+(6, 'Silu Muduli', 'silu@gmail.com', '9090565653', 'Silu@2003', 'administrator'),
+(8, 'surajit', 'surajit@gmail.com', '8008736659', 'Sura@2001', 'customer'),
+(9, 'Deba', 'deba1@gmail.com', '6371095622', 'Deba@2003', 'service-provider'),
+(10, 'Ram Chandra', 'ram1@gmail.com', '8805866968', 'Ram@1', 'customer'),
+(11, 'Mana Ranjan', 'mana@gmail.com', '7856625887', 'Mana@1', 'service-provider');
 
 --
 -- Indexes for dumped tables
@@ -64,7 +70,7 @@ ALTER TABLE `users_details`
 -- AUTO_INCREMENT for table `users_details`
 --
 ALTER TABLE `users_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

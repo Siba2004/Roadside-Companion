@@ -516,7 +516,7 @@ require_once '../dbcon.php';
                 <p data-aos="fade-down" data-aos-delay="100">Specialized care for bikes & scooters – from puncture repair to performance tuning</p>
                 <nav aria-label="breadcrumb" data-aos="fade-down" data-aos-delay="200">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Two Wheeler Services</li>
                     </ol>
                 </nav>
