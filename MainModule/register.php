@@ -24,466 +24,249 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - RoadSide Companion</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #0B4F6C;
-            --secondary: #3282B8;
-            --accent: #1B98F5;
-            --success: #20B2AA;
-            --warning: #FFA500;
-            --light-bg: #F8FBFE;
-            --dark-blue: #0A2472;
-            --gray-corporate: #4A5568;
-            --border-corporate: #E2E8F0;
-        }
+<html>
+    <head>
+        <title>Roadside Companion Register</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <style>
 
-        * {
-            font-family: 'Montserrat', sans-serif;
-        }
+            body{
+                height:100vh;
+                margin:0;
+                font-family:'Poppins',sans-serif;
 
-        body {
-            background: linear-gradient(135deg, #ffffff 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 0;
-        }
+                background-image:url('veh2(1).jpg');
+                background-size:cover;
+                background-position:center;
+                background-repeat:no-repeat;
+                background-attachment:fixed;
 
-        .register-wrapper {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .register-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .register-left {
-            flex: 1;
-            background: linear-gradient(135deg, var(--primary), var(--dark-blue));
-            padding: 60px 40px;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-width: 300px;
-        }
-
-        .register-left h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .register-left p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        .feature-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .feature-list li {
-            padding: 12px 0;
-            display: flex;
-            align-items: center;
-            font-size: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .feature-list li i {
-            color: var(--warning);
-            margin-right: 15px;
-            font-size: 1.2rem;
-        }
-
-        .register-right {
-            flex: 1;
-            padding: 60px 40px;
-            background: white;
-            min-width: 300px;
-        }
-
-        .register-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .register-header h3 {
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .register-header p {
-            color: var(--gray-corporate);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-label {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .input-group {
-            border: 2px solid var(--border-corporate);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .input-group:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(27,152,245,0.1);
-        }
-
-        .input-group-text {
-            background: #F0F7FF;
-            border: none;
-            color: var(--primary);
-            padding: 12px 15px;
-        }
-
-        .form-control {
-            border: none;
-            padding: 12px 15px;
-            font-size: 0.95rem;
-        }
-
-        .form-control:focus {
-            box-shadow: none;
-            outline: none;
-        }
-
-        .password-strength {
-            margin-top: 8px;
-            height: 4px;
-            background: var(--border-corporate);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .strength-bar {
-            height: 100%;
-            width: 0%;
-            background: #dc2626;
-            transition: 0.3s;
-        }
-
-        .terms-check {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-        }
-
-        .terms-check input {
-            margin-right: 10px;
-            accent-color: var(--primary);
-        }
-
-        .terms-check label {
-            color: var(--gray-corporate);
-            font-size: 0.9rem;
-        }
-
-        .terms-check a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .btn-register {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 8px;
-            width: 100%;
-            transition: 0.3s;
-            margin-bottom: 20px;
-        }
-
-        .btn-register:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(11,79,108,0.3);
-        }
-
-        .social-register {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .social-register p {
-            color: var(--gray-corporate);
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .social-register p::before,
-        .social-register p::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 30%;
-            height: 1px;
-            background: var(--border-corporate);
-        }
-
-        .social-register p::before {
-            left: 0;
-        }
-
-        .social-register p::after {
-            right: 0;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .social-icon {
-            width: 50px;
-            height: 50px;
-            border: 2px solid var(--border-corporate);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.3rem;
-            transition: 0.3s;
-        }
-
-        .social-icon:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .login-link {
-            text-align: center;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-corporate);
-        }
-
-        .login-link a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .register-card {
-                flex-direction: column;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                position:relative;
             }
-            
-            .register-left {
-                padding: 40px 30px;
+
+            /* Dark overlay */
+            body::before{
+                content:"";
+                position:absolute;
+                top:0;
+                left:0;
+                width:100%;
+                height:100%;
+                background:rgba(0,0,0,0.65);
+                z-index:0;
             }
-            
-            .register-right {
-                padding: 40px 30px;
+
+            .register-header{
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:12px;
+                margin-bottom:15px;
             }
-        }
-        .error{
-        color: red;
-        display:block;
-        }
-    </style>
-</head>
-<body>
-    <div class="register-wrapper">
-        <div class="register-card" data-aos="fade-up">
-            <!-- Left Side - Benefits -->
-            <div class="register-left">
-                <h2>Join RoadSide Companion</h2>
-                <p>Get instant access to India's most trusted roadside assistance network</p>
-                
-                <ul class="feature-list">
-                    <li><i class="fas fa-check-circle"></i> 24/7 Emergency Assistance</li>
-                    <li><i class="fas fa-check-circle"></i> 500+ Certified Mechanics</li>
-                    <li><i class="fas fa-check-circle"></i> Real-time Service Tracking</li>
-                    <li><i class="fas fa-check-circle"></i> Exclusive Member Discounts</li>
-                    <li><i class="fas fa-check-circle"></i> 100% Genuine Parts Warranty</li>
-                    <li><i class="fas fa-check-circle"></i> Zero Hidden Charges</li>
-                </ul>
-                
-                <div style="margin-top: 40px;">
-                    <p style="font-size: 0.9rem; opacity: 0.8;">Trusted by over 10,000+ happy customers</p>
-                    <div style="display: flex; gap: 5px;">
-                        <i class="fas fa-star" style="color: #FFA500;"></i>
-                        <i class="fas fa-star" style="color: #FFA500;"></i>
-                        <i class="fas fa-star" style="color: #FFA500;"></i>
-                        <i class="fas fa-star" style="color: #FFA500;"></i>
-                        <i class="fas fa-star" style="color: #FFA500;"></i>
-                        <span style="margin-left: 10px;">4.8/5 Rating</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right Side - Registration Form -->
-            <div class="register-right">
-                <div class="register-header">
-                    <h3>Create Account</h3>
-                    <p>Fill in your details to get started</p>
-                </div>
-                <?php 
-                if(isset($_SESSION['msg'])) {
-                    echo '<div class="alert alert-custom alert-info">' . $_SESSION['msg'] . '</div>';
-                    unset($_SESSION['msg']);
+
+            .register-header img{
+                width:80px;
+            }
+
+            .register-header h2{
+                font-family:'Orbitron',sans-serif;
+                margin:0;
+                letter-spacing:5px;
+            }
+
+
+            /* Register box (smaller) */
+            .register-box{
+                position:relative;
+                width:370px;
+                padding:28px;
+                border-radius:15px;
+                background:rgba(0,0,0,0.65);
+                backdrop-filter:blur(10px);
+                color:white;
+                text-align:center;
+                box-shadow:0 0 30px rgba(0,0,0,0.8);
+                animation:fadeIn 1.5s ease;
+            }
+
+            /* Logo smaller */
+            .logo img{
+                width:90px;
+                margin-bottom:5px;
+                animation:float 3s ease-in-out infinite;
+            }
+
+            /* Heading */
+            .register-box h2{
+                font-family:'Orbitron',sans-serif;
+                margin-bottom:15px;
+                letter-spacing:2px;
+            }
+
+            /* Input fields */
+            .form-control{
+                background:rgba(255,255,255,0.05);
+                border:1px solid rgba(255,255,255,0.2);
+                color:white;
+                height:38px;
+            }
+
+            .form-control:focus{
+                background:rgba(255,255,255,0.05);
+                border-color:#0d6efd;
+                box-shadow:0 0 8px #0d6efd;
+                color:white;
+            }
+
+            /* Password box */
+            .password-box{
+                position:relative;
+            }
+
+            .password-box input{
+                padding-right:40px;
+            }
+
+            .password-box i{
+                position:absolute;
+                right:15px;
+                top:70%;
+                transform:translateY(-50%);
+                cursor:pointer;
+                color:#ccc;
+            }
+
+            /* Reduce spacing */
+            .mb-3{
+                margin-bottom:12px !important;
+            }
+
+            /* Button */
+            .btn-blue{
+                background:#0d6efd;
+                border:none;
+                font-weight:600;
+                transition:0.3s;
+                padding:8px;
+            }
+
+            .btn-blue:hover{
+                background:#0b5ed7;
+                box-shadow:0 0 15px #0d6efd;
+                transform:scale(1.05);
+            }
+
+            /* Links */
+            .links{
+                margin-top:10px;
+                font-size:13px;
+            }
+
+            .links a{
+                color:#0d6efd;
+                text-decoration:none;
+            }
+
+            .links a:hover{
+                text-decoration:underline;
+            }
+
+            /* Animations */
+
+            @keyframes float{
+                0%{transform:translateY(0px);}
+                50%{transform:translateY(-8px);}
+                100%{transform:translateY(0px);}
+            }
+
+            @keyframes fadeIn{
+                from{
+                    opacity:0;
+                    transform:translateY(30px);
                 }
-                ?>
-                <form action="register.php" method="POST" id="regForm" onsubmit="return validate(event)">
-                    <div class="form-group">
-                        <label class="form-label">Full Name</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            <input type="text" class="form-control" placeholder="Enter your full name" name="fullname">
-                            <small class="error" id="nameError"></small>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Email Address</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            <input type="email" class="form-control" placeholder="Enter your email" name="email">
-                            <small class="error" id="emailError"></small>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Phone Number</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            <input type="tel" class="form-control" placeholder="Enter your phone number" name="phone">
-                                <small class="error" id="phoneError"></small>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" class="form-control" placeholder="Create a password" name="password">
-                            <small class="error" id="passError"></small>
-                        </div>
-                        <div class="password-strength">
-                            <div class="strength-bar" style="width: 60%; background: #20B2AA;"></div>
-                        </div>
-                        <small style="color: var(--gray-corporate);">Password strength: Strong</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Confirm Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" class="form-control" placeholder="Confirm your password" name="cpassword">
-                            <small class="error" id="cpassError"></small>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Account Type</label>
-                        <div class="d-flex gap-3">
-                            <!-- <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="administrator" value="administrator">
-                                <label class="form-check-label" for="provider">Administrator</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="customer" value="customer">
-                                <label class="form-check-label" for="customer">Customer</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="accountType" id="provider" value="provider">
-                                <label class="form-check-label" for="provider">Service Provider</label>
-                            </div> -->
-                            <select class="form-select" name="account" id="account">
-                                <option value="">--SELECT--</option>
-                                <option value="administrator">Administrator</option>
-                                <option value="customer">Customer</option>
-                                <option value="service-provider">Service-Provider</option>
-                            </select>
-                            <small class="error" id="accountError"></small>
-                        </div>
-                    </div>
-                    
-                    <div class="terms-check">
-                        <input type="checkbox" id="terms" name="terms">
-                        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
-                    </div>
-                    
-                    <button type="submit" class="btn-register">
-                        <i class="fas fa-user-plus me-2"></i>Register Now
-                    </button>
-                    
-                    <div class="social-register">
-                        <p>Or register with</p>
-                        <div class="social-icons">
-                            <a href="#" class="social-icon"><i class="fab fa-google"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="login-link">
-                        Already have an account? <a href="login.php">Login here</a>
-                    </div>
-                </form>
+                to{
+                    opacity:1;
+                    transform:translateY(0);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="register-box">
+            <div class="register-header">
+                <img src="logo.jpg.jpeg" alt="Roadside Companion Logo">
+                <h2>REGISTER</h2>
             </div>
+            <form method="POST">
+                <div class="mb-3 text-start">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3 text-start">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3 text-start password-box">
+                    <label>Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                </div>
+                <div class="mb-3 text-start password-box">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                    <i class="bi bi-eye-slash" onclick="toggleConfirmPassword()" id="eye2"></i>
+                </div>
+                <button type="submit" name="register" class="btn btn-blue w-100">Register</button>
+                <div class="links">
+                    Already have an account? <a href="login.php">Login</a>
+                </div>
+            </form>
         </div>
-    </div>
-    <script src="./jsfiles/register-validator.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ duration: 1000 });
-    </script>
-</body>
+        <script>
+            function togglePassword(){
+                let pass = document.getElementById("password");
+                let eye = document.getElementById("eye");
+
+                if(pass.type === "password"){
+                    pass.type="text";
+                    eye.classList.remove("bi-eye-slash");
+                    eye.classList.add("bi-eye");
+                }
+                else{
+                    pass.type="password";
+                    eye.classList.remove("bi-eye");
+                    eye.classList.add("bi-eye-slash");
+                }
+            }
+
+            function toggleConfirmPassword(){
+                let pass = document.getElementById("confirmPassword");
+                let eye = document.getElementById("eye2");
+
+                if(pass.type === "password"){
+                    pass.type="text";
+                    eye.classList.remove("bi-eye-slash");
+                    eye.classList.add("bi-eye");
+                }
+                else{
+                    pass.type="password";
+                    eye.classList.remove("bi-eye");
+                    eye.classList.add("bi-eye-slash");
+                }
+            }
+
+        </script>
+
+    </body>
 </html>
+
 
 <?php
 include_once 'footer.php';

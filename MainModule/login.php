@@ -24,7 +24,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     }
 }
 ?>
-<?php include_once 'header.php'; ?>
+<?php include_once 'navbar.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,197 +38,197 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     <style>
 
         body{
-        height:100vh;
-        margin:0;
-        font-family:'Poppins',sans-serif;
-        background:url('vehiclebg.png') no-repeat center center/cover;
-        display:flex;
-        justify-content:center;
-        align-items:center;
+            height:100vh;
+            margin:0;
+            font-family:'Poppins',sans-serif;
+            background:url('vehiclebg.png') no-repeat center center/cover;
+            display:flex;
+            justify-content:center;
+            align-items:center;
         }
 
         /* Dark overlay */
-        body::before{
-        content:"";
-        position:absolute;
-        width:100%;
-        height:100%;
-        background:rgba(0,0,0,0.65);
+            body::before{
+            content:"";
+            position:absolute;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.65);
         }
 
         /* Login box */
         .login-box{
-        position:relative;
-        width:360px;
-        padding:28px;
-        border-radius:15px;
-        background:rgba(0,0,0,0.65);
-        backdrop-filter:blur(10px);
-        color:white;
-        text-align:center;
-        box-shadow:0 0 30px rgba(0,0,0,0.8);
-        animation:fadeIn 1.5s ease;
+            position:relative;
+            width:360px;
+            padding:28px;
+            border-radius:15px;
+            background:rgba(0,0,0,0.65);
+            backdrop-filter:blur(10px);
+            color:white;
+            text-align:center;
+            box-shadow:0 0 30px rgba(0,0,0,0.8);
+            animation:fadeIn 1.5s ease;
         }
 
         /* Logo */
         .logo img{
-        width:90px;
-        margin-bottom:5px;
-        animation:float 3s ease-in-out infinite;
+            width:90px;
+            margin-bottom:5px;
+            animation:float 3s ease-in-out infinite;
         }
 
         /* Heading */
         .login-box h2{
-        font-family:'Orbitron',sans-serif;
-        margin-bottom:15px;
-        letter-spacing:2px;
+            font-family:'Orbitron',sans-serif;
+            margin-bottom:15px;
+            letter-spacing:2px;
         }
 
         /* Inputs */
         .form-control{
-        background:rgba(255,255,255,0.05);
-        border:1px solid rgba(255,255,255,0.2);
-        color:white;
-        height:38px;
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.2);
+            color:white;
+            height:38px;
         }
 
         /* Dropdown */
         .form-select{
-        background-color:rgba(255,255,255,0.05);
-        border:1px solid rgba(255,255,255,0.2);
-        height:38px;
+            background-color:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.2);
+            height:38px;
         }
 
 
         body{
-        height:100vh;
-        margin:0;
-        font-family:'Poppins',sans-serif;
+            height:100vh;
+            margin:0;
+            font-family:'Poppins',sans-serif;
 
-        background-image:url('image-32(2).jpg');
-        background-size:cover;
-        background-position:center;
-        background-repeat:no-repeat;
-        background-attachment:fixed;
+            background-image:url('image-32(2).jpg');
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+            background-attachment:fixed;
 
-        display:flex;
-        justify-content:center;
-        align-items:center;
+            display:flex;
+            justify-content:center;
+            align-items:center;
         }
         /* Placeholder style */
         .form-select:invalid{
-        color:#9aa0a6;
+            color:#9aa0a6;
         }
 
         /* After selecting option */
         .form-select:valid{
-        color:white;
+            color:white;
         }
 
         .login-header{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:12px;
-        margin-bottom:15px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:12px;
+            margin-bottom:15px;
         }
 
         .login-header img{
-        width:80px;
+            width:80px;
         }
 
         .login-header h2{
-        font-family:'Orbitron',sans-serif;
-        margin:0;
-        letter-spacing:5px;
+            font-family:'Orbitron',sans-serif;
+            margin:0;
+            letter-spacing:5px;
         }
 
 
         /* Dropdown options */
         .form-select option{
-        background:#111;
-        color:white;
+            background:#111;
+            color:white;
         }
 
         /* Focus */
         .form-control:focus,
         .form-select:focus{
-        background:rgba(255,255,255,0.05);
-        border-color:#0d6efd;
-        box-shadow:0 0 8px #0d6efd;
-        color:white;
+            background:rgba(255,255,255,0.05);
+            border-color:#0d6efd;
+            box-shadow:0 0 8px #0d6efd;
+            color:white;
         }
 
         /* Password box */
         .password-box{
-        position:relative;
+            position:relative;
         }
 
         .password-box input{
-        padding-right:40px;
+                padding-right:40px;
         }
 
         .password-box i{
-        position:absolute;
-        right:15px;
-        top:70%;
-        transform:translateY(-50%);
-        cursor:pointer;
-        color:#ccc;
+            position:absolute;
+            right:15px;
+            top:70%;
+            transform:translateY(-50%);
+            cursor:pointer;
+            color:#ccc;
         }
 
         /* Spacing */
         .mb-3{
-        margin-bottom:12px !important;
+            margin-bottom:12px !important;
         }
 
         /* Button */
         .btn-blue{
-        background:#0d6efd;
-        border:none;
-        font-weight:600;
-        padding:8px;
-        transition:0.3s;
+            background:#0d6efd;
+            border:none;
+            font-weight:600;
+            padding:8px;
+            transition:0.3s;
         }
 
         .btn-blue:hover{
-        background:#0b5ed7;
-        box-shadow:0 0 15px #0d6efd;
-        transform:scale(1.05);
+            background:#0b5ed7;
+            box-shadow:0 0 15px #0d6efd;
+            transform:scale(1.05);
         }
 
         /* Links */
         .links{
-        margin-top:10px;
-        font-size:13px;
+            margin-top:10px;
+            font-size:13px;
         }
 
         .links a{
-        color:#0d6efd;
-        text-decoration:none;
+            color:#0d6efd;
+            text-decoration:none;
         }
 
         .links a:hover{
-        text-decoration:underline;
+            text-decoration:underline;  
         }
 
         /* Animations */
 
         @keyframes float{
-        0%{transform:translateY(0px);}
-        50%{transform:translateY(-8px);}
-        100%{transform:translateY(0px);}
+            0%{transform:translateY(0px);}
+            50%{transform:translateY(-8px);}
+            100%{transform:translateY(0px);}
         }
 
         @keyframes fadeIn{
-        from{
-        opacity:0;
-        transform:translateY(30px);
-        }
-        to{
-        opacity:1;
-        transform:translateY(0);
-        }
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
         }
 
     </style>
