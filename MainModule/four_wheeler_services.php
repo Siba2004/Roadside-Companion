@@ -766,7 +766,7 @@ require_once '../dbcon.php';
                 <a href="service-emergency-repairs.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80" alt="Emergency Repairs">
+                            <img src="services_pics/four_wheeler_services_pics/" alt="Emergency Repairs">
                             <div class="service-badge">24/7</div>
                         </div>
                         <div class="service-card-content">
@@ -793,7 +793,7 @@ require_once '../dbcon.php';
                 <a href="service-fuel-delivery.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=600&q=80" alt="Fuel Delivery">
+                            <img src="services_pics/four_wheeler_services_pics/fuel_del.jpg" alt="Fuel Delivery">
                             <div class="service-badge">Fast</div>
                         </div>
                         <div class="service-card-content">
@@ -820,7 +820,7 @@ require_once '../dbcon.php';
                 <a href="service-flat-tyre.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80" alt="Flat Tyre">
+                            <img src="services_pics/four_wheeler_services_pics/flattyre.jpeg" alt="Flat Tyre">
                             <div class="service-badge">Popular</div>
                         </div>
                         <div class="service-card-content">
@@ -850,7 +850,7 @@ require_once '../dbcon.php';
                 <a href="service-towing.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1603745713042-00b57d8d9e2a?auto=format&fit=crop&w=600&q=80" alt="Towing Services">
+                            <img src="services_pics/four_wheeler_services_pics/towtruck.jpeg" alt="Towing Services">
                             <div class="service-badge">24/7</div>
                         </div>
                         <div class="service-card-content">
@@ -877,7 +877,7 @@ require_once '../dbcon.php';
                 <a href="service-battery.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?auto=format&fit=crop&w=600&q=80" alt="Battery Services">
+                            <img src="services_pics/four_wheeler_services_pics/battery.jpeg" alt="Battery Services">
                             <div class="service-badge">Warranty</div>
                         </div>
                         <div class="service-card-content">
@@ -904,7 +904,7 @@ require_once '../dbcon.php';
                 <a href="service-lockout.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=600&q=80" alt="Lockout Assistance">
+                            <img src="services_pics/four_wheeler_services_pics/lock.jpeg" alt="Lockout Assistance">
                             <div class="service-badge">Fast</div>
                         </div>
                         <div class="service-card-content">
@@ -934,7 +934,7 @@ require_once '../dbcon.php';
                 <a href="service-jump-start.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1619642751034-765dfdf87c9f?auto=format&fit=crop&w=600&q=80" alt="Jump Starts">
+                            <img src="services_pics/four_wheeler_services_pics/image-2.jpg" alt="Jump Starts">
                             <div class="service-badge">Instant</div>
                         </div>
                         <div class="service-card-content">
@@ -961,7 +961,7 @@ require_once '../dbcon.php';
                 <a href="service-ac.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1612825173281-9a193378527e?auto=format&fit=crop&w=600&q=80" alt="AC Service">
+                            <img src="services_pics/four_wheeler_services_pics/ac.jpeg" alt="AC Service">
                             <div class="service-badge">Seasonal</div>
                         </div>
                         <div class="service-card-content">
@@ -988,7 +988,7 @@ require_once '../dbcon.php';
                 <a href="service-oil-change.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="https://images.unsplash.com/photo-1597170346290-7e8e07a2e8de?auto=format&fit=crop&w=600&q=80" alt="Oil Change">
+                            <img src="services_pics/four_wheeler_services_pics/fuel.jpg" alt="Oil Change">
                             <div class="service-badge">Popular</div>
                         </div>
                         <div class="service-card-content">
