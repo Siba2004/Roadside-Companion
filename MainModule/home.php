@@ -2,7 +2,6 @@
 include_once 'navbar.php';
 require_once '../dbcon.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,586 +9,690 @@ require_once '../dbcon.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RoadSide Companion</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- AOS Scroll Animation -->
+    <!-- Google Fonts - Matching login/register -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* =====================
-           GLOBAL / VARIABLES
-        ===================== */
+        /* ── DESIGN TOKENS - Matching login/register ── */
         :root {
-            --primary:    #0B4F6C;
-            --accent:     #1B98F5;
-            --success:    #20B2AA;
-            --warning:    #FFA500;
-            --gray:       #4A5568;
-            --light-bg:   #F8FBFE;
-            --border:     #E2E8F0;
-            --dark-blue:  #0A2472;
+            --primary:   #0d6efd;
+            --dark-blue: #0b5ed7;
+            --accent:    #0d6efd;
+            --success:   #20B2AA;
+            --warning:   #FFA500;
+            --gray:      #rgba(255,255,255,0.8);
+            --light-bg:  transparent;
+            --border:    rgba(255,255,255,0.2);
+            --icon-bg:   rgba(13,110,253,0.1);
+            --dark-overlay: rgba(0,0,0,0.75);
         }
 
-        * { font-family: 'Montserrat', sans-serif; }
-
-        body {
-            background: var(--light-bg);
-            color: var(--gray);
-        }
-
-        /* =====================
-           NAVBAR
-        ===================== */
-        .navbar {
-            background: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 15px rgba(11, 79, 108, 0.05);
-        }
-
-        .navbar-brand {
-            font-weight: 800;
-            font-size: 1.4rem;
-            color: var(--primary) !important;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .navbar-brand i { color: var(--accent); }
-
-        .nav-link {
-            color: var(--gray) !important;
-            font-weight: 600;
-            margin: 0 10px;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-link:hover { color: var(--primary) !important; }
-
-        .btn-primary {
-            background: var(--primary);
-            border: none;
-            border-radius: 4px;
-            padding: 10px 25px;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-        }
-
-        .btn-primary:hover { background: var(--dark-blue); }
-
-        .btn-outline-primary {
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            border-radius: 4px;
-            padding: 10px 25px;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-        }
-
-        .btn-outline-primary:hover {
-            background: var(--primary);
+        /* ── BASE - Matching login/register background ── */
+        * { font-family: 'Poppins', sans-serif; }
+        
+        body { 
+            background: url('vehiclebg.png') no-repeat center center/cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
             color: white;
-        }
-
-        /* =====================
-           BANNER SLIDER
-        ===================== */
-        .banner-slider-container {
-            margin-top: 80px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            padding: 20px 0;
-        }
-
-        .banner-slider {
             position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-
-        .slider-track {
-            display: flex;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .slide { min-width: 100%; position: relative; }
-
-        .slide img {
+        
+        /* Dark overlay - exactly like login/register */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 300px;
-            object-fit: cover;
-            display: block;
+            height: 100%;
+            background: var(--dark-overlay);
+            z-index: 0;
         }
 
-        .slide-content {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, rgba(11,79,108,0.9) 0%, rgba(27,152,245,0.6) 100%);
+        /* Main container */
+        .home-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
             color: white;
+        }
+
+        /* ── NAVBAR - Matching login/register design ── */
+        .navbar { 
+            background: rgba(0,0,0,0.65); 
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.8);
+        }
+        .navbar-brand { 
+            font-weight: 600; 
+            font-size: 1.4rem; 
+            color: white !important; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            font-family: 'Orbitron', sans-serif;
             display: flex;
             align-items: center;
-            padding: 40px;
+            gap: 10px;
         }
-
-        .slide-text { max-width: 55%; }
-
-        .slide-text h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
+        .navbar-brand i { 
+            color: var(--primary); 
+            font-size: 1.8rem;
+        }
+        .nav-link { 
+            color: rgba(255,255,255,0.8) !important; 
+            font-weight: 400; 
+            margin: 0 10px; 
+            text-transform: uppercase; 
+            font-size: .85rem; 
             letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .slide-text p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 20px;
-        }
-
-        .offer-badge {
-            display: inline-block;
-            background: var(--warning);
-            color: white;
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .btn-slide {
-            background: white;
-            color: var(--primary);
-            border: none;
-            padding: 10px 25px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 4px;
-            cursor: pointer;
             transition: 0.3s;
         }
+        .nav-link:hover { 
+            color: var(--primary) !important; 
+            transform: translateY(-2px);
+        }
 
-        .btn-slide:hover {
-            background: var(--warning);
+        /* ── BUTTONS - Matching login/register ── */
+        .btn-primary { 
+            background: var(--primary); 
+            border: none; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            font-size: .85rem; 
+            letter-spacing: 1px;
+            padding: 8px 20px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .btn-primary:hover { 
+            background: var(--dark-blue); 
+            box-shadow: 0 0 15px var(--primary);
+            transform: scale(1.05);
+        }
+        .btn-outline-primary { 
+            border: 2px solid var(--primary); 
+            color: white; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            font-size: .85rem; 
+            letter-spacing: 1px;
+            background: transparent;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .btn-outline-primary:hover { 
+            background: var(--primary); 
+            color: white; 
+            box-shadow: 0 0 15px var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* ── BANNER SLIDER - Matching glassmorphism ── */
+        .banner-wrap { 
+            margin-top: 90px; 
+            background: transparent; 
+            padding: 40px 0; 
+        }
+        .slider { 
+            position: relative; 
+            max-width: 1380px; 
+            margin: 0 auto; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .slider-track { 
+            display: flex; 
+            transition: transform .3s ease-in-out; 
+        }
+
+        /* Each slide */
+        .slide { 
+            min-width: 100%; 
+            position: relative; 
+        }
+        .slide img { 
+            width: 100%; 
+            height: 400px; 
+            object-fit: cover; 
+            display: block; 
+        }
+
+        /* For Emergency slide */
+.slide:nth-child(1) img {
+    object-position: 60% center;
+}
+
+/* For Battery slide */
+.slide:nth-child(2) img {
+    object-position: 80% center;
+}
+
+/* For Fuel slide */
+.slide:nth-child(3) img {
+    object-position: 55% center;
+}
+
+/* For Flat Tyre slide */
+.slide:nth-child(4) img {
+    object-position: 90% center;
+}
+
+/* For Towing slide */
+.slide:nth-child(5) img {
+    object-position: 60% center;
+}
+        .slide-overlay {
+            position: absolute; 
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(0px);
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            padding: 80px;
+        }
+        .slide-text { 
+            max-width: 55%; 
+        }
+        .slide-text h2 { 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin-bottom: 10px; 
+            color: white;
+        }
+        .slide-text p  { 
+            font-size: 1.1rem; 
+            opacity: .9; 
+            margin-bottom: 20px; 
+            color: rgba(255,255,255,0.9);
+        }
+
+        .badge-offer { 
+            display: inline-block; 
+            background: var(--warning); 
+            color: white; 
+            padding: 6px 18px; 
+            border-radius: 30px; 
+            font-weight: 700; 
+            margin-bottom: 15px; 
+        }
+        .btn-slide { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 10px 25px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: .3s; 
+        }
+        .btn-slide:hover { 
+            background: var(--dark-blue); 
+            box-shadow: 0 0 15px var(--primary);
+            transform: scale(1.05);
             color: white;
         }
 
-        .slide-icon {
-            position: absolute;
-            right: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 10rem;
-            color: rgba(255,255,255,0.2);
+        /* Decorative icon */
+        .slide-icon { 
+            position: absolute; 
+            right: 60px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            font-size: 10rem; 
+            color: rgba(255,255,255,.1); 
+            pointer-events: none; 
         }
 
-        .slider-dots {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 10;
+        /* Dots, arrows, progress */
+        .slider-dots { 
+            position: absolute; 
+            bottom: 15px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            display: flex; 
+            gap: 8px; 
+            z-index: 10; 
         }
-
-        .dot {
-            width: 11px;
-            height: 11px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
+        .dot { 
+            width: 11px; 
+            height: 11px; 
+            background: rgba(255,255,255,.3); 
+            border-radius: 50%; 
+            cursor: pointer; 
+            transition: .3s; 
         }
-
-        .dot.active {
-            background: white;
+        .dot.active { 
+            background: var(--primary); 
             transform: scale(1.2);
+            box-shadow: 0 0 10px var(--primary);
         }
 
-        .slider-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 38px;
-            height: 38px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            cursor: pointer;
-            z-index: 10;
-            transition: 0.3s;
+        .slider-arrow { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            width: 38px; 
+            height: 38px; 
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            cursor: pointer; 
+            z-index: 10; 
+            transition: .3s; 
+            border: 1px solid rgba(255,255,255,0.2);
         }
-
-        .slider-arrow:hover { background: white; color: var(--primary); }
+        .slider-arrow:hover { 
+            background: var(--primary); 
+            color: white; 
+        }
         .slider-arrow.left  { left: 15px; }
         .slider-arrow.right { right: 15px; }
 
-        .slider-progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            z-index: 10;
+        .slider-progress { 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 4px; 
+            background: rgba(255,255,255,.1); 
+            z-index: 10; 
+        }
+        .progress-fill   { 
+            height: 100%; 
+            background: var(--primary); 
+            width: 0%; 
+            box-shadow: 0 0 10px var(--primary);
         }
 
-        .progress-fill {
-            height: 100%;
-            background: var(--warning);
-            width: 0%;
-        }
+        
 
-        /* =====================
-           SECTION COMMON
-        ===================== */
-        section { padding: 70px 0; }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .section-subtitle {
-            color: var(--gray);
-            margin-bottom: 40px;
-        }
-
-        /* =====================
-           SERVICE CARDS
-        ===================== */
-        .service-card {
-            background: white;
-            padding: 35px;
-            border: 1px solid var(--border);
+        /* ── SHARED SECTION HEADINGS ── */
+        section { 
+            padding: 35px 0; 
             position: relative;
-            height: 100%;
+        }
+        .section-title    { 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem; 
+            font-weight: 700; 
+            color: white; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin-bottom: 10px; 
+            text-shadow: 0 0 10px rgba(13,110,253,0.3);
+        }
+        .section-subtitle { 
+            color: rgba(255,255,255,0.8); 
+            margin-bottom: 40px; 
+        }
+
+        /* ── ICON SHARED ── */
+        .icon-box { 
+            width: 58px; 
+            height: 58px; 
+            background: rgba(13,110,253,0.1); 
+            border: 2px solid var(--primary);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 18px; 
+            border-radius: 5px;
             transition: 0.3s;
         }
-
-        .service-card:hover { border-color: var(--accent); box-shadow: 0 10px 30px rgba(11,79,108,0.08); }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 3px;
-            height: 0;
-            background: var(--accent);
-            transition: 0.3s;
+        .icon-box i { 
+            font-size: 1.5rem; 
+            color: var(--primary); 
         }
 
-        .service-card:hover::before { height: 100%; }
 
-        .service-icon {
-            width: 55px;
-            height: 55px;
-            background: #F0F7FF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+
+/* ── SERVICE CARDS - Glassmorphism ── */
+        .service-card { 
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(10px);
+            padding: 35px; 
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            height: 100%; 
+            transition: .3s; 
+            position: relative; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+        .service-card:hover { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 30px rgba(13,110,253,0.3);
+            transform: translateY(-5px);
         }
 
-        .service-icon i { font-size: 1.6rem; color: var(--accent); }
+        /* Service Image*/
+.service-image {
+    max-height: 300px;
+    width: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(13,110,253,0.3);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
 
-        .service-title {
-            color: var(--primary);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+.service-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(13,110,253,0.5);
+}
+
+.service-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.service-header .icon-box {
+    margin-right: 10px;
+}
+
+/* Clickable card styles */
+.clickable-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.clickable-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 30px rgba(181, 184, 188, 0.4);
+}
+
+/* Ensure link doesn't affect text colors */
+a .card-title,
+a .check-list li,
+a .check-list li i {
+    color: white;
+}
+
+a .check-list li i {
+    color: var(--primary);
+}
+
+/* Optional: Add a subtle indicator */
+.clickable-card::after {
+    content: '↗';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.2rem;
+    color: var(--primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.clickable-card:hover::after {
+    opacity: 0.7;
+}
+
+
+
+        /* Animated left border */
+        .service-card::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 3px; 
+            height: 0; 
+            background: var(--primary); 
+            transition: .3s;
+            border-radius: 15px 0 0 15px;
+        }
+        .service-card:hover::before { 
+            height: 100%; 
+            box-shadow: 0 0 15px var(--primary);
         }
 
-        .service-list { list-style: none; padding: 0; }
-
-        .service-list li {
-            padding: 5px 0;
-            display: flex;
-            align-items: center;
-            font-size: 0.9rem;
+        .card-title { 
+            color: white; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            font-size: 1rem; 
+            letter-spacing: 1px; 
+            margin-bottom: 15px; 
         }
 
-        .service-list li i { color: var(--success); margin-right: 10px; }
-
-        /* =====================
-           FEATURE CARDS (Why Choose Us)
-        ===================== */
-        .feature-card {
-            text-align: center;
-            padding: 30px 20px;
-            background: white;
-            border: 1px solid var(--border);
-            height: 100%;
-            transition: 0.2s;
+        .check-list { 
+            list-style: none; 
+            padding: 0; 
+        }
+        .check-list li { 
+            padding: 5px 0; 
+            display: flex; 
+            align-items: center; 
+            font-size: .9rem; 
+            color: rgba(255,255,255,0.9);
+        }
+        .check-list li i { 
+            color: var(--primary); 
+            margin-right: 10px; 
         }
 
-        .feature-card:hover { border-color: var(--accent); background: var(--light-bg); }
-
-        .feature-icon {
-            width: 65px;
-            height: 65px;
-            background: #F0F7FF;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 1.6rem;
-            color: var(--accent);
+        /* ── ASSIST CARDS - Glassmorphism ── */
+        .assist-card { 
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px 25px; 
+            height: 100%; 
+            position: relative; 
+            overflow: hidden; 
+            transition: transform .3s, box-shadow .3s, border-color .3s; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+        .assist-card::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 0; 
+            height: 3px; 
+            background: var(--primary); 
+            transition: width .35s; 
+            box-shadow: 0 0 15px var(--primary);
+        }
+        .assist-card:hover { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 30px rgba(13,110,253,0.3); 
+            transform: translateY(-5px); 
+        }
+        .assist-card:hover::after { 
+            width: 100%; 
+        }
+        .assist-card:hover .icon-box { 
+            background: var(--primary); 
+            border-color: var(--primary); 
+        }
+        .assist-card:hover .icon-box i { 
+            color: white; 
+        }
+        .assist-card .icon-box { 
+            transition: background .3s, border-color .3s; 
+        }
+        .assist-card .icon-box i { 
+            transition: color .3s; 
+        }
+        .assist-card p {
+            color: rgba(255,255,255,0.8);
         }
 
-        .feature-title {
-            color: var(--primary);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
+        /* ── FEATURE CARDS (Why Choose Us) ── */
+        .feature-card { 
+            text-align: center; 
+            padding: 30px 20px; 
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            height: 100%; 
+            transition: .3s; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+        .feature-card:hover { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 30px rgba(13,110,253,0.3);
+            transform: translateY(-5px);
+        }
+        .feature-card .icon-box { 
+            margin: 0 auto 20px; 
+        }
+        .feature-card p {
+            color: rgba(255,255,255,0.8);
         }
 
-        /* =====================
-           ✅ NEW: ASSIST CARDS
-           Used in Emergency & Tracking sections
-        ===================== */
-        .assist-card {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 30px 25px;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        /* ── REVIEW CARDS ── */
+        .review-card { 
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(10px);
+            padding: 30px; 
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            text-align: center; 
+            height: 100%; 
+            transition: .3s; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+        .review-card:hover { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 30px rgba(13,110,253,0.3);
+            transform: translateY(-5px);
+        }
+        .reviewer-img  { 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            margin-bottom: 10px; 
+            border: 2px solid var(--primary);
+        }
+        .review-stars  { 
+            color: var(--warning); 
+            margin-bottom: 10px; 
+        }
+        .reviewer-name { 
+            color: white; 
+            font-weight: 600; 
+            font-size: .85rem; 
+            text-transform: uppercase; 
+            margin-bottom: 2px; 
+        }
+        .reviewer-role { 
+            font-size: .8rem; 
+            color: rgba(255,255,255,0.7); 
+        }
+        .review-card p {
+            color: rgba(255,255,255,0.9);
         }
 
-        /* Animated bottom border on hover — matches the left-border effect on service-card */
-        .assist-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 0;
-            height: 3px;
-            background: var(--accent);
-            transition: width 0.35s ease;
-        }
-
-        .assist-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 8px 25px rgba(11,79,108,0.09);
-            transform: translateY(-4px);
-        }
-
-        .assist-card:hover::after { width: 100%; }
-
-        .assist-icon {
-            width: 58px;
-            height: 58px;
-            background: #F0F7FF;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 18px;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
-        .assist-icon i {
-            font-size: 1.45rem;
-            color: var(--accent);
-            transition: color 0.3s;
-        }
-
-        /* Icon flips to white on hover — matches service-card color shift */
-        .assist-card:hover .assist-icon {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .assist-card:hover .assist-icon i { color: white; }
-
-        .assist-title {
-            color: var(--primary);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.88rem;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .assist-text {
-            font-size: 0.875rem;
-            color: var(--gray);
-            line-height: 1.65;
-            margin: 0;
-        }
-
-        /* =====================
-           REVIEW CARDS
-        ===================== */
-        .review-card {
-            background: white;
-            padding: 30px;
-            border: 1px solid var(--border);
-            text-align: center;
-            height: 100%;
-            transition: 0.2s;
-        }
-
-        .review-card:hover { border-color: var(--accent); background: var(--light-bg); }
-
-        .reviewer-img {
-            width: 60px;
-            height: 60px;
+        /* ── SOS BUTTON ── */
+        .sos-btn { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            width: 70px; 
+            height: 70px; 
+            background: #DC2626; 
+            border: none; 
             border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            font-weight: 700; 
+            font-size: .6rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            box-shadow: 0 5px 20px rgba(220,38,38,.4); 
+            z-index: 999; 
+            cursor: pointer; 
+            transition: .2s; 
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .sos-btn i { 
+            font-size: 1.5rem; 
+            margin-bottom: 3px; 
+        }
+        .sos-btn:hover { 
+            background: #B91C1C; 
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(220,38,38,0.6);
         }
 
-        .review-rating { color: var(--warning); margin-bottom: 10px; }
-        .review-text   { font-size: 0.9rem; margin-bottom: 15px; }
-
-        .reviewer-name {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            margin-bottom: 2px;
+        /* About section text */
+        .text-muted {
+            color: rgba(255,255,255,0.8) !important;
         }
-
-        .reviewer-role { font-size: 0.8rem; color: var(--gray); }
-
-        /* =====================
-           SOS BUTTON (fixed)
-        ===================== */
-        .sos-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
-            background: #DC2626;
-            border: none;
-            border-radius: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .lead {
             color: white;
-            font-weight: 700;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 20px rgba(220,38,38,0.4);
-            z-index: 999;
-            cursor: pointer;
-            transition: 0.2s;
+        }
+        .position-absolute small {
+            color: rgba(255,255,255,0.8) !important;
         }
 
-        .sos-btn i     { font-size: 1.5rem; margin-bottom: 3px; }
-        .sos-btn:hover { background: #B91C1C; transform: scale(1.05); }
-
-        /* =====================
-           FOOTER
-        ===================== */
-        .footer {
-            background: var(--primary);
-            color: white;
-            padding: 60px 0 30px;
-            border-top: 4px solid var(--accent);
-        }
-
-        .footer-title {
-            color: white;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            position: relative;
-        }
-
-        .footer-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 35px;
-            height: 2px;
-            background: var(--accent);
-        }
-
-        .footer-links { list-style: none; padding: 0; }
-        .footer-links li { margin-bottom: 10px; }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.75);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: 0.2s;
-        }
-
-        .footer-links a:hover { color: white; padding-left: 5px; }
-
-        .social-links { display: flex; gap: 10px; }
-
-        .social-links a {
-            width: 36px;
-            height: 36px;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        .social-links a:hover { background: var(--accent); transform: translateY(-2px); }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 40px;
-            padding-top: 20px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* =====================
-           RESPONSIVE
-        ===================== */
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .slide img       { height: 200px; }
-            .slide-content   { padding: 20px; }
-            .slide-text      { max-width: 100%; }
-            .slide-text h2   { font-size: 1.4rem; }
-            .slide-icon      { display: none; }
+            .slide img     { height: 200px; }
+            .slide-overlay { padding: 20px; }
+            .slide-text    { max-width: 100%; }
+            .slide-text h2 { font-size: 1.4rem; }
+            .slide-icon    { display: none; }
+        }
+
+        /* Animation for logo - matching login/register */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .navbar-brand i {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Additional matching styles */
+        .bg-white {
+            background: rgba(0,0,0,0.8) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+        .shadow-lg {
+            box-shadow: 0 0 30px rgba(0,0,0,0.8) !important;
+        }
+        .fw-bold {
+            color: white;
         }
     </style>
 </head>
 <body>
-
-<!-- ============================================================
-     NAVBAR
-============================================================ -->
+<div class="home-container">
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#">
@@ -614,80 +717,79 @@ require_once '../dbcon.php';
     </div>
 </nav>
 
-<!-- ============================================================
-     BANNER SLIDER
-============================================================ -->
-<div class="banner-slider-container">
-    <div class="container-fluid px-4">
-        <div class="banner-slider">
+<!-- BANNER SLIDER -->
+<div class="banner-wrap">
+    <div class="container-fluid px-5">
+        <div class="slider">
+
             <div class="slider-track" id="sliderTrack">
 
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=1600&q=80" alt="Emergency Service">
-                    <div class="slide-content">
+                    <img src="pic\image-2.jpg" alt="Emergency Service">
+                    <div class="slide-overlay">
                         <div class="slide-text">
-                            <span class="offer-badge">🎉 FLAT 30% OFF</span>
+                            <span class="badge-offer">🎉 FLAT 30% OFF</span>
                             <h2>Emergency<br>Roadside Service</h2>
                             <p>24/7 assistance at your fingertips. First service at 30% off!</p>
                             <button class="btn-slide">Book Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <i class="fas fa-ambulance slide-icon"></i>
+        
                     </div>
                 </div>
 
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?auto=format&fit=crop&w=1600&q=80" alt="Battery Service">
-                    <div class="slide-content">
+                    <img src="pic\battery.jpg" alt="Battery Service">
+                    <div class="slide-overlay">
                         <div class="slide-text">
-                            <span class="offer-badge">⚡ 20% OFF</span>
+                            <span class="badge-offer">⚡ 20% OFF</span>
                             <h2>Battery<br>Boosting Service</h2>
                             <p>Jump start or replace battery. Get 20% off on battery service.</p>
                             <button class="btn-slide">Avail Offer <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <i class="fas fa-car-battery slide-icon"></i>
+                       
                     </div>
                 </div>
 
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1591886960571-74d43a9d4166?auto=format&fit=crop&w=1600&q=80" alt="Fuel Delivery">
-                    <div class="slide-content">
+                    <img src="pic/fuel.jpg" alt="Fuel Delivery">
+                    <div class="slide-overlay">
                         <div class="slide-text">
-                            <span class="offer-badge">⛽ FREE DELIVERY</span>
+                            <span class="badge-offer">⛽ FREE DELIVERY</span>
                             <h2>Emergency<br>Fuel Delivery</h2>
                             <p>Running out of fuel? Get free delivery on your first order.</p>
                             <button class="btn-slide">Order Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <i class="fas fa-gas-pump slide-icon"></i>
+                       
                     </div>
                 </div>
 
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1600&q=80" alt="Flat Tyre">
-                    <div class="slide-content">
+                    <img src="pic/flattyre.jpg" alt="Flat Tyre">
+                    <div class="slide-overlay">
                         <div class="slide-text">
-                            <span class="offer-badge">🛞 25% OFF</span>
+                            <span class="badge-offer">🛞 25% OFF</span>
                             <h2>Flat Tyre<br>Assistance</h2>
                             <p>Quick tyre change or repair. Special discount for members.</p>
                             <button class="btn-slide">Get Help <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <i class="fas fa-circle slide-icon"></i>
+                       
                     </div>
                 </div>
 
                 <div class="slide">
-                    <img src="https://images.unsplash.com/photo-1603745713042-00b57d8d9e2a?auto=format&fit=crop&w=1600&q=80" alt="Towing">
-                    <div class="slide-content">
+                    <img src="pic/tow.jpg" alt="Towing">
+                    <div class="slide-overlay">
                         <div class="slide-text">
-                            <span class="offer-badge">🚛 SAVE 40%</span>
+                            <span class="badge-offer">🚛 SAVE 40%</span>
                             <h2>Towing<br>Services</h2>
                             <p>Professional towing at best prices. Limited period offer.</p>
                             <button class="btn-slide">Call Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                        <i class="fas fa-truck slide-icon"></i>
+                       
                     </div>
                 </div>
 
-            </div>
+            </div><!-- /slider-track -->
 
             <div class="slider-dots" id="sliderDots">
                 <span class="dot active"></span>
@@ -703,218 +805,221 @@ require_once '../dbcon.php';
             <div class="slider-progress">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-        </div>
+
+        </div><!-- /slider -->
     </div>
 </div>
 
-<!-- ============================================================
-     SERVICES SECTION
-============================================================ -->
+<!-- SERVICES -->
 <section id="services">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
             <h2 class="section-title">Our Services</h2>
             <p class="section-subtitle">Comprehensive roadside assistance for all vehicle types</p>
         </div>
-
-        <div class="row g-4">
-            <!-- Four Wheelers -->
+        <div class="row g-4 align-items-stretch">
             <div class="col-lg-6" data-aos="fade-right">
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-car"></i></div>
-                    <h3 class="service-title">Four Wheeler Services</h3>
-                    <ul class="service-list row">
-                        <div class="col-md-6">
-                            <li><i class="fas fa-check-circle"></i> Emergency Repairs</li>
-                            <li><i class="fas fa-check-circle"></i> Fuel Delivery</li>
-                            <li><i class="fas fa-check-circle"></i> Flat Tyre</li>
-                            <li><i class="fas fa-check-circle"></i> Towing Services</li>
+                <a href="four_wheeler_services.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="service-card clickable-card">
+                        <div class="text-center">
+                            <img src="pic/car.jpeg" 
+                                 alt="Four Wheeler" 
+                                 class="service-image">
+                            <div class="service-header">
+                                <h3 class="card-title">Four Wheeler Services</h3>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <li><i class="fas fa-check-circle"></i> Battery Services</li>
-                            <li><i class="fas fa-check-circle"></i> Lockout Assistance</li>
-                            <li><i class="fas fa-check-circle"></i> Jump Starts</li>
-                            <li><i class="fas fa-check-circle"></i> AC Service</li>
-                        </div>
-                    </ul>
-                </div>
+                        <ul class="check-list row">
+                            <div class="col-md-6">
+                                <li><i class="fas fa-check-circle"></i> Emergency Repairs</li>
+                                <li><i class="fas fa-check-circle"></i> Fuel Delivery</li>
+                                <li><i class="fas fa-check-circle"></i> Flat Tyre</li>
+                                <li><i class="fas fa-check-circle"></i> Towing Services</li>
+                            </div>
+                            <div class="col-md-6">
+                                <li><i class="fas fa-check-circle"></i> Battery Services</li>
+                                <li><i class="fas fa-check-circle"></i> Lockout Assistance</li>
+                                <li><i class="fas fa-check-circle"></i> Jump Starts</li>
+                                <li><i class="fas fa-check-circle"></i> AC Service</li>
+                            </div>
+                        </ul>
+                    </div>
+                </a>
             </div>
 
-            <!-- Two Wheelers -->
             <div class="col-lg-6" data-aos="fade-left">
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-motorcycle"></i></div>
-                    <h3 class="service-title">Two Wheeler Services</h3>
-                    <ul class="service-list row">
-                        <div class="col-md-6">
-                            <li><i class="fas fa-check-circle"></i> Emergency Repairs</li>
-                            <li><i class="fas fa-check-circle"></i> Fuel Delivery</li>
-                            <li><i class="fas fa-check-circle"></i> Flat Tyre</li>
-                            <li><i class="fas fa-check-circle"></i> Towing Services</li>
+                <a href="two_wheeler_services.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="service-card clickable-card">
+                        <div class="text-center">
+                            <img src="pic/bike.jpeg" 
+                                 alt="Two Wheeler" 
+                                 class="service-image">
+                            <div class="service-header">
+                                <h3 class="card-title">Two Wheeler Services</h3>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <li><i class="fas fa-check-circle"></i> Battery Boosting</li>
-                            <li><i class="fas fa-check-circle"></i> Parts Replacement</li>
-                            <li><i class="fas fa-check-circle"></i> Chain Repair</li>
-                            <li><i class="fas fa-check-circle"></i> Brake Service</li>
-                        </div>
-                    </ul>
-                </div>
+                        <ul class="check-list row">
+                            <div class="col-md-6">
+                                <li><i class="fas fa-check-circle"></i> Emergency Repairs</li>
+                                <li><i class="fas fa-check-circle"></i> Fuel Delivery</li>
+                                <li><i class="fas fa-check-circle"></i> Flat Tyre</li>
+                                <li><i class="fas fa-check-circle"></i> Towing Services</li>
+                            </div>
+                            <div class="col-md-6">
+                                <li><i class="fas fa-check-circle"></i> Battery Boosting</li>
+                                <li><i class="fas fa-check-circle"></i> Parts Replacement</li>
+                                <li><i class="fas fa-check-circle"></i> Chain Repair</li>
+                                <li><i class="fas fa-check-circle"></i> Brake Service</li>
+                            </div>
+                        </ul>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
 </section>
-
-<!-- ============================================================
-     ✅ NEW SECTION 1 — EMERGENCY ROADSIDE ASSISTANCE
-     Background: white (alternates with the light-bg of Our Services)
-============================================================ -->
-<section id="emergency-assistance" style="background: white;">
+<!-- EMERGENCY ROADSIDE ASSISTANCE -->
+<section id="emergency-assistance">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
             <h2 class="section-title">Emergency Roadside Assistance</h2>
             <p class="section-subtitle">Rapid on-ground help when you need it most — day or night</p>
         </div>
-
         <div class="row g-4">
+
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
                 <div class="assist-card">
-                    <div class="assist-icon"><i class="fas fa-tools"></i></div>
-                    <h4 class="assist-title">On-Site Repairs</h4>
-                    <p class="assist-text">Minor mechanical issues fixed right at your breakdown spot — no garage visit needed.</p>
+                    <div class="icon-box"><i class="fas fa-tools"></i></div>
+                    <h4 class="card-title">On-Site Repairs</h4>
+                    <p class="small">Minor mechanical issues fixed right at your breakdown spot — no garage visit needed.</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
                 <div class="assist-card">
-                    <div class="assist-icon"><i class="fas fa-truck-pickup"></i></div>
-                    <h4 class="assist-title">Towing Service</h4>
-                    <p class="assist-text">Safe and swift towing to the nearest verified garage or your preferred service centre.</p>
+                    <div class="icon-box"><i class="fas fa-truck-pickup"></i></div>
+                    <h4 class="card-title">Towing Service</h4>
+                    <p class="small">Safe and swift towing to the nearest verified garage or your preferred service centre.</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
                 <div class="assist-card">
-                    <div class="assist-icon"><i class="fas fa-car-battery"></i></div>
-                    <h4 class="assist-title">Battery Jump Start</h4>
-                    <p class="assist-text">Instant battery boosting or on-spot replacement so you're back on the road in minutes.</p>
+                    <div class="icon-box"><i class="fas fa-car-battery"></i></div>
+                    <h4 class="card-title">Battery Jump Start</h4>
+                    <p class="small">Instant battery boosting or on-spot replacement so you're back on the road in minutes.</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
                 <div class="assist-card">
-                    <div class="assist-icon"><i class="fas fa-gas-pump"></i></div>
-                    <h4 class="assist-title">Fuel Delivery</h4>
-                    <p class="assist-text">Stranded with an empty tank? We deliver fuel directly to your location — fast and hassle-free.</p>
+                    <div class="icon-box"><i class="fas fa-gas-pump"></i></div>
+                    <h4 class="card-title">Fuel Delivery</h4>
+                    <p class="small">Stranded with an empty tank? We deliver fuel directly to your location — fast and hassle-free.</p>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
 
-<!-- ============================================================
-     ✅ NEW SECTION 2 — REAL-TIME TRACKING & SUPPORT
-     Background: light-bg (alternates back for visual rhythm)
-============================================================ -->
-<section id="tracking-support" style="background: var(--light-bg);">
+<!-- REAL-TIME TRACKING & SUPPORT -->
+<section id="tracking-support">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
             <h2 class="section-title">Real-Time Tracking & Support</h2>
             <p class="section-subtitle">Smart technology that keeps you informed, safe, and in control</p>
         </div>
-
         <div class="row g-4">
+
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
                 <div class="assist-card">
-                    <div class="assist-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <h4 class="assist-title">Live Location Tracking</h4>
-                    <p class="assist-text">Track your assigned mechanic on a live map and get accurate ETA updates in real time.</p>
+                    <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                    <h4 class="card-title">Live Location Tracking</h4>
+                    <p class="small">Track your assigned mechanic on a live map and get accurate ETA updates in real time.</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
                 <div class="assist-card">
-                    <div class="assist-icon"><i class="fas fa-headset"></i></div>
-                    <h4 class="assist-title">24/7 Helpline</h4>
-                    <p class="assist-text">Round-the-clock support via call, chat, or app — a trained agent is always ready to assist.</p>
+                    <div class="icon-box"><i class="fas fa-headset"></i></div>
+                    <h4 class="card-title">24/7 Helpline</h4>
+                    <p class="small">Round-the-clock support via call, chat, or app — a trained agent is always ready to assist.</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
                 <div class="assist-card">
-                    <div class="assist-icon"><i class="fas fa-search-location"></i></div>
-                    <h4 class="assist-title">Nearest Garage Finder</h4>
-                    <p class="assist-text">Instantly locate the closest verified and rated service centre near your breakdown spot.</p>
+                    <div class="icon-box"><i class="fas fa-search-location"></i></div>
+                    <h4 class="card-title">Nearest Garage Finder</h4>
+                    <p class="small">Instantly locate the closest verified and rated service centre near your breakdown spot.</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
                 <div class="assist-card">
-                    <div class="assist-icon"><i class="fas fa-clipboard-list"></i></div>
-                    <h4 class="assist-title">Service History Logs</h4>
-                    <p class="assist-text">Access a full record of all past breakdowns, repairs, and service costs — anytime, anywhere.</p>
+                    <div class="icon-box"><i class="fas fa-clipboard-list"></i></div>
+                    <h4 class="card-title">Service History Logs</h4>
+                    <p class="small">Access a full record of all past breakdowns, repairs, and service costs — anytime, anywhere.</p>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
 
-<!-- ============================================================
-     WHY CHOOSE US SECTION
-============================================================ -->
-<section id="why-us" style="background: white;">
+<!-- WHY CHOOSE US -->
+<section id="why-us">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
             <h2 class="section-title">Why Choose Us?</h2>
             <p class="section-subtitle">We provide the best roadside assistance experience</p>
         </div>
-
         <div class="row g-4">
+
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="100">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                    <h4 class="feature-title">Faster Service</h4>
+                    <div class="icon-box"><i class="fas fa-bolt"></i></div>
+                    <h4 class="card-title">Faster Service</h4>
                     <p class="small">Average response time under 20 minutes with real-time tracking</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-medal"></i></div>
-                    <h4 class="feature-title">Quality Services</h4>
+                    <div class="icon-box"><i class="fas fa-medal"></i></div>
+                    <h4 class="card-title">Quality Services</h4>
                     <p class="small">Certified mechanics and verified service providers</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="300">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-car-battery"></i></div>
-                    <h4 class="feature-title">Genuine Parts</h4>
+                    <div class="icon-box"><i class="fas fa-car-battery"></i></div>
+                    <h4 class="card-title">Genuine Parts</h4>
                     <p class="small">100% authentic spare parts with warranty</p>
                 </div>
             </div>
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="400">
                 <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-tag"></i></div>
-                    <h4 class="feature-title">Affordable Prices</h4>
+                    <div class="icon-box"><i class="fas fa-tag"></i></div>
+                    <h4 class="card-title">Affordable Prices</h4>
                     <p class="small">Transparent pricing with no hidden charges</p>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
 
-<!-- ============================================================
-     REVIEWS SECTION
-============================================================ -->
+<!-- REVIEWS -->
 <section id="reviews">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
             <h2 class="section-title">What Our Customers Say</h2>
             <p class="section-subtitle">Trusted by thousands of happy customers</p>
         </div>
-
         <div class="row g-4">
+
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="review-card">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Kumar" class="reviewer-img">
-                    <div class="review-rating">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="review-text">"My car broke down on the highway and they reached within 15 minutes. Fixed the issue quickly and charged a fair price."</p>
+                    <p class="small mb-3">"My car broke down on the highway and they reached within 15 minutes. Fixed the issue quickly and charged a fair price."</p>
                     <h5 class="reviewer-name">Rajesh Kumar</h5>
                     <p class="reviewer-role">Car Owner</p>
                 </div>
@@ -923,11 +1028,10 @@ require_once '../dbcon.php';
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="review-card">
                     <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma" class="reviewer-img">
-                    <div class="review-rating">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="review-text">"Battery boosting service for my bike was super quick. The mechanic was professional and even checked other parts. Highly recommended!"</p>
+                    <p class="small mb-3">"Battery boosting service for my bike was super quick. The mechanic was professional and even checked other parts. Highly recommended!"</p>
                     <h5 class="reviewer-name">Priya Sharma</h5>
                     <p class="reviewer-role">Bike Rider</p>
                 </div>
@@ -936,38 +1040,31 @@ require_once '../dbcon.php';
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                 <div class="review-card">
                     <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Amit Patel" class="reviewer-img">
-                    <div class="review-rating">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    <div class="review-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                     </div>
-                    <p class="review-text">"Fuel delivery service saved me during a late-night emergency. Easy to use and transparent pricing. Will definitely use again."</p>
+                    <p class="small mb-3">"Fuel delivery service saved me during a late-night emergency. Easy to use and transparent pricing. Will definitely use again."</p>
                     <h5 class="reviewer-name">Amit Patel</h5>
                     <p class="reviewer-role">SUV Owner</p>
                 </div>
             </div>
-        </div>
 
+        </div>
         <div class="text-center mt-5" data-aos="fade-up">
-            <a href="#" class="btn btn-outline-primary btn-lg">
-                View All Reviews <i class="fas fa-arrow-right ms-2"></i>
-            </a>
+            <a href="#" class="btn btn-outline-primary btn-lg">View All Reviews <i class="fas fa-arrow-right ms-2"></i></a>
         </div>
     </div>
 </section>
 
-<!-- ============================================================
-     ABOUT SECTION
-============================================================ -->
-<section id="about" style="background: white;">
+<!-- ABOUT -->
+<section id="about">
     <div class="container">
         <div class="row align-items-center g-5">
+
             <div class="col-lg-6" data-aos="fade-right">
                 <h2 class="section-title">About RoadSide Companion</h2>
                 <p class="lead mb-3">We're on a mission to make roadside assistance accessible, reliable, and affordable for everyone.</p>
-                <p class="text-muted mb-4">
-                    Founded in 2024, RoadSide Companion connects stranded motorists with professional mechanics
-                    and service providers within minutes — ensuring you're never alone on the road.
-                </p>
+                <p class="text-muted mb-4">Founded in 2024, RoadSide Companion connects stranded motorists with professional mechanics and service providers within minutes — ensuring you're never alone on the road.</p>
                 <div class="row g-3">
                     <div class="col-6 d-flex align-items-center">
                         <i class="fas fa-users fa-2x text-primary me-3"></i>
@@ -985,50 +1082,49 @@ require_once '../dbcon.php';
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="position-relative">
-                    <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=1170&q=80"
-                         alt="About Us" class="img-fluid rounded-4 shadow-lg">
-                    <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow m-3">
+                    <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=1170&q=80" alt="About Us" class="img-fluid rounded-4 shadow-lg" style="border: 1px solid rgba(255,255,255,0.1);">
+                    <!-- Emergency callout badge -->
+                    <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow m-3" style="background: rgba(0,0,0,0.8) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
                         <div class="d-flex align-items-center">
-                            <div style="width:45px;height:45px;background:#FF6B6B;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;" class="me-3">
+                            <div style="width:45px;height:45px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;" class="me-3">
                                 <i class="fas fa-phone-alt"></i>
                             </div>
                             <div>
                                 <small class="text-muted d-block">24/7 Emergency</small>
-                                <strong>1800-123-4567</strong>
+                                <strong style="color: white;">1800-123-4567</strong>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
 
-<!-- ============================================================
-     SOS BUTTON (Fixed, bottom-right)
-============================================================ -->
+<!-- SOS BUTTON (fixed) -->
 <button class="sos-btn" id="sosBtn">
     <i class="fas fa-exclamation-triangle"></i>
     <span>SOS</span>
 </button>
-
-<!-- ============================================================
-     SCRIPTS
-============================================================ -->
+</div>
+<!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
+    // Init AOS scroll animations
     AOS.init({ duration: 900, once: true, offset: 80 });
 
+    // Navbar shadow on scroll
     window.addEventListener('scroll', () => {
-        const nav = document.querySelector('.navbar');
-        nav.style.boxShadow = window.scrollY > 50
-            ? '0 2px 20px rgba(0,0,0,0.12)'
-            : '0 2px 15px rgba(11,79,108,0.05)';
+        document.querySelector('.navbar').style.boxShadow =
+            window.scrollY > 50 ? '0 2px 20px rgba(0,0,0,0.8)' : '0 2px 15px rgba(0,0,0,0.5)';
     });
 
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', e => {
             const target = document.querySelector(link.getAttribute('href'));
@@ -1036,23 +1132,22 @@ require_once '../dbcon.php';
         });
     });
 
+    // SOS confirmation dialog
     document.getElementById('sosBtn').addEventListener('click', () => {
-        if (confirm('🚨 EMERGENCY SOS 🚨\n\nDo you need immediate roadside assistance?')) {
+        if (confirm('🚨 EMERGENCY SOS 🚨\n\nDo you need immediate roadside assistance?'))
             alert('Emergency services have been notified! Help is on the way.');
-        }
     });
 
+    // ── SLIDER ──
     const track        = document.getElementById('sliderTrack');
     const dots         = document.querySelectorAll('.dot');
     const progressFill = document.getElementById('progressFill');
-
-    let current        = 0;
-    const total        = dots.length;
+    const TOTAL        = dots.length;
     const INTERVAL     = 2000;
-    let autoPlayTimer, progressTimer, progressStart;
+    let current = 0, autoTimer, progTimer, progStart;
 
-    function goToSlide(index) {
-        current = (index + total) % total;
+    function goTo(index) {
+        current = (index + TOTAL) % TOTAL;
         track.style.transform = `translateX(-${current * 100}%)`;
         dots.forEach((d, i) => d.classList.toggle('active', i === current));
         resetProgress();
@@ -1060,45 +1155,36 @@ require_once '../dbcon.php';
 
     function resetProgress() {
         progressFill.style.width = '0%';
-        clearInterval(progressTimer);
-        progressStart = Date.now();
-        progressTimer = setInterval(() => {
-            const pct = ((Date.now() - progressStart) / INTERVAL) * 100;
-            progressFill.style.width = Math.min(pct, 100) + '%';
+        clearInterval(progTimer);
+        progStart = Date.now();
+        progTimer = setInterval(() => {
+            progressFill.style.width = Math.min(((Date.now() - progStart) / INTERVAL) * 100, 100) + '%';
         }, 50);
     }
 
-    function startAuto() {
-        autoPlayTimer = setInterval(() => goToSlide(current + 1), INTERVAL);
-        resetProgress();
-    }
+    function startAuto() { autoTimer = setInterval(() => goTo(current + 1), INTERVAL); resetProgress(); }
+    function stopAuto()  { clearInterval(autoTimer); clearInterval(progTimer); }
 
-    function stopAuto() {
-        clearInterval(autoPlayTimer);
-        clearInterval(progressTimer);
-    }
-
-    document.getElementById('nextSlide').addEventListener('click', () => { stopAuto(); goToSlide(current + 1); startAuto(); });
-    document.getElementById('prevSlide').addEventListener('click', () => { stopAuto(); goToSlide(current - 1); startAuto(); });
-
-    dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAuto(); goToSlide(i); startAuto(); }));
+    document.getElementById('nextSlide').addEventListener('click', () => { stopAuto(); goTo(current + 1); startAuto(); });
+    document.getElementById('prevSlide').addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
+    dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); }));
 
     track.addEventListener('mouseenter', stopAuto);
     track.addEventListener('mouseleave', startAuto);
 
-    let touchStartX = 0;
-    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; stopAuto(); });
+    // Touch/swipe support
+    let touchX = 0;
+    track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; stopAuto(); });
     track.addEventListener('touchend',   e => {
-        const diff = touchStartX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 50) goToSlide(diff > 0 ? current + 1 : current - 1);
+        const diff = touchX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
         startAuto();
     });
 
-    goToSlide(0);
+    goTo(0);
     startAuto();
 </script>
 
 </body>
 </html>
-<?php
-include_once 'footer.php'; ?>
+<?php include_once 'footer.php'; ?>
