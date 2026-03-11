@@ -255,9 +255,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>User Type</label>
                 <select name="usertype" class="form-select" required>
                     <option value="" selected disabled>-Select-User-Type-</option>
-                    <option value="admin">Admin</option>
-                    <option value="mechanic">Mechanic</option>
-                    <option value="user">User</option>
+                    <option value="administrator">Admin</option>
+                    <option value="service-provider">Mechanic</option>
+                    <option value="customer">User</option>
                 </select>
             </div>
 
