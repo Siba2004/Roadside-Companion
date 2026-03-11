@@ -46,11 +46,18 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
 
+        
         body{
             height:100vh;
             margin:0;
             font-family:'Poppins',sans-serif;
-            background:url('vehiclebg.png') no-repeat center center/cover;
+
+            background-image:url('pic/login_bg.jpeg');
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+            background-attachment:fixed;
+
             display:flex;
             justify-content:center;
             align-items:center;
@@ -108,22 +115,6 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             height:38px;
         }
 
-
-        body{
-            height:100vh;
-            margin:0;
-            font-family:'Poppins',sans-serif;
-
-            background-image:url('image-32(2).jpg');
-            background-size:cover;
-            background-position:center;
-            background-repeat:no-repeat;
-            background-attachment:fixed;
-
-            display:flex;
-            justify-content:center;
-            align-items:center;
-        }
         /* Placeholder style */
         .form-select:invalid{
             color:#9aa0a6;

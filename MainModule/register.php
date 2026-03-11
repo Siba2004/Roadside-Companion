@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 margin:0;
                 font-family:'Poppins',sans-serif;
 
-                background-image:url('veh2(1).jpg');
+                background-image:url('pic/register_bg.jpeg');
                 background-size:cover;
                 background-position:center;
                 background-repeat:no-repeat;
