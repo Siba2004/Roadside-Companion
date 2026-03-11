@@ -4,6 +4,7 @@ require_once '../dbcon.php';
 
 
 if($_SERVER['REQUEST_METHOD']=="POST"){
+    $type=$_POST['usertype'];
     $login_id=$_POST['login_id'];
     $password=$_POST['password'];
     $type=$_POST['account'];
@@ -33,16 +34,17 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     }
 }
 ?>
-<html>
-   <head>
+<?php include_once 'navbar.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - RoadSide Companion</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+    <title>Roadside Companion Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root {
             --primary: #0B4F6C;
@@ -113,389 +115,250 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             margin-bottom: 30px;
         }
 
-        /* Left Side - Image Container (45%) */
-        .login-left {
-            flex: 0 0 45%;
-            background: linear-gradient(135deg, var(--primary), var(--dark-blue));
-            min-width: 300px;
-            position: relative;
-            overflow: hidden;
+        body{
+            height:100vh;
+            margin:0;
+            font-family:'Poppins',sans-serif;
+            background:url('vehiclebg.png') no-repeat center center/cover;
+            display:flex;
+            justify-content:center;
+            align-items:center;
         }
 
-        .login-left-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.4;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+        /* Dark overlay */
+            body::before{
+            content:"";
+            position:absolute;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.65);
         }
 
-        .login-left-content {
-            position: relative;
-            z-index: 2;
-            padding: 60px 40px;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(11,79,108,0.9), rgba(10,36,114,0.9));
+        /* Login box */
+        .login-box{
+            position:relative;
+            width:360px;
+            padding:28px;
+            border-radius:15px;
+            background:rgba(0,0,0,0.65);
+            backdrop-filter:blur(10px);
+            color:white;
+            text-align:center;
+            box-shadow:0 0 30px rgba(0,0,0,0.8);
+            animation:fadeIn 1.5s ease;
         }
 
-        .login-left h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        /* Logo */
+        .logo img{
+            width:90px;
+            margin-bottom:5px;
+            animation:float 3s ease-in-out infinite;
         }
 
-        .login-left p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            line-height: 1.6;
+        /* Heading */
+        .login-box h2{
+            font-family:'Orbitron',sans-serif;
+            margin-bottom:15px;
+            letter-spacing:2px;
         }
 
-        .testimonial {
-            background: rgba(255,255,255,0.1);
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 30px;
-            backdrop-filter: blur(5px);
-            border-left: 4px solid var(--warning);
+        /* Inputs */
+        .form-control{
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.2);
+            color:white;
+            height:38px;
         }
 
-        .testimonial-text {
-            font-style: italic;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            line-height: 1.6;
+        /* Dropdown */
+        .form-select{
+            background-color:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.2);
+            height:38px;
         }
 
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+
+        body{
+            height:100vh;
+            margin:0;
+            font-family:'Poppins',sans-serif;
+
+            background-image:url('image-32(2).jpg');
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+            background-attachment:fixed;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+        /* Placeholder style */
+        .form-select:invalid{
+            color:#9aa0a6;
         }
 
-        .author-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--warning);
+        /* After selecting option */
+        .form-select:valid{
+            color:white;
         }
 
-        .author-info h5 {
-            font-weight: 700;
-            margin-bottom: 5px;
+        .login-header{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:12px;
+            margin-bottom:15px;
         }
 
-        .author-info p {
-            font-size: 0.85rem;
-            margin: 0;
-            opacity: 0.8;
+        .login-header img{
+            width:80px;
         }
 
-        .rating-badge {
-            margin-top: 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(255,255,255,0.1);
-            padding: 15px 20px;
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
+        .login-header h2{
+            font-family:'Orbitron',sans-serif;
+            margin:0;
+            letter-spacing:5px;
         }
 
-        .stars {
-            color: var(--warning);
-            font-size: 1.2rem;
+
+        /* Dropdown options */
+        .form-select option{
+            background:#111;
+            color:white;
         }
 
-        /* Quick Stats */
-        .quick-stats {
-            display: flex;
-            gap: 20px;
-            justify-content: space-between;
-            margin-top: 30px;
+        /* Focus */
+        .form-control:focus,
+        .form-select:focus{
+            background:rgba(255,255,255,0.05);
+            border-color:#0d6efd;
+            box-shadow:0 0 8px #0d6efd;
+            color:white;
         }
 
-        .stat-item {
-            text-align: center;
-            flex: 1;
-            background: rgba(255,255,255,0.1);
-            padding: 15px 10px;
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
+        /* Password box */
+        .password-box{
+            position:relative;
         }
 
-        .stat-item h3 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 5px;
+        .password-box input{
+                padding-right:40px;
         }
 
-        .stat-item p {
-            font-size: 0.8rem;
-            margin: 0;
-            opacity: 0.9;
+        .password-box i{
+            position:absolute;
+            right:15px;
+            top:70%;
+            transform:translateY(-50%);
+            cursor:pointer;
+            color:#ccc;
         }
 
-        /* Right Side - Login Form (55%) */
-        .login-right {
-            flex: 0 0 55%;
-            padding: 70px 50px;
-            background: white;
-            min-width: 350px;
+        /* Spacing */
+        .mb-3{
+            margin-bottom:12px !important;
         }
 
-        .brand-logo {
-            text-align: center;
-            margin-bottom: 30px;
+        /* Button */
+        .btn-blue{
+            background:#0d6efd;
+            border:none;
+            font-weight:600;
+            padding:8px;
+            transition:0.3s;
         }
 
-        .brand-logo i {
-            font-size: 3rem;
-            color: var(--primary);
-            background: #F0F7FF;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 15px;
+        .btn-blue:hover{
+            background:#0b5ed7;
+            box-shadow:0 0 15px #0d6efd;
+            transform:scale(1.05);
         }
 
-        .brand-logo h3 {
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        /* Links */
+        .links{
+            margin-top:10px;
+            font-size:13px;
         }
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 40px;
+        .links a{
+            color:#0d6efd;
+            text-decoration:none;
         }
 
-        .login-header h2 {
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+        .links a:hover{
+            text-decoration:underline;  
         }
 
-        .login-header p {
-            color: var(--gray-corporate);
-            font-size: 1rem;
+        /* Animations */
+
+        @keyframes float{
+            0%{transform:translateY(0px);}
+            50%{transform:translateY(-8px);}
+            100%{transform:translateY(0px);}
         }
 
-        .form-group {
-            margin-bottom: 25px;
+        @keyframes fadeIn{
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
         }
 
-        .form-label {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
+    </style>
 
-        .input-group {
-            border: 2px solid var(--border-corporate);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: 0.3s;
-        }
+</head>
 
-        .input-group:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(27,152,245,0.1);
-        }
+<body>
+    <div class="login-box">
+        <div class="login-header">
+            <img src="logo.jpg.jpeg" alt="Roadside Companion Logo">
+            <h2>LOGIN</h2>
+        </div>
+        <form method="POST" action="login.php" id="regForm" onsubmit="return validate(event)">
+            <div class="mb-3 text-start">
+                <label>User Type</label>
+                <select name="usertype" class="form-select" required>
+                    <option value="" selected disabled>-Select-User-Type-</option>
+                    <option value="admin">Admin</option>
+                    <option value="mechanic">Mechanic</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
 
-        .input-group-text {
-            background: #F0F7FF;
-            border: none;
-            color: var(--primary);
-            padding: 15px 20px;
-        }
+            <div class="mb-3 text-start">
+                <label>Phone/Email</label>
+                <input type="text" name="login_id" class="form-control"><br>
+                <label class="error" id="login_idError"></label>
 
-        .form-control {
-            border: none;
-            padding: 15px 20px;
-            font-size: 1rem;
-        }
+            </div>
 
-        .form-control:focus {
-            box-shadow: none;
-            outline: none;
-        }
+            <div class="mb-3 text-start password-box">
+                <label>Password</label>
+                <input type="password" id="password" name="password" class="form-control"><br>
+                <label class="error" id="login_idError"></label><br>
+                <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+            </div>
 
-        /* Login Options Tabs */
-        .login-options {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            background: #F0F7FF;
-            padding: 5px;
-            border-radius: 10px;
-        }
+            <button type="submit" name="login" class="btn btn-blue w-100">Login</button>
 
-        .login-option {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--gray-corporate);
-            transition: 0.3s;
-        }
+            <div class="links">
+                <a href="#">Forgot Password?</a><br>
+                Don't have an account? <a href="register.php">Sign Up</a>
+            </div>
+        </form>
+    </div>
 
-        .login-option.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .login-option i {
-            margin-right: 8px;
-        }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .remember-me input {
-            accent-color: var(--primary);
-            width: 18px;
-            height: 18px;
-        }
-
-        .remember-me label {
-            color: var(--gray-corporate);
-            font-size: 0.95rem;
-        }
-
-        .forgot-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .forgot-link:hover {
-            text-decoration: underline;
-        }
-
-        .btn-login {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 10px;
-            width: 100%;
-            transition: 0.3s;
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
-
-        .btn-login:hover {
-            background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(11,79,108,0.3);
-        }
-
-        .social-login {
-            text-align: center;
-            margin-top: 25px;
-        }
-
-        .social-login p {
-            color: var(--gray-corporate);
-            margin-bottom: 15px;
-            position: relative;
-            font-size: 0.9rem;
-        }
-
-        .social-login p::before,
-        .social-login p::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 30%;
-            height: 1px;
-            background: var(--border-corporate);
-        }
-
-        .social-login p::before {
-            left: 0;
-        }
-
-        .social-login p::after {
-            right: 0;
-        }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .social-icon {
-            width: 50px;
-            height: 50px;
-            border: 2px solid var(--border-corporate);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.3rem;
-            transition: 0.3s;
-        }
-
-        .social-icon:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-corporate);
-        }
-
-        .register-link a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
+    <script>
+        function validate(e){
+            let error=false;
+            let form=document.getElementById('loginForm');
+            let login_id=form.elements['login_id'].value
+            let password=form.elements['password'].value
 
         /* Footer Styling */
         .main-footer {
@@ -591,9 +454,11 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 flex: 0 0 100%;
             }
             
-            .login-right {
-                flex: 0 0 100%;
-                padding: 50px 30px;
+            if(login_id===""){
+                login_idError.innerHTML="Please enter your email or phone number"
+                error=true
+            }else{
+                login_idError.innerHTML=""
             }
             
             .navbar {
@@ -609,16 +474,13 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
             .login-right {
                 padding: 40px 20px;
             }
-            
-            .remember-forgot {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
+            if(passErrMsg === ""){
+                passwordError.innerHTML = ""
+            } else {
+                passwordError.innerHTML = passErrMsg
             }
-            
-            .quick-stats {
-                flex-direction: column;
-                gap: 10px;
+            if(error){
+                e.preventDefault();
             }
             
             .navbar {

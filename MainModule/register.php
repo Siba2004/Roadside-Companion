@@ -459,13 +459,25 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             .register-card {
                 flex-direction: column;
             }
-            
-            .register-left {
-                padding: 40px 30px;
+
+            /* Dark overlay */
+            body::before{
+                content:"";
+                position:absolute;
+                top:0;
+                left:0;
+                width:100%;
+                height:100%;
+                background:rgba(0,0,0,0.65);
+                z-index:0;
             }
-            
-            .register-right {
-                padding: 40px 30px;
+
+            .register-header{
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:12px;
+                margin-bottom:15px;
             }
             
             .social-links {
@@ -642,6 +654,30 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     </div>
                 </form>
             </div>
+            <form method="POST">
+                <div class="mb-3 text-start">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="mb-3 text-start">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3 text-start password-box">
+                    <label>Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                </div>
+                <div class="mb-3 text-start password-box">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                    <i class="bi bi-eye-slash" onclick="toggleConfirmPassword()" id="eye2"></i>
+                </div>
+                <button type="submit" name="register" class="btn btn-blue w-100">Register</button>
+                <div class="links">
+                    Already have an account? <a href="login.php">Login</a>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -780,6 +816,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     <!-- <script src="./jsfiles/register-validator.js"></script> -->
 </body>
 </html>
+
 
 <?php
 // Include the footer file
