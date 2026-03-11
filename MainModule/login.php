@@ -24,7 +24,7 @@ if(isset($_POST['login'])){
             header("location: home.php");
         }elseif($data['accounttype']=='service-provider'){
             header("location: ../ServiceProvider/service_home.php");
-        }elseif($data['type']=='administrator'){
+        }elseif($data['accounttype']=='administrator'){
             header("location: ../Admin/admin_home.php");
         }exit();
     }else{
