@@ -3,12 +3,13 @@ session_start();
 require_once '../dbcon.php';
 
 if($_SERVER['REQUEST_METHOD']=="POST"){
+    $type=$_POST['usertype'];
     $login_id=$_POST['login_id'];
     $password=$_POST['password'];
     
-    $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND password=?";
+    $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND password=? AND accounttype=?";
     $stmt=$conn->prepare($qry);
-    $stmt->bind_param("sss",$login_id,$login_id,$password);
+    $stmt->bind_param("ssss",$login_id,$login_id,$password,$type);
     $stmt->execute();
     $result=$stmt->get_result();
 
@@ -254,7 +255,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
             <div class="mb-3 text-start">
                 <label>Phone/Email</label>
-                <input type="text" name="username" class="form-control"><br>
+                <input type="text" name="login_id" class="form-control"><br>
                 <label class="error" id="login_idError"></label>
 
             </div>
