@@ -73,6 +73,18 @@ if (session_status() === PHP_SESSION_NONE) {
             transform: translateY(-2px);
         }
 
+        .location-box{
+          max-width:120px;
+           }
+
+       #locationText{
+        font-size:9px;
+        display:block;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        }
+
 /* Responsive */
 @media (max-width: 768px) {
     .slide img {
@@ -95,7 +107,13 @@ if (session_status() === PHP_SESSION_NONE) {
          <ul class="navbar-nav ms-auto align-items-center">
     <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
     <li class="nav-item"><a class="nav-link" href="services.php">Services</a></li>
-    <li class="nav-item"><a class="nav-link" href="reviews.php">Your Location</a></li>
+    <li class="nav-item text-center">
+    <a class="nav-link" href="#" onclick="getLocation()">
+        <i class="fas fa-map-marker-alt"></i> Your Location
+    </a>
+
+    <small id="locationText" class="text-light"></small>
+</li>
     <li class="nav-item ms-2">
         <a class="btn btn-primary" href="login.php">
             <i class="fas fa-sign-in-alt me-2"></i>Login

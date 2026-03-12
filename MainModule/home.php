@@ -995,6 +995,7 @@ a .check-list li i {
         </div>
     </div>
 </section>
+
 <!-- EMERGENCY ROADSIDE ASSISTANCE -->
 <section id="emergency-assistance">
     <div class="container">
@@ -1344,6 +1345,58 @@ a .check-list li i {
 
     goTo(0);
     startAuto();
+
+
+   
+
+function getLocation()
+{
+    if(navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    }
+    else
+    {
+        alert("Geolocation not supported.");
+    }
+}
+
+function showPosition(position)
+{
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+
+    fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon)
+    .then(response => response.json())
+    .then(data => {
+
+        var area = data.address.suburb || data.address.neighbourhood || "";
+        var city = data.address.city || data.address.town || data.address.village || "";
+
+        document.getElementById("locationText").innerHTML =
+        "📍 " + area + ", " + city;
+
+    });
+}
+
+function showError(error)
+{
+    if(error.code == 1)
+    {
+        alert("Location permission denied.");
+    }
+    else if(error.code == 2)
+    {
+        alert("Location unavailable.");
+    }
+    else if(error.code == 3)
+    {
+        alert("Location request timeout.");
+    }
+}
+
+
+
 </script>
 
 </body>
