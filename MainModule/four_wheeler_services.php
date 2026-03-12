@@ -766,12 +766,12 @@ require_once '../dbcon.php';
                 <a href="service-emergency-repairs.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
-                            <img src="services_pics/four_wheeler_services_pics/" alt="Emergency Repairs">
+                            <img src="services_pics/four_wheeler_services_pics/roadsidecar.jpeg" alt="Emergency Repairs">
                             <div class="service-badge">24/7</div>
                         </div>
                         <div class="service-card-content">
-                            <h3 class="service-card-title">Emergency Repairs</h3>
-                            <p class="service-card-desc">Immediate on-spot repairs for breakdowns, engine issues, and mechanical failures</p>
+                            <h3 class="service-card-title">Emergency Roadside Repairs</h3>
+                            <p class="service-card-desc">Immediate on-spot repairs for unknown breakdowns, engine issues, and mechanical failures</p>
                             <div class="service-price-row">
                                 <div>
                                     <span class="original-price">₹700</span>
@@ -788,7 +788,92 @@ require_once '../dbcon.php';
                 </a>
             </div>
             
-            <!-- Card 2: Fuel Delivery -->
+            
+            
+            <!-- Card 2: Flat Tyre -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <a href="service-flat-tyre.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="service-card clickable-card">
+                        <div class="service-card-image">
+                            <img src="services_pics/four_wheeler_services_pics/flattyre.jpeg" alt="Flat Tyre">
+                            <div class="service-badge">Popular</div>
+                        </div>
+                        <div class="service-card-content">
+                            <h3 class="service-card-title">Flat Tyre Assistance</h3>
+                            <p class="service-card-desc">Quick tyre change, puncture repair, and spare tyre installation at your location</p>
+                            <div class="service-price-row">
+                                <div>
+                                    <span class="original-price">₹300</span>
+                                    <span class="offer-price">₹200</span>
+                                </div>
+                                <span class="discount-badge">SAVE 18%</span>
+                            </div>
+                            <div class="service-card-footer">
+                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.7</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        <!-- Card 3: Battery Services -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <a href="service-battery.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="service-card clickable-card">
+                        <div class="service-card-image">
+                            <img src="services_pics/four_wheeler_services_pics/battery.jpeg" alt="Battery Services">
+                            <div class="service-badge">Warranty</div>
+                        </div>
+                        <div class="service-card-content">
+                            <h3 class="service-card-title">Battery Services</h3>
+                            <p class="service-card-desc">Jump start, battery testing, replacement with genuine batteries & 1-year warranty</p>
+                            <div class="service-price-row">
+                                <div>
+                                    <span class="original-price">₹500 for Full Charge</span>
+                                    <span class="offer-price">₹450</span>
+                                </div>
+                                <span class="discount-badge">SAVE 4%</span>
+                            </div>
+                            <div class="service-card-footer">
+                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        
+        <!-- Service Cards Row 2 -->
+        <div class="row g-4 mb-4">
+            <!-- Card 4: Towing Services -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <a href="service-towing.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="service-card clickable-card">
+                        <div class="service-card-image">
+                            <img src="services_pics/four_wheeler_services_pics/towtruck.jpg" alt="Towing Services">
+                            <div class="service-badge">24/7</div>
+                        </div>
+                        <div class="service-card-content">
+                            <h3 class="service-card-title">Towing Services</h3>
+                            <p class="service-card-desc">Professional towing to nearest garage or your preferred service center. All vehicle types</p>
+                            <div class="service-price-row">
+                                <div>
+                                    <span class="original-price">₹1000</span>
+                                    <span class="offer-price">₹800</span>
+                                </div>
+                                <span class="discount-badge">SAVE 34%</span>
+                            </div>
+                            <div class="service-card-footer">
+                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Card 5: Fuel Delivery -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                 <a href="service-fuel-delivery.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
@@ -815,89 +900,6 @@ require_once '../dbcon.php';
                 </a>
             </div>
             
-            <!-- Card 3: Flat Tyre -->
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <a href="service-flat-tyre.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="service-card clickable-card">
-                        <div class="service-card-image">
-                            <img src="services_pics/four_wheeler_services_pics/flattyre.jpeg" alt="Flat Tyre">
-                            <div class="service-badge">Popular</div>
-                        </div>
-                        <div class="service-card-content">
-                            <h3 class="service-card-title">Flat Tyre Assistance</h3>
-                            <p class="service-card-desc">Quick tyre change, puncture repair, and spare tyre installation at your location</p>
-                            <div class="service-price-row">
-                                <div>
-                                    <span class="original-price">₹300</span>
-                                    <span class="offer-price">₹200</span>
-                                </div>
-                                <span class="discount-badge">SAVE 18%</span>
-                            </div>
-                            <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
-                                <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.7</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Service Cards Row 2 -->
-        <div class="row g-4 mb-4">
-            <!-- Card 4: Towing Services -->
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <a href="service-towing.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="service-card clickable-card">
-                        <div class="service-card-image">
-                            <img src="services_pics/four_wheeler_services_pics/towtruck.jpeg" alt="Towing Services">
-                            <div class="service-badge">24/7</div>
-                        </div>
-                        <div class="service-card-content">
-                            <h3 class="service-card-title">Towing Services</h3>
-                            <p class="service-card-desc">Professional towing to nearest garage or your preferred service center. All vehicle types</p>
-                            <div class="service-price-row">
-                                <div>
-                                    <span class="original-price">₹1000</span>
-                                    <span class="offer-price">₹800</span>
-                                </div>
-                                <span class="discount-badge">SAVE 34%</span>
-                            </div>
-                            <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
-                                <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-            <!-- Card 5: Battery Services -->
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <a href="service-battery.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="service-card clickable-card">
-                        <div class="service-card-image">
-                            <img src="services_pics/four_wheeler_services_pics/battery.jpeg" alt="Battery Services">
-                            <div class="service-badge">Warranty</div>
-                        </div>
-                        <div class="service-card-content">
-                            <h3 class="service-card-title">Battery Services</h3>
-                            <p class="service-card-desc">Jump start, battery testing, replacement with genuine batteries & 1-year warranty</p>
-                            <div class="service-price-row">
-                                <div>
-                                    <span class="original-price">₹500 for Full Charge</span>
-                                    <span class="offer-price">₹450</span>
-                                </div>
-                                <span class="discount-badge">SAVE 4%</span>
-                            </div>
-                            <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
-                                <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
             
             <!-- Card 6: Lockout Assistance -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">

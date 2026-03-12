@@ -583,12 +583,39 @@ require_once '../dbcon.php';
                 
                 <!-- Row 1 -->
                 <div class="row g-4 mb-4">
-                    <!-- Card 1: Puncture Repair (different from four-wheeler) -->
+                    <!-- Card 1: Emergency Roadside Repair (different from four-wheeler) -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <a href="service-puncture-repair.html" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
-                                    <img src="https://images.unsplash.com/photo-1609636606920-e479546ac1d8?auto=format&fit=crop&w=600&q=80" alt="Puncture Repair">
+                                    <img src="services_pics/two_wheeler_services_pics/roadside.jpeg" alt="Roadside Repair">
+                                    <div class="service-badge">Popular</div>
+                                </div>
+                                <div class="service-card-content">
+                                    <h3 class="service-card-title">Emergency Roadside Repair</h3>
+                                    <p class="service-card-desc">Immediate on-spot repairs for unknown breakdowns, engine issues, and mechanical failures</p>
+                                    <div class="service-price-row">
+                                        <div>
+                                            <span class="original-price">₹150</span>
+                                            <span class="offer-price">₹99</span>
+                                        </div>
+                                        <span class="discount-badge">SAVE 34%</span>
+                                    </div>
+                                    <div class="service-card-footer">
+                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Card 2: Puncture Repair (different from four-wheeler) -->
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <a href="service-puncture-repair.html" style="text-decoration: none; display: block; height: 100%;">
+                            <div class="service-card clickable-card">
+                                <div class="service-card-image">
+                                    <img src="services_pics/two_wheeler_services_pics/flattyre.jpeg" alt="Puncture Repair">
                                     <div class="service-badge">Popular</div>
                                 </div>
                                 <div class="service-card-content">
@@ -610,44 +637,17 @@ require_once '../dbcon.php';
                         </a>
                     </div>
                     
-                    <!-- Card 2: Fuel Delivery (same concept, but two-wheeler pricing) -->
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <a href="service-fuel-delivery-bike.html" style="text-decoration: none; display: block; height: 100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image">
-                                    <img src="https://images.plus.unsplash.com/premium_photo-1664303847962-586ccfd28c27?auto=format&fit=crop&w=600&q=80" alt="Fuel Delivery Bike">
-                                    <div class="service-badge">24/7</div>
-                                </div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Fuel Delivery</h3>
-                                    <p class="service-card-desc">Emergency petrol/diesel delivery for bikes & scooters.</p>
-                                    <div class="service-price-row">
-                                        <div>
-                                            <span class="original-price">₹130/L</span>
-                                            <span class="offer-price">₹120/L</span>
-                                        </div>
-                                        <span class="discount-badge">SAVE 8%</span>
-                                    </div>
-                                    <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
-                                        <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    
                     <!-- Card 3: Chain Lubrication (different) -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                         <a href="service-chain-lube.html" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
-                                    <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?auto=format&fit=crop&w=600&q=80" alt="Chain Lubrication">
+                                    <img src="services_pics/two_wheeler_services_pics/chain.jpeg" alt="Chain Repair">
                                     <div class="service-badge">Essential</div>
                                 </div>
                                 <div class="service-card-content">
-                                    <h3 class="service-card-title">Chain Lubrication</h3>
-                                    <p class="service-card-desc">Complete chain cleaning and lubrication for smooth ride.</p>
+                                    <h3 class="service-card-title">BrokenChain Repair</h3>
+                                    <p class="service-card-desc">Complete chain repairing,cleaning and lubrication for smooth ride.</p>
                                     <div class="service-price-row">
                                         <div>
                                             <span class="original-price">₹350</span>
@@ -672,7 +672,7 @@ require_once '../dbcon.php';
                         <a href="service-brake-adjust.html" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
-                                    <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80" alt="Brake Adjustment">
+                                    <img src="services_pics/two_wheeler_services_pics/bikepart.jpeg" alt="Brake Adjustment">
                                     <div class="service-badge">Safety</div>
                                 </div>
                                 <div class="service-card-content">
@@ -699,7 +699,7 @@ require_once '../dbcon.php';
                         <a href="service-bike-jump.html" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
-                                    <img src="https://images.unsplash.com/photo-1619642751034-765dfdf87c9f?auto=format&fit=crop&w=600&q=80" alt="Bike Jump Start">
+                                    <img src="services_pics/two_wheeler_services_pics/spark.jpeg" alt="Bike Jump Start">
                                     <div class="service-badge">Instant</div>
                                 </div>
                                 <div class="service-card-content">
@@ -726,7 +726,7 @@ require_once '../dbcon.php';
                         <a href="service-bike-towing.html" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
-                                    <img src="https://images.unsplash.com/photo-1603745713042-00b57d8d9e2a?auto=format&fit=crop&w=600&q=80" alt="Bike Towing">
+                                    <img src="services_pics/two_wheeler_services_pics/towbike.jpeg" alt="Bike Towing">
                                     <div class="service-badge">24/7</div>
                                 </div>
                                 <div class="service-card-content">
@@ -756,7 +756,7 @@ require_once '../dbcon.php';
                         <a href="service-bike-oil.html" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
-                                    <img src="https://images.unsplash.com/photo-1597170346290-7e8e07a2e8de?auto=format&fit=crop&w=600&q=80" alt="Bike Oil Change">
+                                    <img src="services_pics/two_wheeler_services_pics/oil.jpeg" alt="Bike Oil Change">
                                     <div class="service-badge">Maintenance</div>
                                 </div>
                                 <div class="service-card-content">
@@ -778,27 +778,27 @@ require_once '../dbcon.php';
                         </a>
                     </div>
                     
-                    <!-- Card 8: Carburetor/Injector Cleaning (different) -->
+                     <!-- Card 8: Fuel Delivery (same concept, but two-wheeler pricing) -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <a href="service-carb-cleaning.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="service-fuel-delivery-bike.html" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
-                                    <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?auto=format&fit=crop&w=600&q=80" alt="Carb Cleaning">
-                                    <div class="service-badge">Performance</div>
+                                    <img src="services_pics/two_wheeler_services_pics/fueldelivery.jpeg" alt="Fuel Delivery Bike">
+                                    <div class="service-badge">24/7</div>
                                 </div>
                                 <div class="service-card-content">
-                                    <h3 class="service-card-title">Carb / Injector Clean</h3>
-                                    <p class="service-card-desc">Deep cleaning for smooth engine performance.</p>
+                                    <h3 class="service-card-title">Fuel Delivery</h3>
+                                    <p class="service-card-desc">Emergency petrol/diesel delivery for bikes & scooters.</p>
                                     <div class="service-price-row">
                                         <div>
-                                            <span class="original-price">₹550</span>
-                                            <span class="offer-price">₹399</span>
+                                            <span class="original-price">₹130/L</span>
+                                            <span class="offer-price">₹120/L</span>
                                         </div>
-                                        <span class="discount-badge">SAVE 27%</span>
+                                        <span class="discount-badge">SAVE 8%</span>
                                     </div>
                                     <div class="service-card-footer">
                                         <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
-                                        <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.6</span>
+                                        <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
                                     </div>
                                 </div>
                             </div>
@@ -810,7 +810,7 @@ require_once '../dbcon.php';
                         <a href="service-spark-plug.html" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
-                                    <img src="https://images.unsplash.com/photo-1612825173281-9a193378527e?auto=format&fit=crop&w=600&q=80" alt="Spark Plug">
+                                    <img src="services_pics/two_wheeler_services_pics/sparkplug.jpeg" alt="Spark Plug">
                                     <div class="service-badge">Quick Fix</div>
                                 </div>
                                 <div class="service-card-content">
