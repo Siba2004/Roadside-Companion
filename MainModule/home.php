@@ -492,54 +492,171 @@ a .check-list li i {
             margin-right: 10px; 
         }
 
-        /* ── ASSIST CARDS - Glassmorphism ── */
-        .assist-card { 
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 30px 25px; 
-            height: 100%; 
-            position: relative; 
-            overflow: hidden; 
-            transition: transform .3s, box-shadow .3s, border-color .3s; 
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
-        .assist-card::after { 
-            content: ''; 
-            position: absolute; 
-            bottom: 0; 
-            left: 0; 
-            width: 0; 
-            height: 3px; 
-            background: var(--primary); 
-            transition: width .35s; 
-            box-shadow: 0 0 15px var(--primary);
-        }
-        .assist-card:hover { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 30px rgba(13,110,253,0.3); 
-            transform: translateY(-5px); 
-        }
-        .assist-card:hover::after { 
-            width: 100%; 
-        }
-        .assist-card:hover .icon-box { 
-            background: var(--primary); 
-            border-color: var(--primary); 
-        }
-        .assist-card:hover .icon-box i { 
-            color: white; 
-        }
-        .assist-card .icon-box { 
-            transition: background .3s, border-color .3s; 
-        }
-        .assist-card .icon-box i { 
-            transition: color .3s; 
-        }
-        .assist-card p {
-            color: rgba(255,255,255,0.8);
-        }
+        /* Enhanced Assist Card Styles with Images */
+.assist-card {
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+.assist-card.clickable-card {
+    cursor: pointer;
+}
+
+.assist-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 0 30px rgba(13,110,253,0.4);
+}
+
+.assist-card-image {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+}
+
+.assist-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.assist-card:hover .assist-card-image img {
+    transform: scale(1.1);
+}
+
+.assist-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 15px rgba(13,110,253,0.5);
+    z-index: 2;
+}
+
+.assist-card-content {
+    padding: 20px 15px 15px;
+    text-align: center;
+    position: relative;
+}
+
+.assist-card-content .icon-box {
+    width: 50px;
+    height: 50px;
+    background: rgba(13,110,253,0.1);
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -40px auto 12px;
+    position: relative;
+    z-index: 3;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.assist-card:hover .assist-card-content .icon-box {
+    background: var(--primary);
+    transform: rotate(360deg);
+}
+
+.assist-card:hover .assist-card-content .icon-box i {
+    color: white;
+}
+
+.assist-card-content .icon-box i {
+    font-size: 1.3rem;
+    color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.assist-card-content .card-title {
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.assist-card-content p {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    min-height: 70px;
+}
+
+.assist-card-footer {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 12px;
+}
+
+.assist-link {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.assist-link i {
+    transition: transform 0.3s;
+}
+
+.assist-card:hover .assist-link i {
+    transform: translateX(5px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .assist-card-image {
+        height: 130px;
+    }
+    
+    .assist-card-content {
+        padding: 15px 10px 10px;
+    }
+    
+    .assist-card-content .icon-box {
+        width: 45px;
+        height: 45px;
+        margin-top: -35px;
+    }
+    
+    .assist-card-content .icon-box i {
+        font-size: 1.1rem;
+    }
+    
+    .assist-card-content .card-title {
+        font-size: 0.9rem;
+    }
+    
+    .assist-card-content p {
+        font-size: 0.8rem;
+        min-height: 60px;
+    }
+}
 
         /* ── FEATURE CARDS (Why Choose Us) ── */
         .feature-card { 
@@ -888,32 +1005,76 @@ a .check-list li i {
         <div class="row g-4">
 
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-                <div class="assist-card">
-                    <div class="icon-box"><i class="fas fa-tools"></i></div>
-                    <h4 class="card-title">On-Site Repairs</h4>
-                    <p class="small">Minor mechanical issues fixed right at your breakdown spot — no garage visit needed.</p>
-                </div>
+                <a href="service-on-site-repairs.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="assist-card clickable-card">
+                        <div class="assist-card-image">
+                            <img src="Emergency_roadside_pics/onsite.jpeg" alt="On-Site Repairs">
+                            <div class="assist-badge">24/7</div>
+                        </div>
+                        <div class="assist-card-content">
+                            
+                            <h4 class="card-title">On-Site Repairs</h4>
+                            <p class="small">Minor mechanical issues fixed right at your breakdown spot — no garage visit needed.</p>
+                            <div class="assist-card-footer">
+                                <span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
+
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-                <div class="assist-card">
-                    <div class="icon-box"><i class="fas fa-truck-pickup"></i></div>
-                    <h4 class="card-title">Towing Service</h4>
-                    <p class="small">Safe and swift towing to the nearest verified garage or your preferred service centre.</p>
-                </div>
+                <a href="service-towing.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="assist-card clickable-card">
+                        <div class="assist-card-image">
+                            <img src="Emergency_roadside_pics/tow.jpeg" alt="Towing Service">
+                            <div class="assist-badge">Fast</div>
+                        </div>
+                        <div class="assist-card-content">
+                            <h4 class="card-title">Towing Service</h4>
+                            <p class="small">Safe and swift towing to the nearest verified garage or your preferred service centre.</p>
+                            <div class="assist-card-footer">
+                                <span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
+
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-                <div class="assist-card">
-                    <div class="icon-box"><i class="fas fa-car-battery"></i></div>
-                    <h4 class="card-title">Battery Jump Start</h4>
-                    <p class="small">Instant battery boosting or on-spot replacement so you're back on the road in minutes.</p>
-                </div>
+                <a href="service-battery-jump.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="assist-card clickable-card">
+                        <div class="assist-card-image">
+                            <img src="Emergency_roadside_pics/jumpsark.jpeg" alt="Battery Jump Start">
+                            <div class="assist-badge">Instant</div>
+                        </div>
+                        <div class="assist-card-content">
+                            <h4 class="card-title">Battery Jump Start</h4>
+                            <p class="small">Instant battery boosting or on-spot replacement so you're back on the road in minutes.</p>
+                            <div class="assist-card-footer">
+                                <span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
+
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
-                <div class="assist-card">
-                    <div class="icon-box"><i class="fas fa-gas-pump"></i></div>
-                    <h4 class="card-title">Fuel Delivery</h4>
-                    <p class="small">Stranded with an empty tank? We deliver fuel directly to your location — fast and hassle-free.</p>
-                </div>
+                <a href="service-fuel-delivery.php" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="assist-card clickable-card">
+                        <div class="assist-card-image">
+                            <img src="Emergency_roadside_pics/fuel.jpeg" alt="Fuel Delivery">
+                            <div class="assist-badge">24/7</div>
+                        </div>
+                        <div class="assist-card-content">
+                            <h4 class="card-title">Fuel Delivery</h4>
+                            <p class="small">Stranded with an empty tank? We deliver fuel directly to your location — fast and hassle-free.</p>
+                            <div class="assist-card-footer">
+                                <span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
 
         </div>
