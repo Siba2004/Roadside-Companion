@@ -34,169 +34,240 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <!-- Bootstrap Icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
         <style>
-
-            body{
-                height:100vh;
-                margin:0;
-                font-family:'Poppins',sans-serif;
-
-                background-image:url('pic/register_bg.jpeg');
-                background-size:cover;
-                background-position:center;
-                background-repeat:no-repeat;
-                background-attachment:fixed;
-
-                display:flex;
-                justify-content:center;
-                align-items:center;
-                position:relative;
+        body {
+                height: 100vh;
+                margin: 0;
+                font-family: 'Poppins', sans-serif;
+                background-image: url('pic/register_bg.jpeg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                padding-top: 70px; /* Accounts for fixed navbar */
+                padding-bottom: 20px;
+                min-height: 100vh;
+                overflow-y: auto; /* Allows scrolling if needed */
             }
 
             /* Dark overlay */
-            body::before{
-                content:"";
-                position:absolute;
-                top:0;
-                left:0;
-                width:100%;
-                height:100%;
-                background:rgba(0,0,0,0.65);
-                z-index:0;
+            body::before {
+                content: "";
+                position: fixed; /* Changed to fixed to cover entire viewport */
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.65);
+                z-index: 0;
             }
 
-            .register-header{
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                gap:12px;
-                margin-bottom:15px;
+            .register-header {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px; /* Reduced gap */
+                margin-bottom: 10px; /* Reduced margin */
             }
 
-            .register-header img{
-                width:80px;
+            .register-header img {
+                width: 50px; /* Smaller logo */
             }
 
-            .register-header h2{
-                font-family:'Orbitron',sans-serif;
-                margin:0;
-                letter-spacing:5px;
+            .register-header h2 {
+                font-family: 'Orbitron', sans-serif;
+                margin: 0;
+                letter-spacing: 3px; /* Reduced letter spacing */
+                font-size: 1.5rem; /* Smaller font */
             }
 
-
-            /* Register box (smaller) */
-            .register-box{
-                position:relative;
-                width:370px;
-                padding:28px;
-                border-radius:15px;
-                background:rgba(0,0,0,0.65);
-                backdrop-filter:blur(10px);
-                color:white;
-                text-align:center;
-                box-shadow:0 0 30px rgba(0,0,0,0.8);
-                animation:fadeIn 1.5s ease;
+            /* Register box - smaller size */
+            .register-box {
+                position: relative;
+                width: 360px; /* Reduced from 370px */
+                padding: 28px; /* Reduced padding */
+                border-radius: 15px; /* Slightly smaller radius */
+                background: rgba(0,0,0,0.65);
+                backdrop-filter: blur(10px);
+                color: white;
+                text-align: center;
+                box-shadow: 0 0 25px rgba(0,0,0,0.8);
+                animation: fadeIn 1.5s ease;
+                z-index: 1;
+                margin: 15px auto; /* Auto margins for centering */
             }
 
-            /* Logo smaller */
-            .logo img{
-                width:90px;
-                margin-bottom:5px;
-                animation:float 3s ease-in-out infinite;
+            /* Even smaller logo in the box */
+            .logo img {
+                width: 70px; /* Smaller logo */
+                margin-bottom: 3px;
+                animation: float 3s ease-in-out infinite;
             }
 
             /* Heading */
-            .register-box h2{
-                font-family:'Orbitron',sans-serif;
-                margin-bottom:15px;
-                letter-spacing:2px;
+            .register-box h2 {
+                font-family: 'Orbitron', sans-serif;
+                margin-bottom: 10px; /* Reduced margin */
+                letter-spacing: 1.5px; /* Reduced letter spacing */
+                font-size: 1.3rem; /* Smaller font */
             }
 
-            /* Input fields */
-            .form-control{
-                background:rgba(255,255,255,0.05);
-                border:1px solid rgba(255,255,255,0.2);
-                color:white;
-                height:38px;
+            /* Input fields - more compact */
+            .form-control {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.2);
+                color: white;
+                height: 35px; /* Reduced height */
+                font-size: 0.9rem; /* Smaller font */
+                padding: 5px 10px; /* Adjusted padding */
             }
 
-            .form-control:focus{
-                background:rgba(255,255,255,0.05);
-                border-color:#0d6efd;
-                box-shadow:0 0 8px #0d6efd;
-                color:white;
+            .form-control:focus {
+                background: rgba(255,255,255,0.05);
+                border-color: #0d6efd;
+                box-shadow: 0 0 6px #0d6efd;
+                color: white;
+            }
+
+            /* Labels - smaller */
+            .form-label, label {
+                font-size: 0.85rem;
+                margin-bottom: 2px;
+                font-weight: 400;
+                color: rgba(255,255,255,0.9);
+            }
+
+            /* Reduce spacing between form groups */
+            .mb-3 {
+                margin-bottom: 8px !important; /* Reduced from 12px */
             }
 
             /* Password box */
-            .password-box{
-                position:relative;
+            .password-box {
+                position: relative;
             }
 
-            .password-box input{
-                padding-right:40px;
+            .password-box input {
+                padding-right: 35px;
+                height: 35px;
             }
 
-            .password-box i{
-                position:absolute;
-                right:15px;
-                top:70%;
-                transform:translateY(-50%);
-                cursor:pointer;
-                color:#ccc;
+            .password-box i {
+                position: absolute;
+                right: 12px;
+                top: 65%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #ccc;
+                font-size: 0.9rem;
             }
 
-            /* Reduce spacing */
-            .mb-3{
-                margin-bottom:12px !important;
+            /* Select dropdown */
+            .form-select {
+                background: rgba(255,255,255,0.05);
+                border: 1px solid rgba(255,255,255,0.2);
+                color: white;
+                height: 35px;
+                font-size: 0.9rem;
+                padding: 5px 10px;
             }
 
-            /* Button */
-            .btn-blue{
-                background:#0d6efd;
-                border:none;
-                font-weight:600;
-                transition:0.3s;
-                padding:8px;
+            .form-select option {
+                background: #333;
+                color: white;
             }
 
-            .btn-blue:hover{
-                background:#0b5ed7;
-                box-shadow:0 0 15px #0d6efd;
-                transform:scale(1.05);
+            /* Button - smaller */
+            .btn-blue {
+                background: #0d6efd;
+                border: none;
+                font-weight: 500;
+                transition: 0.3s;
+                padding: 6px; /* Reduced padding */
+                font-size: 0.9rem; /* Smaller font */
+                margin-top: 5px;
             }
 
-            /* Links */
-            .links{
-                margin-top:10px;
-                font-size:13px;
+            .btn-blue:hover {
+                background: #0b5ed7;
+                box-shadow: 0 0 12px #0d6efd;
+                transform: scale(1.02);
             }
 
-            .links a{
-                color:#0d6efd;
-                text-decoration:none;
+            /* Links - smaller */
+            .links {
+                margin-top: 8px; /* Reduced margin */
+                font-size: 0.8rem; /* Smaller font */
+                    }
+
+                    .links a {
+                        color: #0d6efd;
+                        text-decoration: none;
+                    }
+
+                    .links a:hover {
+                        text-decoration: underline;
+                    }
+
+                    /* Error message small */
+                    .error {
+                        font-size: 0.7rem;
+                        color: #ff6b6b;
+                        display: block;
+                        margin-top: 2px;
+                    }
+
+                    /* Responsive for smaller screens */
+                    @media (max-width: 576px) {
+                        body {
+                            padding-top: 60px;
+                            padding-bottom: 10px;
+                            align-items: flex-start;
+                        }
+                        
+                        .register-box {
+                            width: 280px; /* Even smaller on mobile */
+                    padding: 15px;
+                    margin: 10px auto;
+                }
+                
+                .register-header img {
+                    width: 40px;
+                }
+                
+                .register-header h2 {
+                    font-size: 1.2rem;
+                }
             }
 
-            .links a:hover{
-                text-decoration:underline;
+            /* For medium screens */
+            @media (min-width: 768px) and (max-height: 700px) {
+                .register-box {
+                    transform: scale(0.95); /* Slightly smaller on shorter screens */
+                }
             }
 
             /* Animations */
-
-            @keyframes float{
-                0%{transform:translateY(0px);}
-                50%{transform:translateY(-8px);}
-                100%{transform:translateY(0px);}
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-5px); }
+                100% { transform: translateY(0px); }
             }
 
-            @keyframes fadeIn{
-                from{
-                    opacity:0;
-                    transform:translateY(30px);
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
                 }
-                to{
-                    opacity:1;
-                    transform:translateY(0);
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
                 }
             }
+
         </style>
     </head>
     <body>
