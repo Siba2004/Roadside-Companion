@@ -658,30 +658,66 @@ a .check-list li i {
     }
 }
 
-        /* ── FEATURE CARDS (Why Choose Us) ── */
-        .feature-card { 
-            text-align: center; 
-            padding: 30px 20px; 
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            height: 100%; 
-            transition: .3s; 
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
-        .feature-card:hover { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 30px rgba(13,110,253,0.3);
-            transform: translateY(-5px);
-        }
-        .feature-card .icon-box { 
-            margin: 0 auto 20px; 
-        }
-        .feature-card p {
-            color: rgba(255,255,255,0.8);
-        }
+    /* Why Choose Us - Card */
+.feature-card {
+    text-align: center;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    height: 100%;
+    transition: 0.3s;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
 
+/* Image wrapper */
+.card-image-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 15px 15px 0 0; /* same as card */
+}
+
+/* Image */
+.feature-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* Image zoom */
+.feature-card:hover .feature-image {
+    transform: scale(1.1);
+}
+
+/* Card hover */
+.feature-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 30px rgba(13,110,253,0.3);
+    transform: translateY(-6px);
+}
+
+
+
+
+/* Text spacing */
+.card-title {
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+.feature-card p {
+    color: rgba(255,255,255,0.8);
+    padding: 0 15px;
+    margin-bottom: 13px;
+}
+        
         /* ── REVIEW CARDS ── */
         .review-card { 
             background: rgba(0,0,0,0.65);
@@ -809,30 +845,7 @@ a .check-list li i {
 </head>
 <body>
 <div class="home-container">
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <i class="fas fa-tools me-2"></i>RoadSide Companion
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="#why-us">Why Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                <li class="nav-item ms-2">
-                    <a class="btn btn-primary" href="login.php">
-                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+
 
 <!-- BANNER SLIDER -->
 <div class="banner-wrap">
@@ -1081,49 +1094,6 @@ a .check-list li i {
         </div>
     </div>
 </section>
-
-<!-- REAL-TIME TRACKING & SUPPORT -->
-<section id="tracking-support">
-    <div class="container">
-        <div class="text-center" data-aos="fade-up">
-            <h2 class="section-title">Real-Time Tracking & Support</h2>
-            <p class="section-subtitle">Smart technology that keeps you informed, safe, and in control</p>
-        </div>
-        <div class="row g-4">
-
-            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-                <div class="assist-card">
-                    <div class="icon-box"><i class="fas fa-map-marker-alt"></i></div>
-                    <h4 class="card-title">Live Location Tracking</h4>
-                    <p class="small">Track your assigned mechanic on a live map and get accurate ETA updates in real time.</p>
-                </div>
-            </div>
-            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-                <div class="assist-card">
-                    <div class="icon-box"><i class="fas fa-headset"></i></div>
-                    <h4 class="card-title">24/7 Helpline</h4>
-                    <p class="small">Round-the-clock support via call, chat, or app — a trained agent is always ready to assist.</p>
-                </div>
-            </div>
-            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-                <div class="assist-card">
-                    <div class="icon-box"><i class="fas fa-search-location"></i></div>
-                    <h4 class="card-title">Nearest Garage Finder</h4>
-                    <p class="small">Instantly locate the closest verified and rated service centre near your breakdown spot.</p>
-                </div>
-            </div>
-            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
-                <div class="assist-card">
-                    <div class="icon-box"><i class="fas fa-clipboard-list"></i></div>
-                    <h4 class="card-title">Service History Logs</h4>
-                    <p class="small">Access a full record of all past breakdowns, repairs, and service costs — anytime, anywhere.</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
 <!-- WHY CHOOSE US -->
 <section id="why-us">
     <div class="container">
@@ -1131,32 +1101,44 @@ a .check-list li i {
             <h2 class="section-title">Why Choose Us?</h2>
             <p class="section-subtitle">We provide the best roadside assistance experience</p>
         </div>
+
         <div class="row g-4">
 
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="100">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="fas fa-bolt"></i></div>
+                    <div class="card-image-wrapper">
+                        <img src="pic/why-choose/fast.jpeg" alt="Faster Service" class="feature-image">
+                    </div>
                     <h4 class="card-title">Faster Service</h4>
                     <p class="small">Average response time under 20 minutes with real-time tracking</p>
                 </div>
             </div>
+
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="fas fa-medal"></i></div>
+                    <div class="card-image-wrapper">
+                        <img src="pic/why-choose/quality.jpeg" alt="Quality Services" class="feature-image">
+                    </div>
                     <h4 class="card-title">Quality Services</h4>
                     <p class="small">Certified mechanics and verified service providers</p>
                 </div>
             </div>
+
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="300">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="fas fa-car-battery"></i></div>
+                    <div class="card-image-wrapper">
+                        <img src="pic/why-choose/parts.jpeg" alt="Genuine Parts" class="feature-image">
+                    </div>
                     <h4 class="card-title">Genuine Parts</h4>
                     <p class="small">100% authentic spare parts with warranty</p>
                 </div>
             </div>
+
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="400">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="fas fa-tag"></i></div>
+                    <div class="card-image-wrapper">
+                        <img src="pic/why-choose/affordable.jpeg" alt="Affordable Prices" class="feature-image">
+                    </div>
                     <h4 class="card-title">Affordable Prices</h4>
                     <p class="small">Transparent pricing with no hidden charges</p>
                 </div>
@@ -1247,7 +1229,7 @@ a .check-list li i {
 
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="position-relative">
-                    <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=1170&q=80" alt="About Us" class="img-fluid rounded-4 shadow-lg" style="border: 1px solid rgba(255,255,255,0.1);">
+                    <img src="pic/why-choose/bottom.jpeg" alt="About Us" class="img-fluid rounded-4 shadow-lg" style="border: 1px solid rgba(255,255,255,0.1);">
                     <!-- Emergency callout badge -->
                     <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow m-3" style="background: rgba(0,0,0,0.8) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
                         <div class="d-flex align-items-center">
@@ -1331,17 +1313,47 @@ a .check-list li i {
     document.getElementById('prevSlide').addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
     dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); }));
 
-    track.addEventListener('mouseenter', stopAuto);
-    track.addEventListener('mouseleave', startAuto);
 
-    // Touch/swipe support
+
     let touchX = 0;
-    track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; stopAuto(); });
-    track.addEventListener('touchend',   e => {
-        const diff = touchX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
-        startAuto();
+    let touchActive = false;
+
+        track.addEventListener('touchstart', e => { 
+            touchX = e.touches[0].clientX; 
+            touchActive = true;
+            stopAuto(); // Only stop during touch
+        });
+
+        track.addEventListener('touchmove', e => {
+            // Optional: prevent default to avoid page scroll while swiping
+            e.preventDefault();
+        });
+
+        track.addEventListener('touchend',   e => {
+            if (touchActive) {
+                const diff = touchX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    goTo(diff > 0 ? current + 1 : current - 1);
+                }
+                touchActive = false;
+                startAuto(); // Resume after touch ends
+            }
+        });
+
+// Add click handlers to make slides clickable
+document.querySelectorAll('.slide').forEach((slide, index) => {
+    slide.addEventListener('click', function(e) {
+        // Don't redirect if clicking on dots or arrows
+        if (e.target.closest('.slider-dots') || e.target.closest('.slider-arrow')) {
+            return;
+        }
+        // Redirect to services page
+        window.location.href = '/services.php';
     });
+    
+    // Make cursor pointer to indicate clickable
+    slide.style.cursor = 'pointer';
+});
 
     goTo(0);
     startAuto();
