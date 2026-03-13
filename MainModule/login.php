@@ -15,21 +15,28 @@ if(isset($_POST['login'])){
 
     if($result->num_rows==1){
         $data=$result->fetch_assoc();
-        $_SESSION['name']=$data['name'];
-        $_SESSION['id']=$data['id'];
-        $_SESSION['type']=$data['accounttype'];
-        $stmt->close();
-        $conn->close();
-        if($data['accounttype']=='customer'){
-            header("location: home.php");
-        }elseif($data['accounttype']=='service-provider'){
-            header("location: ../ServiceProvider/service_home.php");
-        }elseif($data['accounttype']=='administrator'){
-            header("location: ../Admin/admin_home.php");
-        }exit();
+        if(password_verify($password,$data['password'])){
+            $_SESSION['name']=$data['name'];
+            $_SESSION['id']=$data['id'];
+            $_SESSION['type']=$data['accounttype'];
+            $stmt->close();
+            $conn->close();
+            if($data['accounttype']=='customer'){
+                header("location: home.php");
+            }elseif($data['accounttype']=='service-provider'){
+                header("location: ../ServiceProvider/service_home.php");
+            }elseif($data['accounttype']=='administrator'){
+                header("location: ../Admin/admin_home.php");
+            }exit();
+        }else{
+            $_SESSION['login_error'] = "Incorrect Password !";
+            header("location:login.php");
+            exit();
+        }
     }else{
         $_SESSION['login_error'] = "Incorrect Login_id or Password !";
         header("location:login.php");
+        exit();
     }
 }
 ?>
@@ -245,6 +252,12 @@ if(isset($_POST['login'])){
             <img src="../image/logo.jpg.jpeg" alt="Roadside Companion Logo">
             <h2>LOGIN</h2>
         </div>
+        <?php
+            if(isset($_SESSION['login_error'])){
+                echo "<p style='color:red'>".$_SESSION['login_error']."</p>";
+                unset($_SESSION['login_error']);
+            }
+        ?>
         <form method="POST" action="login.php" id="regForm" onsubmit="return validate()">
             <div class="mb-3 text-start">
                 <label>User Type</label>

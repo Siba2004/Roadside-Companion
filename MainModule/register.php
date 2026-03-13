@@ -9,10 +9,43 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $phone=$_POST['phone'];
     $account=$_POST['account'];
     $password=$_POST['password'];
+    $cpassword=$_POST['confirmPassword'];
+
+    if($name=="" || $email=="" || $phone=="" || $account=="" || $password=="" || $cpassword==""){
+        echo "<script>
+                alert('All fields are required');
+                window.location='register.php';
+                </script>";
+        exit();
+    }
+
+    if($password != $cpassword){
+        echo "<script>
+                alert('Passwords do not match');
+                window.location='register.php';
+                </script>";
+        exit();
+    }
+
+    $data="SELECT * FROM users_details WHERE email=? OR phone_number=?";
+    $stmt=$conn->prepare($data);
+    $stmt->bind_param("ss",$email,$phone);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    if($result->num_rows > 0){
+        echo "<script>
+                alert('Email or phone number already exists');
+                window.location='register.php';
+                </script>";
+        exit();
+    }
+
+    $hashedPassword=password_hash($password,PASSWORD_DEFAULT);
+
 
     $sql="INSERT INTO users_details (name,email,phone_number,accounttype,password) VALUES (?,?,?,?,?)";
     $stmt=$conn->prepare($sql);
-    $stmt->bind_param("ssiss",$name,$email,$phone,$account,$password);
+    $stmt->bind_param("ssiss",$name,$email,$phone,$account,$hashedPassword);
     if($stmt->execute()){
         echo "<script>
         alert('Registration successful! Please login.');
@@ -299,7 +332,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                                 <option value="customer">Customer</option>
                                 <option value="service-provider">Service-Provider</option>
                             </select>
-                            <small class="error" id="accountError"></small>
+                            <label class="error" id="accountError"></label>
                     </div>
                 <div class="mb-3 text-start password-box">
                     <label>Password</label>
@@ -320,149 +353,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 </div>
             </form>
         </div>
-        <script>
-            function validate(){
-                let error=false;
-
-                let form=document.getElementById("regForm");
-                let name=form.elements['username'].value
-                let email=form.elements['email'].value
-                let phone=form.elements['phone'].value
-                let password=form.elements['password'].value
-                let cpassword=form.elements['cpassword'].value
-                let account=form.elements['account'].value
-
-                let nameError=document.getElementById("usernameError")
-                let emailError=document.getElementById("emailError")
-                let phoneError=document.getElementById("phoneError")
-                let passError=document.getElementById("passwordError")
-                let cpassError=document.getElementById("confirmPasswordError")
-                let accountError=document.getElementById("accountError")
-
-                nameError.innerHTML="";
-                emailError.innerHTML="";
-                phoneError.innerHTML="";
-                passError.innerHTML="";
-                cpassError.innerHTML="";
-                accountError.innerHTML="";
-
-                if(name===""){
-                    usernameError.innerHTML="Name is require"
-                    error= true
-                }else{
-                    usernameError.innerHTML=""
-                }
-
-                let emailRegx=/^[a-z0-9_\.]{3,}@[a-z0-9\.]{3,15}\.[a-z]{2,5}$/
-                if(email===""){
-                    emailError.innerHTML="Email is required"
-                    error=true
-                }else if(!emailRegx.test(email)){
-                    emailError.innerHTML="please enter a valid email"
-                    error=true
-                }else{
-                    emailError.innerHTML=""
-                }
-
-                let phoneRegx=/^[6-9][0-9]{9}$/
-                if(phone===""){
-                    phoneError.innerHTML="Mobile is required"
-                    error=true
-                }else if(!phoneRegx.test(phone)){
-                    phoneError.innerHTML="Please enter a 10 digit valid mobile number"
-                    error=true
-                }else if(phone.length<10){
-                    phoneError.innerHTML="Phone number must be 10 digits"
-                    error=true
-                }else{
-                    phoneError.innerHTML=""
-                }
-
-                if(account===""){
-                    accountError.innerHTML="Account type is required"
-                    error=true
-                }else{
-                    accountError.innerHTML=""
-                }
-
-                let passErrMsg=""
-                if(password===""){
-                    passErrMsg+="Password is required<br>"
-                    error=true
-                }if(!/[a-z]/.test(password)){
-                    passErrMsg+="Password should have 1 loswe case character<br>"
-                    error=true
-                }if(!/[A-Z]/.test(password)){
-                    passErrMsg+="Password should have 1 upper case character<br>"
-                    error=true
-                }if(!/[0-9]/.test(password)){
-                    passErrMsg+="Password should have 1 number<br>"
-                    error=true
-                }if(!/[@#$%^&]/.test(password)){
-                    passErrMsg+="Password should have 1 special character<br>"
-                    error=true
-                }if(password.length>8 && password.length <15){
-                    passErrMsg+="Password length should be between 8 -15<br>"
-                    error=true
-                }
-
-                if(passErrMsg===""){
-                    passError.innerHTML=""
-                }else{
-                    passError.innerHTML=passErrMsg;
-                    error=true
-                }
-
-                if(cpassword!==password){
-                    cpassError.innerHTML="check the confirm password"
-                    error=true
-                }else{
-                    cpassError.innerHTML=""
-                }
-                var terms = document.getElementById('terms').checked;
-                if (!terms) {
-                    document.getElementById('termsError').innerHTML = 'You must agree to the terms and conditions';
-                    error = true;
-                }
-                if(error){
-                    e.preventDefault();
-                    return false;
-                }
-                return true;
-            }
-            function togglePassword(){
-                let pass = document.getElementById("password");
-                let eye = document.getElementById("eye");
-
-                if(pass.type === "password"){
-                    pass.type="text";
-                    eye.classList.remove("bi-eye-slash");
-                    eye.classList.add("bi-eye");
-                }
-                else{
-                    pass.type="password";
-                    eye.classList.remove("bi-eye");
-                    eye.classList.add("bi-eye-slash");
-                }
-            }
-
-            function toggleConfirmPassword(){
-                let pass = document.getElementById("confirmPassword");
-                let eye = document.getElementById("eye2");
-
-                if(pass.type === "password"){
-                    pass.type="text";
-                    eye.classList.remove("bi-eye-slash");
-                    eye.classList.add("bi-eye");
-                }
-                else{
-                    pass.type="password";
-                    eye.classList.remove("bi-eye");
-                    eye.classList.add("bi-eye-slash");
-                }
-            }
-
-        </script>
+        <script src="register-validation.js"></script>
 
     </body>
 </html>
