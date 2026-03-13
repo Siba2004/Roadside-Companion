@@ -894,7 +894,7 @@ a .check-list li i {
                 </div>
 
                 <div class="slide">
-                    <img src="pic/flattyre.jpg" alt="Flat Tyre">
+                    <img src="pic/f2.jpg" alt="Flat Tyre">
                     <div class="slide-overlay">
                         <div class="slide-text">
                             <span class="badge-offer">🛞 25% OFF</span>
