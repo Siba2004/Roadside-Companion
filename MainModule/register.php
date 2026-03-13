@@ -4,15 +4,48 @@ include_once 'navbar.php';
 require_once '../dbcon.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $name=$_POST['name'];
-    $email=$_POST['email'];
-    $phone=$_POST['phone'];
-    $account=$_POST['account'];
-    $password=$_POST['password'];
+    $name=trim($_POST['name']);
+    $email=trim($_POST['email']);
+    $phone=trim($_POST['phone']);
+    $account=trim($_POST['account']);
+    $password=trim($_POST['password']);
+    $cpassword=trim($_POST['confirmPassword']);
+
+    if($name=="" || $email=="" || $phone=="" || $account=="" || $password=="" || $cpassword==""){
+        echo "<script>
+                alert('All fields are required');
+                window.location='register.php';
+                </script>";
+        exit();
+    }
+
+    if($password != $cpassword){
+        echo "<script>
+                alert('Passwords do not match');
+                window.location='register.php';
+                </script>";
+        exit();
+    }
+
+    $data="SELECT * FROM users_details WHERE email=? OR phone_number=?";
+    $stmt=$conn->prepare($data);
+    $stmt->bind_param("ss",$email,$phone);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    if($result->num_rows > 0){
+        echo "<script>
+                alert('Email or phone number already exists');
+                window.location='register.php';
+                </script>";
+        exit();
+    }
+
+    $hashedPassword=password_hash($password,PASSWORD_DEFAULT);
+
 
     $sql="INSERT INTO users_details (name,email,phone_number,accounttype,password) VALUES (?,?,?,?,?)";
     $stmt=$conn->prepare($sql);
-    $stmt->bind_param("ssiss",$name,$email,$phone,$account,$password);
+    $stmt->bind_param("sssss",$name,$email,$phone,$account,$hashedPassword);
     if($stmt->execute()){
         echo "<script>
         alert('Registration successful! Please login.');
@@ -26,14 +59,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 ?>
 
 <html>
-<head>
-    <title>Roadside Companion Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <style>
+    <head>
+        <title>Roadside Companion Register</title>
+        <link href="../bootstrap.min.css" rel="stylesheet">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <style>
         body {
             height: 100vh;
             margin: 0;
@@ -246,74 +279,53 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 <label>Username</label>
                 <input type="text" name="name" class="form-control" required>
             </div>
-            <div class="mb-3 text-start">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
-            </div>
-            <div class="mb-3 text-start">
-                <label>Phone Number</label>
-                <input type="tel" name="phone" class="form-control" required>
-            </div>
-            <div class="mb-3 text-start">
-                <label>Account Type</label>
-                <select class="form-select" name="account" required>
-                    <option value="" selected disabled>-- Select Type --</option>
-                    <option value="customer">Customer</option>
-                    <option value="service-provider">Service Provider</option>
-                </select>
-                <small class="error" id="accountError"></small>
-            </div>
-            <div class="mb-3 text-start">
-                <label>Password</label>
-                <div class="password-wrapper">
-                    <input type="password" id="password" name="password" class="form-control" required>
+            <form method="POST" action="register.php" id="regForm" onsubmit="return validate()">
+                <div class="mb-3 text-start">
+                    <label>Username</label>
+                    <input type="text" name="name" class="form-control">
+                    <label class="error" id="usernameError"></label>
+                </div>
+                <div class="mb-3 text-start">
+                    <label>Email</label>
+                    <input type="text" name="email" class="form-control">
+                    <label class="error" id="emailError"></label>
+                </div>
+                <div class="mb-3 text-start">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" class="form-control">
+                    <label class="error" id="phoneError"></label>
+                </div>
+                <div class="mb-3 text-start">
+                    <label class="form-label">Account Type</label>
+                            <select class="form-select" name="account" id="account">
+                                <option value="">--SELECT--</option>
+                                <option value="customer">Customer</option>
+                                <option value="service-provider">Service-Provider</option>
+                            </select>
+                            <label class="error" id="accountError"></label>
+                    </div>
+                <div class="mb-3 text-start password-box">
+                    <label>Password</label>
+                    <input type="password" id="password" name="password" class="form-control">
                     <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                    <label class="error" id="passwordError"></label>
                 </div>
-            </div>
-            <div class="mb-3 text-start">
-                <label>Confirm Password</label>
-                <div class="password-wrapper">
-                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                <div class="mb-3 text-start password-box">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
                     <i class="bi bi-eye-slash" onclick="toggleConfirmPassword()" id="eye2"></i>
+                    <label class="error" id="confirmPasswordError"></label>
                 </div>
-            </div>
-            <button type="submit" name="register" class="btn btn-blue">Register</button>
-            <div class="links">
-                Already have an account? <a href="login.php">Login</a>
-            </div>
-        </form>
-    </div>
+                
+                <button type="submit" name="register" class="btn btn-blue w-100">Register</button>
+                <div class="links">
+                    Already have an account? <a href="login.php">Login</a>
+                </div>
+            </form>
+        </div>
+        <script src="./register-validator.js"></script>
 
-    <script>
-        function togglePassword() {
-            let pass = document.getElementById("password");
-            let eye = document.getElementById("eye");
-            if (pass.type === "password") {
-                pass.type = "text";
-                eye.classList.remove("bi-eye-slash");
-                eye.classList.add("bi-eye");
-            } else {
-                pass.type = "password";
-                eye.classList.remove("bi-eye");
-                eye.classList.add("bi-eye-slash");
-            }
-        }
-
-        function toggleConfirmPassword() {
-            let pass = document.getElementById("confirmPassword");
-            let eye = document.getElementById("eye2");
-            if (pass.type === "password") {
-                pass.type = "text";
-                eye.classList.remove("bi-eye-slash");
-                eye.classList.add("bi-eye");
-            } else {
-                pass.type = "password";
-                eye.classList.remove("bi-eye");
-                eye.classList.add("bi-eye-slash");
-            }
-        }
-    </script>
-</body>
+    </body>
 </html>
 <?php
 // include_once 'footer.php';

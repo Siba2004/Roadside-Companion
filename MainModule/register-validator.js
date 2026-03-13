@@ -1,29 +1,27 @@
-AOS.init({ duration: 1000 });
-function validate(e){
-    document.addEventListener('DOMContentLoaded', function() {
-        var navbar = document.querySelector('.navbar');
-        if (navbar) {
-            if (window.getComputedStyle(navbar).position === 'fixed') {
-                document.body.classList.add('has-fixed-navbar');
-            }
-        }
-    });
+function validate(){
     let error=false;
 
     let form=document.getElementById("regForm");
-    let name=form.elements['fullname'].value
+    let name=form.elements['name'].value
     let email=form.elements['email'].value
     let phone=form.elements['phone'].value
     let password=form.elements['password'].value
-    let cpassword=form.elements['cpassword'].value
+    let cpassword=form.elements['confirmPassword'].value
     let account=form.elements['account'].value
 
-    let nameError=document.getElementById("nameError")
+    let nameError=document.getElementById("usernameError")
     let emailError=document.getElementById("emailError")
     let phoneError=document.getElementById("phoneError")
-    let passError=document.getElementById("passError")
-    let cpassError=document.getElementById("cpassError")
+    let passError=document.getElementById("passwordError")
+    let cpassError=document.getElementById("confirmPasswordError")
     let accountError=document.getElementById("accountError")
+
+    nameError.innerHTML="";
+    emailError.innerHTML="";
+    phoneError.innerHTML="";
+    passError.innerHTML="";
+    cpassError.innerHTML="";
+    accountError.innerHTML="";
 
     if(name===""){
         nameError.innerHTML="Name is require"
@@ -45,10 +43,10 @@ function validate(e){
 
     let phoneRegx=/^[6-9][0-9]{9}$/
     if(phone===""){
-        phoneError.innerHTML="Mobile is required"
+        phoneError.innerHTML="Phone number is required"
         error=true
     }else if(!phoneRegx.test(phone)){
-        phoneError.innerHTML="Please enter a 10 digit valid mobile number"
+        phoneError.innerHTML="Please enter a 10 digit valid phone number"
         error=true
     }else if(phone.length<10){
         phoneError.innerHTML="Phone number must be 10 digits"
@@ -57,55 +55,76 @@ function validate(e){
         phoneError.innerHTML=""
     }
 
-    if(account===""){
+    if(account==="" || account===null){
         accountError.innerHTML="Account type is required"
         error=true
     }else{
         accountError.innerHTML=""
     }
 
-    let passErrMsg=""
     if(password===""){
-        passErrMsg+="Password is required<br>"
+        passError.innerHTML+="Password is required<br>"
         error=true
     }if(!/[a-z]/.test(password)){
-        passErrMsg+="Password should have 1 loswe case character<br>"
+        passError.innerHTML+="Password should have 1 loswe case character<br>"
         error=true
     }if(!/[A-Z]/.test(password)){
-        passErrMsg+="Password should have 1 upper case character<br>"
+        passError.innerHTML+="Password should have 1 upper case character<br>"
         error=true
     }if(!/[0-9]/.test(password)){
-        passErrMsg+="Password should have 1 number<br>"
+        passError.innerHTML+="Password should have 1 number<br>"
         error=true
     }if(!/[@#$%^&]/.test(password)){
-        passErrMsg+="Password should have 1 special character<br>"
+        passError.innerHTML+="Password should have 1 special character<br>"
         error=true
-    }if(password.length>8 && password.length <15){
-        passErrMsg+="Password length should be between 8 -15<br>"
-        error=true
-    }
-
-    if(passErrMsg===""){
-        passError.innerHTML=""
-    }else{
-        passError.innerHTML=passErrMsg;
+    }if(password.length <6 || password.length >15){
+        passError.innerHTML+="Password length should be between 6-15<br>"
         error=true
     }
 
-    if(cpassword!==password){
+    if(cpassword===""){
+        cpassError.innerHTML="Confirm password is required"
+        error=true
+    }else if(cpassword!==password){
         cpassError.innerHTML="check the confirm password"
         error=true
     }else{
         cpassError.innerHTML=""
     }
-    var terms = document.getElementById('terms').checked;
-    if (!terms) {
-        document.getElementById('termsError').innerHTML = 'You must agree to the terms and conditions';
-        error = true;
-    }
+                
     if(error){
-        e.preventDefault();
         return false;
     }
     return true;
+}
+function togglePassword(){
+    let pass = document.getElementById("password");
+    let eye = document.getElementById("eye");
+
+    if(pass.type === "password"){
+        pass.type="text";
+        eye.classList.remove("bi-eye-slash");
+        eye.classList.add("bi-eye");
+    }
+    else{
+        pass.type="password";
+        eye.classList.remove("bi-eye");
+        eye.classList.add("bi-eye-slash");
+    }
+}
+
+function toggleConfirmPassword(){
+    let pass = document.getElementById("confirmPassword");
+    let eye = document.getElementById("eye2");
+
+    if(pass.type === "password"){
+        pass.type="text";
+        eye.classList.remove("bi-eye-slash");
+        eye.classList.add("bi-eye");
+    }
+    else{
+        pass.type="password";
+        eye.classList.remove("bi-eye");
+        eye.classList.add("bi-eye-slash");
+    }
 }

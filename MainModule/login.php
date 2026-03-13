@@ -3,41 +3,49 @@ session_start();
 require_once '../dbcon.php';
 
 if(isset($_POST['login'])){
-    $login_id=$_POST['login_id'];
+    $login_id=trim($_POST['login_id']);
     $password=$_POST['password'];
     $type=$_POST['usertype'];
-    $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND password=? AND accounttype=?";
+
+    $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND accounttype=?";
     $stmt=$conn->prepare($qry);
-    $stmt->bind_param("ssss",$login_id,$login_id,$password,$type);
+    $stmt->bind_param("sss",$login_id,$login_id,$type);
     $stmt->execute();
     $result=$stmt->get_result();
 
     if($result->num_rows==1){
         $data=$result->fetch_assoc();
-        $_SESSION['name']=$data['name'];
-        $_SESSION['id']=$data['id'];
-        $_SESSION['type']=$data['accounttype'];
-        $stmt->close();
-        $conn->close();
-        if($data['accounttype']=='customer'){
-            header("location: home.php");
-        }elseif($data['accounttype']=='service-provider'){
-            header("location: ../ServiceProvider/service_home.php");
-        }elseif($data['accounttype']=='administrator'){
-            header("location: ../Admin/admin_home.php");
-        }exit();
+        if(password_verify($password,$data['password'])){
+            $_SESSION['name']=$data['name'];
+            $_SESSION['id']=$data['id'];
+            $_SESSION['type']=$data['accounttype'];
+            $stmt->close();
+            $conn->close();
+            if($data['accounttype']=='customer'){
+                header("location: home.php");
+            }elseif($data['accounttype']=='service-provider'){
+                header("location: ../ServiceProvider/service_home.php");
+            }elseif($data['accounttype']=='administrator'){
+                header("location: ../Admin/admin_home.php");
+            }exit();
+        }else{
+            $_SESSION['login_error'] = "Incorrect Login ID or Account Type";
+            header("location:login.php");
+            exit();
+        }
     }else{
         $_SESSION['login_error'] = "Incorrect Login_id or Password !";
         header("location:login.php");
+        exit();
     }
 }
 ?>
 <?php include_once 'navbar.php'; ?>
 <html>
 <head>
-    <meta charset="UTF-8">
+
     <title>Roadside Companion Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -235,7 +243,12 @@ if(isset($_POST['login'])){
                 transform:translateY(0);
             }
         }
-
+        .error{
+            color: red;
+            font-size: 14px;
+            margin-top: 3px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -245,15 +258,22 @@ if(isset($_POST['login'])){
             <img src="../image/logo.jpg.jpeg" alt="Roadside Companion Logo">
             <h2>LOGIN</h2>
         </div>
-        <form method="POST" action="login.php" id="regForm" onsubmit="return validate(event)">
+        <?php
+            if(isset($_SESSION['login_error'])){
+                echo "<p style='color:red'>".$_SESSION['login_error']."</p>";
+                unset($_SESSION['login_error']);
+            }
+        ?>
+        <form method="POST" action="login.php" id="loginForm" onsubmit="return validateLogin()">
             <div class="mb-3 text-start">
                 <label>User Type</label>
-                <select name="usertype" class="form-select" required>
+                <select name="usertype" class="form-select">
                     <option value="" selected disabled>-Select-User-Type-</option>
                     <option value="administrator">Admin</option>
                     <option value="service-provider">Mechanic</option>
                     <option value="customer">User</option>
                 </select>
+                <label class="error" id="usertypeError"></label>
             </div>
 
             <div class="mb-3 text-start">
@@ -279,58 +299,12 @@ if(isset($_POST['login'])){
             </div>
         </form>
     </div>
-
-    <script>
-        function validate(e){
-            let error=false;
-            let form=document.getElementById('regForm');
-            let login_id=form.elements['login_id'].value;
-            let password=form.elements['password'].value;
-
-            let login_idError=document.getElementById('login_idError');
-            let passwordError=document.getElementById('passwordError');
-            
-            if(login_id===""){
-                login_idError.innerHTML="Please enter your email or phone number";
-                error=true;
-            }else{
-                login_idError.innerHTML="";
-            }
-
-            let passErrMsg="";
-            if(password === ""){
-                passErrMsg +="Password is required<br>";
-                error = true;
-            }
-            if(passErrMsg === ""){
-                passwordError.innerHTML = "";
-            } else {
-                passwordError.innerHTML = passErrMsg;
-            }
-
-            if(error){
-                e.preventDefault();
-            }
-        }
-
-        function togglePassword(){
-            let pass = document.getElementById("password");
-            let eye = document.getElementById("eye");
-
-            if(pass.type === "password"){
-                pass.type="text";
-                eye.classList.remove("bi-eye-slash");
-                eye.classList.add("bi-eye");
-            }
-            else{
-                pass.type="password";
-                eye.classList.remove("bi-eye");
-                eye.classList.add("bi-eye-slash");
-            }
-        }
-    </script>
-</body>
+    <script src="./login-validation.js"></script>
+    </body>
 </html>
-<?php 
-// include_once 'footer.php'; 
+<?php
+// include_once 'footer.php';
 ?>
+
+
+
