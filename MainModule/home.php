@@ -62,42 +62,6 @@ require_once '../dbcon.php';
             color: white;
         }
 
-        /* ── NAVBAR - Matching login/register design ── */
-        .navbar { 
-            background: rgba(0,0,0,0.65); 
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 0; 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.8);
-        }
-        .navbar-brand { 
-            font-weight: 600; 
-            font-size: 1.4rem; 
-            color: white !important; 
-            text-transform: uppercase; 
-            letter-spacing: 2px;
-            font-family: 'Orbitron', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .navbar-brand i { 
-            color: var(--primary); 
-            font-size: 1.8rem;
-        }
-        .nav-link { 
-            color: rgba(255,255,255,0.8) !important; 
-            font-weight: 400; 
-            margin: 0 10px; 
-            text-transform: uppercase; 
-            font-size: .85rem; 
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        .nav-link:hover { 
-            color: var(--primary) !important; 
-            transform: translateY(-2px);
-        }
 
         /* ── BUTTONS - Matching login/register ── */
         .btn-primary { 
@@ -136,7 +100,7 @@ require_once '../dbcon.php';
 
         /* ── BANNER SLIDER - Matching glassmorphism ── */
         .banner-wrap { 
-            margin-top: 90px; 
+            margin-top: 65px; 
             background: transparent; 
             padding: 40px 0; 
         }
@@ -828,13 +792,6 @@ a .check-list li i {
             animation: float 3s ease-in-out infinite;
         }
 
-        /* Additional matching styles */
-        .bg-white {
-            background: rgba(0,0,0,0.8) !important;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-        }
         .shadow-lg {
             box-shadow: 0 0 30px rgba(0,0,0,0.8) !important;
         }
@@ -944,7 +901,7 @@ a .check-list li i {
 <section id="services">
     <div class="container">
         <div class="text-center" data-aos="fade-up">
-            <h2 class="section-title">Our Services</h2>
+            <h2 class="section-title">Our Popular Services</h2>
             <p class="section-subtitle">Comprehensive roadside assistance for all vehicle types</p>
         </div>
         <div class="row g-4 align-items-stretch">
@@ -1159,31 +1116,31 @@ a .check-list li i {
 
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="review-card">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Kumar" class="reviewer-img">
+                    <img src="pic/reviewpic/revimg2.avif" alt="Rajesh Kumar Patra" class="reviewer-img">
                     <div class="review-stars">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="small mb-3">"My car broke down on the highway and they reached within 15 minutes. Fixed the issue quickly and charged a fair price."</p>
+                    <p class="small mb-3">"My Bike broke down on the highway and they reached within 15 minutes. Fixed the issue quickly and charged a fair price."</p>
                     <h5 class="reviewer-name">Rajesh Kumar</h5>
-                    <p class="reviewer-role">Car Owner</p>
+                    <p class="reviewer-role">Bike Rider</p>
                 </div>
             </div>
 
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="review-card">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Sharma" class="reviewer-img">
+                    <img src="pic/reviewpic/revimg.avif" alt="Soumya Rani Nayak" class="reviewer-img">
                     <div class="review-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="small mb-3">"Battery boosting service for my bike was super quick. The mechanic was professional and even checked other parts. Highly recommended!"</p>
+                    <p class="small mb-3">"Battery boosting service for my car was super quick. The mechanic was professional and even checked other parts. Highly recommended!"</p>
                     <h5 class="reviewer-name">Priya Sharma</h5>
-                    <p class="reviewer-role">Bike Rider</p>
+                    <p class="reviewer-role">Car Owner</p>
                 </div>
             </div>
 
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                 <div class="review-card">
-                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Amit Patel" class="reviewer-img">
+                    <img src="pic/reviewpic/revimg3.avif" alt="Amit Patel" class="reviewer-img">
                     <div class="review-stars">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                     </div>
