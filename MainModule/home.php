@@ -414,22 +414,7 @@ a .check-list li i {
 
 
 
-        /* Animated left border */
-        .service-card::before { 
-            content: ''; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 3px; 
-            height: 0; 
-            background: var(--primary); 
-            transition: .3s;
-            border-radius: 15px 0 0 15px;
-        }
-        .service-card:hover::before { 
-            height: 100%; 
-            box-shadow: 0 0 15px var(--primary);
-        }
+       
 
         .card-title { 
             color: white; 
