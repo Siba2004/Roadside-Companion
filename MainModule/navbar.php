@@ -116,11 +116,43 @@ if (session_status() === PHP_SESSION_NONE) {
                     </a>
                     <small id="locationText" class="text-light"></small>
                 </li>
-                <li class="nav-item ms-2">
-                    <a class="btn btn-primary" href="login.php">
-                        <i class="fas fa-sign-in-alt me-2"></i>Login
-                    </a>
-                </li>
+               <?php if(isset($_SESSION['name'])){ ?>
+
+<li class="nav-item dropdown ms-2">
+    <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+        <i class="fas fa-user me-2"></i>
+        Hello <?php echo htmlspecialchars($_SESSION['name']); ?>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+            <a class="dropdown-item" href="profile.php">
+                <i class="fas fa-user-circle me-2"></i> Your Profile
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="my_services.php">
+                <i class="fas fa-tools me-2"></i> My Services
+            </a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+            <a class="dropdown-item text-danger" href="logout.php">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </a>
+        </li>
+    </ul>
+</li>
+
+<?php } else { ?>
+
+<li class="nav-item ms-2">
+    <a class="btn btn-primary" href="login.php">
+        <i class="fas fa-sign-in-alt me-2"></i>Login
+    </a>
+</li>
+
+<?php } ?>
             </ul>
         </div>
     </div>
