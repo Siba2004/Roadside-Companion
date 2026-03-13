@@ -35,18 +35,19 @@ if (session_status() === PHP_SESSION_NONE) {
             background: var(--light-bg);
             color: var(--gray-corporate);
         }
+          .navbar { 
+    background: linear-gradient(135deg,#0b1220,#0f1f3d);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 30px 0;   /* increased height */
+    position: relative;
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.8);
+    margin-bottom;:80px;
+}
 
-        /* ── NAVBAR - Matching login/register design ── */
-        .navbar { 
-            background: rgba(0,0,0,0.65); 
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 0; 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.8);
-        }
         .navbar-brand { 
             font-weight: 600; 
-            font-size: 1.4rem; 
+            font-size: 1.5rem; 
             color: white !important; 
             text-transform: uppercase; 
             letter-spacing: 2px;
@@ -57,14 +58,14 @@ if (session_status() === PHP_SESSION_NONE) {
         }
         .navbar-brand i { 
             color: var(--primary); 
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
         .nav-link { 
             color: rgba(255,255,255,0.8) !important; 
             font-weight: 400; 
-            margin: 0 10px; 
+            margin: 7px 12px; 
             text-transform: uppercase; 
-            font-size: .85rem; 
+            font-size: .6rem; 
             letter-spacing: 1px;
             transition: 0.3s;
         }

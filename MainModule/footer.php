@@ -3,11 +3,11 @@
 ============================================================ -->
 <style>
     .footer {
-        background: var(--primary);
-        color: white;
-        padding: 60px 0 30px;
-        border-top: 4px solid var(--accent);
-    }
+    background: #0b1220;
+    color: white;
+    padding: 60px 0 30px;
+    
+}
 
     .footer-title {
         color: white;
