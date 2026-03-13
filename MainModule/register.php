@@ -274,11 +274,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <img src="../image/logo.jpg.jpeg" alt="Roadside Companion Logo">
             <h2>REGISTER</h2>
         </div>
-        <form method="POST" action="register.php">
-            <div class="mb-3 text-start">
-                <label>Username</label>
-                <input type="text" name="name" class="form-control" required>
-            </div>
             <form method="POST" action="register.php" id="regForm" onsubmit="return validate()">
                 <div class="mb-3 text-start">
                     <label>Username</label>
@@ -328,5 +323,5 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </body>
 </html>
 <?php
-// include_once 'footer.php';
+include_once 'footer.php';
 ?>
