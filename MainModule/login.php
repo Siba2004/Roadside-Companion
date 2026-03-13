@@ -2,7 +2,6 @@
 session_start();
 require_once '../dbcon.php';
 
-
 if(isset($_POST['login'])){
     $login_id=$_POST['login_id'];
     $password=$_POST['password'];
@@ -44,8 +43,6 @@ if(isset($_POST['login'])){
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
-
-        
         body{
             height:100vh;
             margin:0;
@@ -63,7 +60,7 @@ if(isset($_POST['login'])){
         }
 
         /* Dark overlay */
-            body::before{
+        body::before{
             content:"";
             position:absolute;
             width:100%;
@@ -83,6 +80,8 @@ if(isset($_POST['login'])){
             text-align:center;
             box-shadow:0 0 30px rgba(0,0,0,0.8);
             animation:fadeIn 1.5s ease;
+            margin-top:20px;          /* space below navbar */
+            z-index:1000;              /* above overlay and navbar */
         }
 
         /* Logo */
@@ -142,7 +141,6 @@ if(isset($_POST['login'])){
             letter-spacing:5px;
         }
 
-
         /* Dropdown options */
         .form-select option{
             background:#111;
@@ -158,27 +156,36 @@ if(isset($_POST['login'])){
             color:white;
         }
 
-        /* Password box */
-        .password-box{
+        /* Password wrapper for eye icon */
+        .password-wrapper{
             position:relative;
         }
 
-        .password-box input{
-                padding-right:40px;
+        .password-wrapper input{
+            padding-right:40px;
         }
 
-        .password-box i{
+        .password-wrapper i{
             position:absolute;
             right:15px;
-            top:70%;
+            top:50%;
             transform:translateY(-50%);
             cursor:pointer;
             color:#ccc;
+            z-index:10;
         }
 
         /* Spacing */
         .mb-3{
             margin-bottom:12px !important;
+        }
+
+        /* Error messages */
+        .error{
+            color:#ff6b6b;
+            font-size:13px;
+            display:block;
+            margin-top:2px;
         }
 
         /* Button */
@@ -212,7 +219,6 @@ if(isset($_POST['login'])){
         }
 
         /* Animations */
-
         @keyframes float{
             0%{transform:translateY(0px);}
             50%{transform:translateY(-8px);}
@@ -222,7 +228,7 @@ if(isset($_POST['login'])){
         @keyframes fadeIn{
             from{
                 opacity:0;
-                transform:translateY(30px);
+                transform:translateY(60px);   /* starts lower */
             }
             to{
                 opacity:1;
@@ -231,7 +237,6 @@ if(isset($_POST['login'])){
         }
 
     </style>
-
 </head>
 
 <body>
@@ -253,16 +258,17 @@ if(isset($_POST['login'])){
 
             <div class="mb-3 text-start">
                 <label>Phone/Email</label>
-                <input type="text" name="login_id" class="form-control"><br>
+                <input type="text" name="login_id" class="form-control">
                 <label class="error" id="login_idError"></label>
-
             </div>
 
-            <div class="mb-3 text-start password-box">
+            <div class="mb-3 text-start">
                 <label>Password</label>
-                <input type="password" id="password" name="password" class="form-control"><br>
-                <label class="error" id="login_idError"></label><br>
-                <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" class="form-control">
+                    <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                </div>
+                <label class="error" id="passwordError"></label>
             </div>
 
             <button type="submit" name="login" class="btn btn-blue w-100">Login</button>
@@ -277,33 +283,36 @@ if(isset($_POST['login'])){
     <script>
         function validate(e){
             let error=false;
-            let form=document.getElementById('loginForm');
-            let login_id=form.elements['login_id'].value
-            let password=form.elements['password'].value
+            let form=document.getElementById('regForm');
+            let login_id=form.elements['login_id'].value;
+            let password=form.elements['password'].value;
 
             let login_idError=document.getElementById('login_idError');
             let passwordError=document.getElementById('passwordError');
             
             if(login_id===""){
-                login_idError.innerHTML="Please enter your email or phone number"
-                error=true
+                login_idError.innerHTML="Please enter your email or phone number";
+                error=true;
             }else{
-                login_idError.innerHTML=""
+                login_idError.innerHTML="";
             }
+
             let passErrMsg="";
             if(password === ""){
-                passErrMsg +="Password is required<br>"
-                error = true
+                passErrMsg +="Password is required<br>";
+                error = true;
             }
             if(passErrMsg === ""){
-                passwordError.innerHTML = ""
+                passwordError.innerHTML = "";
             } else {
-                passwordError.innerHTML = passErrMsg
+                passwordError.innerHTML = passErrMsg;
             }
+
             if(error){
                 e.preventDefault();
             }
         }
+
         function togglePassword(){
             let pass = document.getElementById("password");
             let eye = document.getElementById("eye");
@@ -318,16 +327,10 @@ if(isset($_POST['login'])){
                 eye.classList.remove("bi-eye");
                 eye.classList.add("bi-eye-slash");
             }
-
         }
-
     </script>
-
 </body>
 </html>
 <?php 
 // include_once 'footer.php'; 
 ?>
-
-
-
