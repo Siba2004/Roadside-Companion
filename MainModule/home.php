@@ -27,7 +27,7 @@ require_once '../dbcon.php';
             --light-bg:  transparent;
             --border:    rgba(255,255,255,0.2);
             --icon-bg:   rgba(13,110,253,0.1);
-            --dark-overlay: rgba(0,0,0,0.75);
+            --dark-overlay: rgba(6, 6, 6, 0.95);
         }
 
         /* ── BASE - Matching login/register background ── */
