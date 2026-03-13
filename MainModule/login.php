@@ -38,7 +38,7 @@ if(isset($_POST['login'])){
 <head>
     <meta charset="UTF-8">
     <title>Roadside Companion Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -229,7 +229,12 @@ if(isset($_POST['login'])){
                 transform:translateY(0);
             }
         }
-
+        .error{
+            color: red;
+            font-size: 14px;
+            margin-top: 3px;
+            display: block;
+        }
     </style>
 
 </head>
@@ -240,29 +245,30 @@ if(isset($_POST['login'])){
             <img src="../image/logo.jpg.jpeg" alt="Roadside Companion Logo">
             <h2>LOGIN</h2>
         </div>
-        <form method="POST" action="login.php" id="regForm" onsubmit="return validate(event)">
+        <form method="POST" action="login.php" id="regForm" onsubmit="return validate()">
             <div class="mb-3 text-start">
                 <label>User Type</label>
-                <select name="usertype" class="form-select" required>
+                <select name="usertype" class="form-select">
                     <option value="" selected disabled>-Select-User-Type-</option>
                     <option value="administrator">Admin</option>
                     <option value="service-provider">Mechanic</option>
                     <option value="customer">User</option>
                 </select>
+                <label class="error" id="usertypeError"></label>
             </div>
 
             <div class="mb-3 text-start">
                 <label>Phone/Email</label>
-                <input type="text" name="login_id" class="form-control"><br>
+                <input type="text" name="login_id" class="form-control">
                 <label class="error" id="login_idError"></label>
 
             </div>
 
             <div class="mb-3 text-start password-box">
                 <label>Password</label>
-                <input type="password" id="password" name="password" class="form-control"><br>
-                <label class="error" id="login_idError"></label><br>
+                <input type="password" id="password" name="password" class="form-control">
                 <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                <label class="error" id="passwordError"></label>
             </div>
 
             <button type="submit" name="login" class="btn btn-blue w-100">Login</button>
@@ -273,60 +279,11 @@ if(isset($_POST['login'])){
             </div>
         </form>
     </div>
-
-    <script>
-        function validate(e){
-            let error=false;
-            let form=document.getElementById('loginForm');
-            let login_id=form.elements['login_id'].value
-            let password=form.elements['password'].value
-
-            let login_idError=document.getElementById('login_idError');
-            let passwordError=document.getElementById('passwordError');
-            
-            if(login_id===""){
-                login_idError.innerHTML="Please enter your email or phone number"
-                error=true
-            }else{
-                login_idError.innerHTML=""
-            }
-            let passErrMsg="";
-            if(password === ""){
-                passErrMsg +="Password is required<br>"
-                error = true
-            }
-            if(passErrMsg === ""){
-                passwordError.innerHTML = ""
-            } else {
-                passwordError.innerHTML = passErrMsg
-            }
-            if(error){
-                e.preventDefault();
-            }
-        }
-        function togglePassword(){
-            let pass = document.getElementById("password");
-            let eye = document.getElementById("eye");
-
-            if(pass.type === "password"){
-                pass.type="text";
-                eye.classList.remove("bi-eye-slash");
-                eye.classList.add("bi-eye");
-            }
-            else{
-                pass.type="password";
-                eye.classList.remove("bi-eye");
-                eye.classList.add("bi-eye-slash");
-            }
-
-        }
-
-    </script>
-
-</body>
+    <script src="login-validation.js"></script>
+    </body>
 </html>
-<?php 
-// include_once 'footer.php'; 
+<?php
+// include_once 'footer.php';
 ?>
 
 

@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <html>
     <head>
         <title>Roadside Companion Register</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../bootstrap.min.css" rel="stylesheet">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500&display=swap" rel="stylesheet">
         <!-- Bootstrap Icons -->
@@ -276,18 +276,21 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 <img src="../image/logo.jpg.jpeg" alt="Roadside Companion Logo">
                 <h2>REGISTER</h2>
             </div>
-            <form method="POST" action="register.php">
+            <form method="POST" action="register.php" id="regForm" onsubmit="return validate()">
                 <div class="mb-3 text-start">
                     <label>Username</label>
                     <input type="text" name="name" class="form-control">
+                    <label class="error" id="usernameError"></label>
                 </div>
                 <div class="mb-3 text-start">
                     <label>Email</label>
                     <input type="text" name="email" class="form-control">
+                    <label class="error" id="emailError"></label>
                 </div>
                 <div class="mb-3 text-start">
                     <label>Phone Number</label>
                     <input type="text" name="phone" class="form-control">
+                    <label class="error" id="phoneError"></label>
                 </div>
                 <div class="mb-3 text-start">
                     <label class="form-label">Account Type</label>
@@ -300,14 +303,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     </div>
                 <div class="mb-3 text-start password-box">
                     <label>Password</label>
-                    <input type="password" id="password" name="password" class="form-control" required>
+                    <input type="password" id="password" name="password" class="form-control">
                     <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                    <label class="error" id="passwordError"></label>
                 </div>
                 <div class="mb-3 text-start password-box">
                     <label>Confirm Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
                     <i class="bi bi-eye-slash" onclick="toggleConfirmPassword()" id="eye2"></i>
+                    <label class="error" id="confirmPasswordError"></label>
                 </div>
+                
                 <button type="submit" name="register" class="btn btn-blue w-100">Register</button>
                 <div class="links">
                     Already have an account? <a href="login.php">Login</a>
@@ -315,6 +321,115 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             </form>
         </div>
         <script>
+            function validate(){
+                let error=false;
+
+                let form=document.getElementById("regForm");
+                let name=form.elements['username'].value
+                let email=form.elements['email'].value
+                let phone=form.elements['phone'].value
+                let password=form.elements['password'].value
+                let cpassword=form.elements['cpassword'].value
+                let account=form.elements['account'].value
+
+                let nameError=document.getElementById("usernameError")
+                let emailError=document.getElementById("emailError")
+                let phoneError=document.getElementById("phoneError")
+                let passError=document.getElementById("passwordError")
+                let cpassError=document.getElementById("confirmPasswordError")
+                let accountError=document.getElementById("accountError")
+
+                nameError.innerHTML="";
+                emailError.innerHTML="";
+                phoneError.innerHTML="";
+                passError.innerHTML="";
+                cpassError.innerHTML="";
+                accountError.innerHTML="";
+
+                if(name===""){
+                    usernameError.innerHTML="Name is require"
+                    error= true
+                }else{
+                    usernameError.innerHTML=""
+                }
+
+                let emailRegx=/^[a-z0-9_\.]{3,}@[a-z0-9\.]{3,15}\.[a-z]{2,5}$/
+                if(email===""){
+                    emailError.innerHTML="Email is required"
+                    error=true
+                }else if(!emailRegx.test(email)){
+                    emailError.innerHTML="please enter a valid email"
+                    error=true
+                }else{
+                    emailError.innerHTML=""
+                }
+
+                let phoneRegx=/^[6-9][0-9]{9}$/
+                if(phone===""){
+                    phoneError.innerHTML="Mobile is required"
+                    error=true
+                }else if(!phoneRegx.test(phone)){
+                    phoneError.innerHTML="Please enter a 10 digit valid mobile number"
+                    error=true
+                }else if(phone.length<10){
+                    phoneError.innerHTML="Phone number must be 10 digits"
+                    error=true
+                }else{
+                    phoneError.innerHTML=""
+                }
+
+                if(account===""){
+                    accountError.innerHTML="Account type is required"
+                    error=true
+                }else{
+                    accountError.innerHTML=""
+                }
+
+                let passErrMsg=""
+                if(password===""){
+                    passErrMsg+="Password is required<br>"
+                    error=true
+                }if(!/[a-z]/.test(password)){
+                    passErrMsg+="Password should have 1 loswe case character<br>"
+                    error=true
+                }if(!/[A-Z]/.test(password)){
+                    passErrMsg+="Password should have 1 upper case character<br>"
+                    error=true
+                }if(!/[0-9]/.test(password)){
+                    passErrMsg+="Password should have 1 number<br>"
+                    error=true
+                }if(!/[@#$%^&]/.test(password)){
+                    passErrMsg+="Password should have 1 special character<br>"
+                    error=true
+                }if(password.length>8 && password.length <15){
+                    passErrMsg+="Password length should be between 8 -15<br>"
+                    error=true
+                }
+
+                if(passErrMsg===""){
+                    passError.innerHTML=""
+                }else{
+                    passError.innerHTML=passErrMsg;
+                    error=true
+                }
+
+                if(cpassword!==password){
+                    cpassError.innerHTML="check the confirm password"
+                    error=true
+                }else{
+                    cpassError.innerHTML=""
+                }
+                var terms = document.getElementById('terms').checked;
+                if (!terms) {
+                    document.getElementById('termsError').innerHTML = 'You must agree to the terms and conditions';
+                    error = true;
+                }
+                if(error){
+                    e.preventDefault();
+                    return false;
+                }
+                return true;
+            }
             function togglePassword(){
                 let pass = document.getElementById("password");
                 let eye = document.getElementById("eye");
