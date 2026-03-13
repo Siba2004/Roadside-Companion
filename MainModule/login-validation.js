@@ -1,6 +1,6 @@
-function validate(){
+function validateLogin(){
         let error=false;
-        let form=document.getElementById('regForm')
+        let form=document.getElementById('loginForm')
         let usertype=form.elements['usertype'].value
         let login_id=form.elements['login_id'].value.trim()
         let password=form.elements['password'].value

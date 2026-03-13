@@ -20,7 +20,7 @@ function validate(){
     emailError.innerHTML="";
     phoneError.innerHTML="";
     passError.innerHTML="";
-    cpassError.innerHTML=
+    cpassError.innerHTML="";
     accountError.innerHTML="";
 
     if(name===""){
@@ -80,8 +80,6 @@ function validate(){
     }if(password.length <6 || password.length >15){
         passError.innerHTML+="Password length should be between 6-15<br>"
         error=true
-    }else{
-        passError.innerHTML=""
     }
 
     if(cpassword===""){

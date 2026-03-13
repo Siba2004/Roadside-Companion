@@ -4,12 +4,13 @@ require_once '../dbcon.php';
 
 
 if(isset($_POST['login'])){
-    $login_id=$_POST['login_id'];
+    $login_id=trim($_POST['login_id']);
     $password=$_POST['password'];
     $type=$_POST['usertype'];
-    $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND password=? AND accounttype=?";
+
+    $qry="SELECT * FROM users_details WHERE (email=? OR phone_number=?) AND accounttype=?";
     $stmt=$conn->prepare($qry);
-    $stmt->bind_param("ssss",$login_id,$login_id,$password,$type);
+    $stmt->bind_param("sss",$login_id,$login_id,$type);
     $stmt->execute();
     $result=$stmt->get_result();
 
@@ -29,7 +30,7 @@ if(isset($_POST['login'])){
                 header("location: ../Admin/admin_home.php");
             }exit();
         }else{
-            $_SESSION['login_error'] = "Incorrect Password !";
+            $_SESSION['login_error'] = "Incorrect Login ID or Account Type";
             header("location:login.php");
             exit();
         }
@@ -43,7 +44,7 @@ if(isset($_POST['login'])){
 <?php include_once 'navbar.php'; ?>
 <html>
 <head>
-    <meta charset="UTF-8">
+
     <title>Roadside Companion Login</title>
     <link href="../bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
@@ -258,7 +259,7 @@ if(isset($_POST['login'])){
                 unset($_SESSION['login_error']);
             }
         ?>
-        <form method="POST" action="login.php" id="regForm" onsubmit="return validate()">
+        <form method="POST" action="login.php" id="loginForm" onsubmit="return validateLogin()">
             <div class="mb-3 text-start">
                 <label>User Type</label>
                 <select name="usertype" class="form-select">
@@ -292,7 +293,7 @@ if(isset($_POST['login'])){
             </div>
         </form>
     </div>
-    <script src="login-validation.js"></script>
+    <script src="./login-validation.js"></script>
     </body>
 </html>
 <?php

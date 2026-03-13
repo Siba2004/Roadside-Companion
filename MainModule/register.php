@@ -4,12 +4,12 @@ include_once 'navbar.php';
 require_once '../dbcon.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $name=$_POST['name'];
-    $email=$_POST['email'];
-    $phone=$_POST['phone'];
-    $account=$_POST['account'];
-    $password=$_POST['password'];
-    $cpassword=$_POST['confirmPassword'];
+    $name=trim($_POST['name']);
+    $email=trim($_POST['email']);
+    $phone=trim($_POST['phone']);
+    $account=trim($_POST['account']);
+    $password=trim($_POST['password']);
+    $cpassword=trim($_POST['confirmPassword']);
 
     if($name=="" || $email=="" || $phone=="" || $account=="" || $password=="" || $cpassword==""){
         echo "<script>
@@ -45,7 +45,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
     $sql="INSERT INTO users_details (name,email,phone_number,accounttype,password) VALUES (?,?,?,?,?)";
     $stmt=$conn->prepare($sql);
-    $stmt->bind_param("ssiss",$name,$email,$phone,$account,$hashedPassword);
+    $stmt->bind_param("sssss",$name,$email,$phone,$account,$hashedPassword);
     if($stmt->execute()){
         echo "<script>
         alert('Registration successful! Please login.');
@@ -353,7 +353,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 </div>
             </form>
         </div>
-        <script src="register-validation.js"></script>
+        <script src="./register-validator.js"></script>
 
     </body>
 </html>
