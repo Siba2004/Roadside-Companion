@@ -2,14 +2,14 @@
 include_once 'navbar.php';
 require_once '../dbcon.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
+
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RoadSide Companion</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts - Matching login/register -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
@@ -414,22 +414,7 @@ a .check-list li i {
 
 
 
-        /* Animated left border */
-        .service-card::before { 
-            content: ''; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 3px; 
-            height: 0; 
-            background: var(--primary); 
-            transition: .3s;
-            border-radius: 15px 0 0 15px;
-        }
-        .service-card:hover::before { 
-            height: 100%; 
-            box-shadow: 0 0 15px var(--primary);
-        }
+       
 
         .card-title { 
             color: white; 

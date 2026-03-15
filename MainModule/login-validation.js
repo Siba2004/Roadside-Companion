@@ -1,66 +1,83 @@
-AOS.init({ duration: 1000 });
-function validate(e){
+function validateLogin(){
         let error=false;
-        let form=document.getElementById('regForm');
-        let login_id=form.elements['login_id'].value
+        let form=document.getElementById('loginForm')
+        let usertype=form.elements['usertype'].value
+        let login_id=form.elements['login_id'].value.trim()
         let password=form.elements['password'].value
 
-        let login_idError=document.getElementById('login_idError');
-        let passwordError=document.getElementById('passwordError');
+        let usertypeError=document.getElementById('usertypeError')
+        let login_idError=document.getElementById('login_idError')
+        let passwordError=document.getElementById('passwordError')
         
-        if(login_id===""){
-            login_idError.innerHTML="Please enter your email or phone number"
+        usertypeError.innerHTML = ""
+        login_idError.innerHTML = ""
+        passwordError.innerHTML = ""
+        
+        if(usertype === "" || usertype === null){
+            usertypeError.innerHTML="Please select an account type"
+            error=true
+        }
+
+        if(login_id === ""){
+            login_idError.innerHTML = "Please enter your email or phone number"
+            error = true;
+        }else{
+            let emailRegex = /^[a-z0-9_\.]{3,}@[a-z0-9\.]{3,15}\.[a-z]{2,5}$/
+            let phoneRegex =/^[6-9][0-9]{9}$/
+
+            if(emailRegex.test(login_id)){
+                login_idError.innerHTML = ""
+
+            }else if(phoneRegex.test(login_id)){
+                login_idError.innerHTML = ""
+
+            }else{
+                login_idError.innerHTML = "Enter a valid Email or 10 digit Phone number"
+                error = true
+            }
+        }
+
+        if(password===""){
+            passwordError.innerHTML+="Password is required<br>"
+            error=true
+        }if(!/[a-z]/.test(password)){
+            passwordError.innerHTML+="Password should have 1 loswe case character<br>"
+            error=true
+        }if(!/[A-Z]/.test(password)){
+            passwordError.innerHTML+="Password should have 1 upper case character<br>"
+            error=true
+        }if(!/[0-9]/.test(password)){
+            passwordError.innerHTML+="Password should have 1 number<br>"
+            error=true
+        }if(!/[@#$%^&]/.test(password)){
+            passwordError.innerHTML+="Password should have 1 special character<br>"
+            error=true
+        }if(password.length <6 || password.length >15){
+            passwordError.innerHTML+="Password length should be between 6-15<br>"
             error=true
         }else{
-            login_idError.innerHTML=""
+            passwordError.innerHTML=""
         }
-        let passErrMsg="";
-        if(password === ""){
-            passErrMsg +="Password is required<br>"
-            error = true
-        }
-        if(passErrMsg === ""){
-            passwordError.innerHTML = ""
-        } else {
-            passwordError.innerHTML = passErrMsg
-        }
+        
         if(error){
             return false;
         }
         return true;
 }
-function switchLoginOption(option) {
-            const emailOption = document.getElementById('emailOption');
-            const phoneOption = document.getElementById('phoneOption');
-            const emailField = document.getElementById('emailField');
-            const phoneField = document.getElementById('phoneField');
-            
-            if (option === 'email') {
-                emailOption.classList.add('active');
-                phoneOption.classList.remove('active');
-                emailField.style.display = 'block';
-                phoneField.style.display = 'none';
-            } else {
-                phoneOption.classList.add('active');
-                emailOption.classList.remove('active');
-                phoneField.style.display = 'block';
-                emailField.style.display = 'none';
-            }
-        }
-function togglePassword() {
-            const passwordField = document.getElementById('passwordField');
-            const toggleIcon = document.getElementById('toggleIcon');
-            
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordField.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
-document.querySelector('input[type="tel"]')?.addEventListener('input', function(e) {
-            this.value = this.value.replace(/[^0-9+]/g, '');
-        });
+
+function togglePassword(){
+    let pass = document.getElementById("password");
+    let eye = document.getElementById("eye");
+
+    if(pass.type === "password"){
+        pass.type="text";
+        eye.classList.remove("bi-eye-slash");
+        eye.classList.add("bi-eye");
+    }
+    else{
+        pass.type="password";
+        eye.classList.remove("bi-eye");
+        eye.classList.add("bi-eye-slash");
+    }
+
+}
