@@ -50,7 +50,7 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background-image:url('pic/register_bg.jpeg');
+background-image:url('pic/otpverifybg.jpg');
 background-size:cover;
 
 backdrop-filter:blur(4px);

@@ -71,7 +71,7 @@ body{
 height:100vh;
 margin:0;
 font-family:'Poppins',sans-serif;
-background-image:url('pic/register_bg.jpeg');
+background-image:url('pic/otp_verify_bg.jpeg');
 background-size:cover;
 background-position:center;
 display:flex;
