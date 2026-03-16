@@ -40,7 +40,6 @@ if(isset($_POST['login'])){
     }
 }
 ?>
-<?php include_once 'navbar.php'; ?>
 <html>
 <head>
 
@@ -302,9 +301,7 @@ if(isset($_POST['login'])){
     <script src="./login-validation.js"></script>
     </body>
 </html>
-<?php
-// include_once 'footer.php';
-?>
+
 
 
 

@@ -119,7 +119,7 @@ border:none;
 
 <form method="POST">
 
-<label>Email</label>
+<label>Enter your Email</label>
 <input type="email" name="email" class="form-control" required>
 
 <br>

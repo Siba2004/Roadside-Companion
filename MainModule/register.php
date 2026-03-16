@@ -1,7 +1,6 @@
 <?php
 session_start();
 $email = $_SESSION['otp_email'];
-include_once 'navbar.php';
 require_once '../dbcon.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -318,6 +317,3 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
     </body>
 </html>
-<?php
-// include_once 'footer.php';
-?>
