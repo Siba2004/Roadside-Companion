@@ -1,17 +1,17 @@
 <?php
 session_start();
+$email = $_SESSION['otp_email'];
 include_once 'navbar.php';
 require_once '../dbcon.php';
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $name=trim($_POST['name']);
-    $email=trim($_POST['email']);
     $phone=trim($_POST['phone']);
     $account=trim($_POST['account']);
     $password=trim($_POST['password']);
     $cpassword=trim($_POST['confirmPassword']);
 
-    if($name=="" || $email=="" || $phone=="" || $account=="" || $password=="" || $cpassword==""){
+    if($name=="" || $phone=="" || $account=="" || $password=="" || $cpassword==""){
         echo "<script>
                 alert('All fields are required');
                 window.location='register.php';
@@ -275,15 +275,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <h2>REGISTER</h2>
         </div>
             <form method="POST" action="register.php" id="regForm" onsubmit="return validate()">
+              <input type="hidden" name="email" value="<?php echo $email; ?>">
                 <div class="mb-3 text-start">
                     <label>Username</label>
                     <input type="text" name="name" class="form-control">
                     <label class="error" id="usernameError"></label>
-                </div>
-                <div class="mb-3 text-start">
-                    <label>Email</label>
-                    <input type="text" name="email" class="form-control">
-                    <label class="error" id="emailError"></label>
                 </div>
                 <div class="mb-3 text-start">
                     <label>Phone Number</label>

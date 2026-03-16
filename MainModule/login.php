@@ -295,7 +295,7 @@ if(isset($_POST['login'])){
 
             <div class="links">
                 <a href="#">Forgot Password?</a><br>
-                Don't have an account? <a href="register.php">Sign Up</a>
+                Don't have an account? <a href="register1.php">Sign Up</a>
             </div>
         </form>
     </div>
