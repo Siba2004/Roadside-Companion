@@ -148,7 +148,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <li class="nav-item ms-2">
     <a class="btn btn-primary" href="login.php">
-        <i class="fas fa-sign-in-alt me-2"></i>Login
+        <i class="fas fa-sign-in-alt me-2"></i>LOGIN
     </a>
 </li>
 

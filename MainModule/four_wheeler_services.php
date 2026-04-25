@@ -31,11 +31,11 @@ require_once '../dbcon.php';
             --dark-overlay: rgba(6, 6, 6, 0.95);
         }
 
-        /* ── BASE - Matching homepage background ── */
+        /* ── BASE - Solid dark background + gradient overlay ── */
         * { font-family: 'Poppins', sans-serif; }
         
         body { 
-            background: url('vehiclebg.png') no-repeat center center/cover;
+            background: #0a0a0f;            /* solid near‑black */
             background-attachment: fixed;
             min-height: 100vh;
             margin: 0;
@@ -43,7 +43,7 @@ require_once '../dbcon.php';
             position: relative;
         }
         
-        /* Dark overlay */
+        /* Dark overlay – subtle diagonal blue‑to‑black gradient */
         body::before {
             content: "";
             position: fixed;
@@ -51,7 +51,7 @@ require_once '../dbcon.php';
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark-overlay);
+            background: linear-gradient(135deg, rgba(13,110,253,0.03) 0%, rgba(0,0,0,0.8) 100%);
             z-index: 0;
         }
 
@@ -763,7 +763,7 @@ require_once '../dbcon.php';
         <div class="row g-4 mb-4">
             <!-- Card 1: Emergency Repairs -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <a href="service-emergency-repairs.php" style="text-decoration: none; display: block; height: 100%;">
+                <a href="book_service.php?service=Emergency+Roadside+Repairs&price=450" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
                             <img src="services_pics/four_wheeler_services_pics/roadsidecar.jpeg" alt="Emergency Repairs">
@@ -780,7 +780,7 @@ require_once '../dbcon.php';
                                 <span class="discount-badge">SAVE 38%</span>
                             </div>
                             <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                 <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
                             </div>
                         </div>
@@ -788,38 +788,9 @@ require_once '../dbcon.php';
                 </a>
             </div>
             
-            
-            
-            <!-- Card 2: Flat Tyre -->
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <a href="service-flat-tyre.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="service-card clickable-card">
-                        <div class="service-card-image">
-                            <img src="services_pics/four_wheeler_services_pics/flattyre.jpeg" alt="Flat Tyre">
-                            <div class="service-badge">Popular</div>
-                        </div>
-                        <div class="service-card-content">
-                            <h3 class="service-card-title">Flat Tyre Assistance</h3>
-                            <p class="service-card-desc">Quick tyre change, puncture repair, and spare tyre installation at your location</p>
-                            <div class="service-price-row">
-                                <div>
-                                    <span class="original-price">₹300</span>
-                                    <span class="offer-price">₹200</span>
-                                </div>
-                                <span class="discount-badge">SAVE 18%</span>
-                            </div>
-                            <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
-                                <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.7</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-        <!-- Card 3: Battery Services -->
+            <!-- Card 3: Battery Services -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <a href="service-battery.php" style="text-decoration: none; display: block; height: 100%;">
+                <a href="book_service.php?service=Battery+Services&price=450" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
                             <img src="services_pics/four_wheeler_services_pics/battery.jpeg" alt="Battery Services">
@@ -836,19 +807,47 @@ require_once '../dbcon.php';
                                 <span class="discount-badge">SAVE 4%</span>
                             </div>
                             <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                 <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
-        
+
+            <!-- Card 2: Flat Tyre -->
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                <a href="book_service.php?service=Flat+Tyre+Assistance&price=200" style="text-decoration: none; display: block; height: 100%;">
+                    <div class="service-card clickable-card">
+                        <div class="service-card-image">
+                            <img src="services_pics/four_wheeler_services_pics/flattyre.jpeg" alt="Flat Tyre">
+                            <div class="service-badge">Popular</div>
+                        </div>
+                        <div class="service-card-content">
+                            <h3 class="service-card-title">Flat Tyre Assistance</h3>
+                            <p class="service-card-desc">Quick tyre change, puncture repair, and spare tyre installation at your location</p>
+                            <div class="service-price-row">
+                                <div>
+                                    <span class="original-price">₹300</span>
+                                    <span class="offer-price">₹200</span>
+                                </div>
+                                <span class="discount-badge">SAVE 18%</span>
+                            </div>
+                            <div class="service-card-footer">
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.7</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
         <!-- Service Cards Row 2 -->
         <div class="row g-4 mb-4">
             <!-- Card 4: Towing Services -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <a href="service-towing.php" style="text-decoration: none; display: block; height: 100%;">
+                <a href="book_service.php?service=Towing+Services&price=800" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
                             <img src="services_pics/four_wheeler_services_pics/towtruck.jpg" alt="Towing Services">
@@ -865,7 +864,7 @@ require_once '../dbcon.php';
                                 <span class="discount-badge">SAVE 34%</span>
                             </div>
                             <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                 <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
                             </div>
                         </div>
@@ -875,7 +874,7 @@ require_once '../dbcon.php';
             
             <!-- Card 5: Fuel Delivery -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <a href="service-fuel-delivery.php" style="text-decoration: none; display: block; height: 100%;">
+                <a href="book_service.php?service=Fuel+Delivery&price=105" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
                             <img src="services_pics/four_wheeler_services_pics/fuel_del.jpg" alt="Fuel Delivery">
@@ -892,7 +891,7 @@ require_once '../dbcon.php';
                                 <span class="discount-badge">SAVE 4%</span>
                             </div>
                             <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                 <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
                             </div>
                         </div>
@@ -900,10 +899,9 @@ require_once '../dbcon.php';
                 </a>
             </div>
             
-            
             <!-- Card 6: Lockout Assistance -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <a href="service-lockout.php" style="text-decoration: none; display: block; height: 100%;">
+                <a href="book_service.php?service=Lockout+Assistance&price=180" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
                             <img src="services_pics/four_wheeler_services_pics/lock.jpeg" alt="Lockout Assistance">
@@ -915,12 +913,12 @@ require_once '../dbcon.php';
                             <div class="service-price-row">
                                 <div>
                                     <span class="original-price">₹200</span>
-                                    <span class="offer-price">$180</span>
+                                    <span class="offer-price">₹180</span>
                                 </div>
                                 <span class="discount-badge">SAVE 3%</span>
                             </div>
                             <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                 <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.6</span>
                             </div>
                         </div>
@@ -933,7 +931,7 @@ require_once '../dbcon.php';
         <div class="row g-4">
             <!-- Card 7: Jump Starts -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <a href="service-jump-start.php" style="text-decoration: none; display: block; height: 100%;">
+                <a href="book_service.php?service=Jump+Starts&price=270" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
                             <img src="services_pics/four_wheeler_services_pics/image-2.jpg" alt="Jump Starts">
@@ -950,7 +948,7 @@ require_once '../dbcon.php';
                                 <span class="discount-badge">SAVE 6%</span>
                             </div>
                             <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                 <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
                             </div>
                         </div>
@@ -960,7 +958,7 @@ require_once '../dbcon.php';
             
             <!-- Card 8: AC Service -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <a href="service-ac.php" style="text-decoration: none; display: block; height: 100%;">
+                <a href="book_service.php?service=AC+Service&price=850" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
                             <img src="services_pics/four_wheeler_services_pics/ac.jpeg" alt="AC Service">
@@ -977,7 +975,7 @@ require_once '../dbcon.php';
                                 <span class="discount-badge">SAVE 5%</span>
                             </div>
                             <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                 <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.7</span>
                             </div>
                         </div>
@@ -987,7 +985,7 @@ require_once '../dbcon.php';
             
             <!-- Card 9: Oil Change -->
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <a href="service-oil-change.php" style="text-decoration: none; display: block; height: 100%;">
+                <a href="book_service.php?service=Oil+Change&price=1500" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="service-card-image">
                             <img src="services_pics/four_wheeler_services_pics/fuel.jpg" alt="Oil Change">
@@ -1004,7 +1002,7 @@ require_once '../dbcon.php';
                                 <span class="discount-badge">SAVE 34%</span>
                             </div>
                             <div class="service-card-footer">
-                                <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                 <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
                             </div>
                         </div>

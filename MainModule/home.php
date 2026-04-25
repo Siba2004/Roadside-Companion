@@ -30,11 +30,12 @@ require_once '../dbcon.php';
             --dark-overlay: rgba(6, 6, 6, 0.95);
         }
 
-        /* ── BASE - Matching login/register background ── */
+        /* ── BASE - Solid dark background + gradient overlay ── */
         * { font-family: 'Poppins', sans-serif; }
         
         body { 
-            background: url('vehiclebg.png') no-repeat center center/cover;
+            /* Changed from image background to solid dark base */
+            background: #0a0a0f;            /* solid near‑black */
             background-attachment: fixed;
             min-height: 100vh;
             margin: 0;
@@ -42,7 +43,7 @@ require_once '../dbcon.php';
             position: relative;
         }
         
-        /* Dark overlay - exactly like login/register */
+        /* Dark overlay – subtle diagonal blue‑to‑black gradient */
         body::before {
             content: "";
             position: fixed;
@@ -50,7 +51,7 @@ require_once '../dbcon.php';
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark-overlay);
+            background: linear-gradient(135deg, rgba(13,110,253,0.03) 0%, rgba(0,0,0,0.8) 100%);
             z-index: 0;
         }
 
@@ -61,7 +62,6 @@ require_once '../dbcon.php';
             min-height: 100vh;
             color: white;
         }
-
 
         /* ── BUTTONS - Matching login/register ── */
         .btn-primary { 
@@ -98,7 +98,7 @@ require_once '../dbcon.php';
             transform: scale(1.05);
         }
 
-        /* ── BANNER SLIDER - Matching glassmorphism ── */
+        /* ── BANNER SLIDER ── */
         .banner-wrap { 
             margin-top: 65px; 
             background: transparent; 
@@ -131,29 +131,25 @@ require_once '../dbcon.php';
         }
 
         /* For Emergency slide */
-.slide:nth-child(1) img {
-    object-position: 60% center;
-}
-
-/* For Battery slide */
-.slide:nth-child(2) img {
-    object-position: 80% center;
-}
-
-/* For Fuel slide */
-.slide:nth-child(3) img {
-    object-position: 55% center;
-}
-
-/* For Flat Tyre slide */
-.slide:nth-child(4) img {
-    object-position: 90% center;
-}
-
-/* For Towing slide */
-.slide:nth-child(5) img {
-    object-position: 60% center;
-}
+        .slide:nth-child(1) img {
+            object-position: 60% center;
+        }
+        /* For Battery slide */
+        .slide:nth-child(2) img {
+            object-position: 80% center;
+        }
+        /* For Fuel slide */
+        .slide:nth-child(3) img {
+            object-position: 55% center;
+        }
+        /* For Flat Tyre slide */
+        .slide:nth-child(4) img {
+            object-position: 90% center;
+        }
+        /* For Towing slide */
+        .slide:nth-child(5) img {
+            object-position: 60% center;
+        }
         .slide-overlay {
             position: absolute; 
             inset: 0;
@@ -286,8 +282,6 @@ require_once '../dbcon.php';
             box-shadow: 0 0 10px var(--primary);
         }
 
-        
-
         /* ── SHARED SECTION HEADINGS ── */
         section { 
             padding: 35px 0; 
@@ -326,9 +320,7 @@ require_once '../dbcon.php';
             color: var(--primary); 
         }
 
-
-
-/* ── SERVICE CARDS - Glassmorphism ── */
+        /* ── SERVICE CARDS ── */
         .service-card { 
             background: rgba(0,0,0,0.65);
             backdrop-filter: blur(10px);
@@ -347,74 +339,59 @@ require_once '../dbcon.php';
         }
 
         /* Service Image*/
-.service-image {
-    max-height: 300px;
-    width: auto;
-    border-radius: 5px;
-    box-shadow: 0 0 20px rgba(13,110,253,0.3);
-    margin-bottom: 20px;
-    transition: transform 0.3s ease;
-}
+        .service-image {
+            max-height: 300px;
+            width: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(13,110,253,0.3);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .service-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(13,110,253,0.5);
+        }
+        .service-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .service-header .icon-box {
+            margin-right: 10px;
+        }
 
-.service-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 30px rgba(13,110,253,0.5);
-}
-
-.service-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.service-header .icon-box {
-    margin-right: 10px;
-}
-
-/* Clickable card styles */
-.clickable-card {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    height: 100%;
-}
-
-.clickable-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--primary) !important;
-    box-shadow: 0 0 30px rgba(181, 184, 188, 0.4);
-}
-
-/* Ensure link doesn't affect text colors */
-a .card-title,
-a .check-list li,
-a .check-list li i {
-    color: white;
-}
-
-a .check-list li i {
-    color: var(--primary);
-}
-
-/* Optional: Add a subtle indicator */
-.clickable-card::after {
-    content: '↗';
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.2rem;
-    color: var(--primary);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.clickable-card:hover::after {
-    opacity: 0.7;
-}
-
-
-
-       
+        .clickable-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .clickable-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 30px rgba(181, 184, 188, 0.4);
+        }
+        a .card-title,
+        a .check-list li,
+        a .check-list li i {
+            color: white;
+        }
+        a .check-list li i {
+            color: var(--primary);
+        }
+        .clickable-card::after {
+            content: '↗';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.2rem;
+            color: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .clickable-card:hover::after {
+            opacity: 0.7;
+        }
 
         .card-title { 
             color: white; 
@@ -424,7 +401,6 @@ a .check-list li i {
             letter-spacing: 1px; 
             margin-bottom: 15px; 
         }
-
         .check-list { 
             list-style: none; 
             padding: 0; 
@@ -442,230 +418,193 @@ a .check-list li i {
         }
 
         /* Enhanced Assist Card Styles with Images */
-.assist-card {
-    background: rgba(0,0,0,0.65);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    height: 100%;
-    position: relative;
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-}
+        .assist-card {
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+        .assist-card.clickable-card {
+            cursor: pointer;
+        }
+        .assist-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(13,110,253,0.4);
+        }
+        .assist-card-image {
+            position: relative;
+            height: 160px;
+            overflow: hidden;
+        }
+        .assist-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .assist-card:hover .assist-card-image img {
+            transform: scale(1.1);
+        }
+        .assist-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(13,110,253,0.5);
+            z-index: 2;
+        }
+        .assist-card-content {
+            padding: 20px 15px 15px;
+            text-align: center;
+            position: relative;
+        }
+        .assist-card-content .icon-box {
+            width: 50px;
+            height: 50px;
+            background: rgba(13,110,253,0.1);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -40px auto 12px;
+            position: relative;
+            z-index: 3;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        .assist-card:hover .assist-card-content .icon-box {
+            background: var(--primary);
+            transform: rotate(360deg);
+        }
+        .assist-card:hover .assist-card-content .icon-box i {
+            color: white;
+        }
+        .assist-card-content .icon-box i {
+            font-size: 1.3rem;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        .assist-card-content .card-title {
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .assist-card-content p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            min-height: 70px;
+        }
+        .assist-card-footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 12px;
+        }
+        .assist-link {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .assist-link i {
+            transition: transform 0.3s;
+        }
+        .assist-card:hover .assist-link i {
+            transform: translateX(5px);
+        }
 
-.assist-card.clickable-card {
-    cursor: pointer;
-}
+        @media (max-width: 768px) {
+            .assist-card-image {
+                height: 130px;
+            }
+            .assist-card-content {
+                padding: 15px 10px 10px;
+            }
+            .assist-card-content .icon-box {
+                width: 45px;
+                height: 45px;
+                margin-top: -35px;
+            }
+            .assist-card-content .icon-box i {
+                font-size: 1.1rem;
+            }
+            .assist-card-content .card-title {
+                font-size: 0.9rem;
+            }
+            .assist-card-content p {
+                font-size: 0.8rem;
+                min-height: 60px;
+            }
+        }
 
-.assist-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--primary);
-    box-shadow: 0 0 30px rgba(13,110,253,0.4);
-}
-
-.assist-card-image {
-    position: relative;
-    height: 160px;
-    overflow: hidden;
-}
-
-.assist-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.assist-card:hover .assist-card-image img {
-    transform: scale(1.1);
-}
-
-.assist-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: var(--primary);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 0 15px rgba(13,110,253,0.5);
-    z-index: 2;
-}
-
-.assist-card-content {
-    padding: 20px 15px 15px;
-    text-align: center;
-    position: relative;
-}
-
-.assist-card-content .icon-box {
-    width: 50px;
-    height: 50px;
-    background: rgba(13,110,253,0.1);
-    border: 2px solid var(--primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: -40px auto 12px;
-    position: relative;
-    z-index: 3;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
-}
-
-.assist-card:hover .assist-card-content .icon-box {
-    background: var(--primary);
-    transform: rotate(360deg);
-}
-
-.assist-card:hover .assist-card-content .icon-box i {
-    color: white;
-}
-
-.assist-card-content .icon-box i {
-    font-size: 1.3rem;
-    color: var(--primary);
-    transition: all 0.3s ease;
-}
-
-.assist-card-content .card-title {
-    color: white;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-}
-
-.assist-card-content p {
-    color: rgba(255,255,255,0.8);
-    font-size: 0.85rem;
-    line-height: 1.5;
-    margin-bottom: 15px;
-    min-height: 70px;
-}
-
-.assist-card-footer {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 12px;
-}
-
-.assist-link {
-    color: var(--primary);
-    font-weight: 600;
-    font-size: 0.85rem;
-    transition: 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.assist-link i {
-    transition: transform 0.3s;
-}
-
-.assist-card:hover .assist-link i {
-    transform: translateX(5px);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .assist-card-image {
-        height: 130px;
-    }
-    
-    .assist-card-content {
-        padding: 15px 10px 10px;
-    }
-    
-    .assist-card-content .icon-box {
-        width: 45px;
-        height: 45px;
-        margin-top: -35px;
-    }
-    
-    .assist-card-content .icon-box i {
-        font-size: 1.1rem;
-    }
-    
-    .assist-card-content .card-title {
-        font-size: 0.9rem;
-    }
-    
-    .assist-card-content p {
-        font-size: 0.8rem;
-        min-height: 60px;
-    }
-}
-
-    /* Why Choose Us - Card */
-.feature-card {
-    text-align: center;
-    background: rgba(0,0,0,0.65);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
-    height: 100%;
-    transition: 0.3s;
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Image wrapper */
-.card-image-wrapper {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 15px 15px 0 0; /* same as card */
-}
-
-/* Image */
-.feature-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-}
-
-/* Image zoom */
-.feature-card:hover .feature-image {
-    transform: scale(1.1);
-}
-
-/* Card hover */
-.feature-card:hover {
-    border-color: var(--primary);
-    box-shadow: 0 0 30px rgba(13,110,253,0.3);
-    transform: translateY(-6px);
-}
-
-
-
-
-/* Text spacing */
-.card-title {
-    margin-bottom: 5px;
-    margin-top: 10px;
-}
-
-.feature-card p {
-    color: rgba(255,255,255,0.8);
-    padding: 0 15px;
-    margin-bottom: 13px;
-}
+        /* Why Choose Us - Card */
+        .feature-card {
+            text-align: center;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            height: 100%;
+            transition: 0.3s;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-image-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+        }
+        .feature-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .feature-card:hover .feature-image {
+            transform: scale(1.1);
+        }
+        .feature-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(13,110,253,0.3);
+            transform: translateY(-6px);
+        }
+        .card-title {
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+        .feature-card p {
+            color: rgba(255,255,255,0.8);
+            padding: 0 15px;
+            margin-bottom: 13px;
+        }
         
         /* ── REVIEW CARDS ── */
         .review-card { 
@@ -766,17 +705,15 @@ a .check-list li i {
             .slide-icon    { display: none; }
         }
 
-        /* Animation for logo - matching login/register */
+        /* Animation for logo */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-8px); }
             100% { transform: translateY(0px); }
         }
-
         .navbar-brand i {
             animation: float 3s ease-in-out infinite;
         }
-
         .shadow-lg {
             box-shadow: 0 0 30px rgba(0,0,0,0.8) !important;
         }
@@ -787,7 +724,6 @@ a .check-list li i {
 </head>
 <body>
 <div class="home-container">
-
 
 <!-- BANNER SLIDER -->
 <div class="banner-wrap">
@@ -805,7 +741,6 @@ a .check-list li i {
                             <p>24/7 assistance at your fingertips. First service at 30% off!</p>
                             <button class="btn-slide">Book Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-        
                     </div>
                 </div>
 
@@ -818,7 +753,6 @@ a .check-list li i {
                             <p>Jump start or replace battery. Get 20% off on battery service.</p>
                             <button class="btn-slide">Avail Offer <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                       
                     </div>
                 </div>
 
@@ -831,7 +765,6 @@ a .check-list li i {
                             <p>Running out of fuel? Get free delivery on your first order.</p>
                             <button class="btn-slide">Order Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                       
                     </div>
                 </div>
 
@@ -844,7 +777,6 @@ a .check-list li i {
                             <p>Quick tyre change or repair. Special discount for members.</p>
                             <button class="btn-slide">Get Help <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                       
                     </div>
                 </div>
 
@@ -857,7 +789,6 @@ a .check-list li i {
                             <p>Professional towing at best prices. Limited period offer.</p>
                             <button class="btn-slide">Call Now <i class="fas fa-arrow-right ms-1"></i></button>
                         </div>
-                       
                     </div>
                 </div>
 
@@ -894,9 +825,7 @@ a .check-list li i {
                 <a href="four_wheeler_services.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="text-center">
-                            <img src="pic/car.jpeg" 
-                                 alt="Four Wheeler" 
-                                 class="service-image">
+                            <img src="pic/car.jpeg" alt="Four Wheeler" class="service-image">
                             <div class="service-header">
                                 <h3 class="card-title">Four Wheeler Services</h3>
                             </div>
@@ -923,9 +852,7 @@ a .check-list li i {
                 <a href="two_wheeler_services.php" style="text-decoration: none; display: block; height: 100%;">
                     <div class="service-card clickable-card">
                         <div class="text-center">
-                            <img src="pic/bike.jpeg" 
-                                 alt="Two Wheeler" 
-                                 class="service-image">
+                            <img src="pic/bike.jpeg" alt="Two Wheeler" class="service-image">
                             <div class="service-header">
                                 <h3 class="card-title">Two Wheeler Services</h3>
                             </div>
@@ -968,7 +895,6 @@ a .check-list li i {
                             <div class="assist-badge">24/7</div>
                         </div>
                         <div class="assist-card-content">
-                            
                             <h4 class="card-title">On-Site Repairs</h4>
                             <p class="small">Minor mechanical issues fixed right at your breakdown spot — no garage visit needed.</p>
                             <div class="assist-card-footer">
@@ -1036,6 +962,7 @@ a .check-list li i {
         </div>
     </div>
 </section>
+
 <!-- WHY CHOOSE US -->
 <section id="why-us">
     <div class="container">
@@ -1043,9 +970,7 @@ a .check-list li i {
             <h2 class="section-title">Why Choose Us?</h2>
             <p class="section-subtitle">We provide the best roadside assistance experience</p>
         </div>
-
         <div class="row g-4">
-
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="100">
                 <div class="feature-card">
                     <div class="card-image-wrapper">
@@ -1055,7 +980,6 @@ a .check-list li i {
                     <p class="small">Average response time under 20 minutes with real-time tracking</p>
                 </div>
             </div>
-
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
                 <div class="feature-card">
                     <div class="card-image-wrapper">
@@ -1065,7 +989,6 @@ a .check-list li i {
                     <p class="small">Certified mechanics and verified service providers</p>
                 </div>
             </div>
-
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="300">
                 <div class="feature-card">
                     <div class="card-image-wrapper">
@@ -1075,7 +998,6 @@ a .check-list li i {
                     <p class="small">100% authentic spare parts with warranty</p>
                 </div>
             </div>
-
             <div class="col-md-3" data-aos="zoom-in" data-aos-delay="400">
                 <div class="feature-card">
                     <div class="card-image-wrapper">
@@ -1085,7 +1007,6 @@ a .check-list li i {
                     <p class="small">Transparent pricing with no hidden charges</p>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
@@ -1098,43 +1019,33 @@ a .check-list li i {
             <p class="section-subtitle">Trusted by thousands of happy customers</p>
         </div>
         <div class="row g-4">
-
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="review-card">
                     <img src="pic/reviewpic/revimg2.avif" alt="Rajesh Kumar Patra" class="reviewer-img">
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
+                    <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                     <p class="small mb-3">"My Bike broke down on the highway and they reached within 15 minutes. Fixed the issue quickly and charged a fair price."</p>
                     <h5 class="reviewer-name">Rajesh Kumar</h5>
                     <p class="reviewer-role">Bike Rider</p>
                 </div>
             </div>
-
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="review-card">
                     <img src="pic/reviewpic/revimg.avif" alt="Soumya Rani Nayak" class="reviewer-img">
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
+                    <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                     <p class="small mb-3">"Battery boosting service for my car was super quick. The mechanic was professional and even checked other parts. Highly recommended!"</p>
                     <h5 class="reviewer-name">Priya Sharma</h5>
                     <p class="reviewer-role">Car Owner</p>
                 </div>
             </div>
-
             <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                 <div class="review-card">
                     <img src="pic/reviewpic/revimg3.avif" alt="Amit Patel" class="reviewer-img">
-                    <div class="review-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    </div>
+                    <div class="review-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
                     <p class="small mb-3">"Fuel delivery service saved me during a late-night emergency. Easy to use and transparent pricing. Will definitely use again."</p>
                     <h5 class="reviewer-name">Amit Patel</h5>
                     <p class="reviewer-role">SUV Owner</p>
                 </div>
             </div>
-
         </div>
         <div class="text-center mt-5" data-aos="fade-up">
             <a href="#" class="btn btn-outline-primary btn-lg">View All Reviews <i class="fas fa-arrow-right ms-2"></i></a>
@@ -1146,7 +1057,6 @@ a .check-list li i {
 <section id="about">
     <div class="container">
         <div class="row align-items-center g-5">
-
             <div class="col-lg-6" data-aos="fade-right">
                 <h2 class="section-title">About RoadSide Companion</h2>
                 <p class="lead mb-3">We're on a mission to make roadside assistance accessible, reliable, and affordable for everyone.</p>
@@ -1168,11 +1078,9 @@ a .check-list li i {
                     </div>
                 </div>
             </div>
-
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="position-relative">
                     <img src="pic/why-choose/bottom.jpeg" alt="About Us" class="img-fluid rounded-4 shadow-lg" style="border: 1px solid rgba(255,255,255,0.1);">
-                    <!-- Emergency callout badge -->
                     <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow m-3" style="background: rgba(0,0,0,0.8) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
                         <div class="d-flex align-items-center">
                             <div style="width:45px;height:45px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;" class="me-3">
@@ -1186,31 +1094,28 @@ a .check-list li i {
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
 
-<!-- SOS BUTTON (fixed) -->
+<!-- SOS BUTTON -->
 <button class="sos-btn" id="sosBtn">
     <i class="fas fa-exclamation-triangle"></i>
     <span>SOS</span>
 </button>
 </div>
+
 <!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    // Init AOS scroll animations
     AOS.init({ duration: 900, once: true, offset: 80 });
 
-    // Navbar shadow on scroll
     window.addEventListener('scroll', () => {
         document.querySelector('.navbar').style.boxShadow =
             window.scrollY > 50 ? '0 2px 20px rgba(0,0,0,0.8)' : '0 2px 15px rgba(0,0,0,0.5)';
     });
 
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', e => {
             const target = document.querySelector(link.getAttribute('href'));
@@ -1218,7 +1123,6 @@ a .check-list li i {
         });
     });
 
-    // SOS confirmation dialog
     document.getElementById('sosBtn').addEventListener('click', () => {
         if (confirm('🚨 EMERGENCY SOS 🚨\n\nDo you need immediate roadside assistance?'))
             alert('Emergency services have been notified! Help is on the way.');
@@ -1255,104 +1159,63 @@ a .check-list li i {
     document.getElementById('prevSlide').addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
     dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); }));
 
-
-
     let touchX = 0;
     let touchActive = false;
 
-        track.addEventListener('touchstart', e => { 
-            touchX = e.touches[0].clientX; 
-            touchActive = true;
-            stopAuto(); // Only stop during touch
-        });
-
-        track.addEventListener('touchmove', e => {
-            // Optional: prevent default to avoid page scroll while swiping
-            e.preventDefault();
-        });
-
-        track.addEventListener('touchend',   e => {
-            if (touchActive) {
-                const diff = touchX - e.changedTouches[0].clientX;
-                if (Math.abs(diff) > 50) {
-                    goTo(diff > 0 ? current + 1 : current - 1);
-                }
-                touchActive = false;
-                startAuto(); // Resume after touch ends
-            }
-        });
-
-// Add click handlers to make slides clickable
-document.querySelectorAll('.slide').forEach((slide, index) => {
-    slide.addEventListener('click', function(e) {
-        // Don't redirect if clicking on dots or arrows
-        if (e.target.closest('.slider-dots') || e.target.closest('.slider-arrow')) {
-            return;
-        }
-        // Redirect to services page
-        window.location.href = '/services.php';
+    track.addEventListener('touchstart', e => { 
+        touchX = e.touches[0].clientX; 
+        touchActive = true;
+        stopAuto();
     });
-    
-    // Make cursor pointer to indicate clickable
-    slide.style.cursor = 'pointer';
-});
+    track.addEventListener('touchmove', e => { e.preventDefault(); });
+    track.addEventListener('touchend', e => {
+        if (touchActive) {
+            const diff = touchX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                goTo(diff > 0 ? current + 1 : current - 1);
+            }
+            touchActive = false;
+            startAuto();
+        }
+    });
+
+    document.querySelectorAll('.slide').forEach((slide, index) => {
+        slide.addEventListener('click', function(e) {
+            if (e.target.closest('.slider-dots') || e.target.closest('.slider-arrow')) return;
+            window.location.href = '/services.php';
+        });
+        slide.style.cursor = 'pointer';
+    });
 
     goTo(0);
     startAuto();
 
-
-   
-
-function getLocation()
-{
-    if(navigator.geolocation)
-    {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            alert("Geolocation not supported.");
+        }
     }
-    else
-    {
-        alert("Geolocation not supported.");
+
+    function showPosition(position) {
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
+        fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon)
+        .then(response => response.json())
+        .then(data => {
+            var area = data.address.suburb || data.address.neighbourhood || "";
+            var city = data.address.city || data.address.town || data.address.village || "";
+            document.getElementById("locationText").innerHTML = "📍 " + area + ", " + city;
+        });
     }
-}
 
-function showPosition(position)
-{
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
-
-    fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon)
-    .then(response => response.json())
-    .then(data => {
-
-        var area = data.address.suburb || data.address.neighbourhood || "";
-        var city = data.address.city || data.address.town || data.address.village || "";
-
-        document.getElementById("locationText").innerHTML =
-        "📍 " + area + ", " + city;
-
-    });
-}
-
-function showError(error)
-{
-    if(error.code == 1)
-    {
-        alert("Location permission denied.");
+    function showError(error) {
+        if(error.code == 1) alert("Location permission denied.");
+        else if(error.code == 2) alert("Location unavailable.");
+        else if(error.code == 3) alert("Location request timeout.");
     }
-    else if(error.code == 2)
-    {
-        alert("Location unavailable.");
-    }
-    else if(error.code == 3)
-    {
-        alert("Location request timeout.");
-    }
-}
-
-
-
 </script>
-
 </body>
 </html>
 <?php include_once 'footer.php'; ?>

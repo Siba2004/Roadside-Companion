@@ -15,13 +15,13 @@ require_once '../dbcon.php';   // if needed
         :root {
             --primary: #0d6efd;
             --dark-blue: #0b5ed7;
-            --dark-overlay: rgba(6, 6, 6, 0.95);
         }
 
         * { font-family: 'Poppins', sans-serif; }
         
         body {
-            background: url('vehiclebg.png') no-repeat center center/cover;
+            /* Solid dark background – no image, no white screen */
+            background: #0a0a0f;
             background-attachment: fixed;
             min-height: 100vh;
             margin: 0;
@@ -29,6 +29,7 @@ require_once '../dbcon.php';   // if needed
             position: relative;
         }
         
+        /* Subtle diagonal gradient overlay */
         body::before {
             content: "";
             position: fixed;
@@ -36,7 +37,7 @@ require_once '../dbcon.php';   // if needed
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark-overlay);
+            background: linear-gradient(135deg, rgba(13,110,253,0.03) 0%, rgba(0,0,0,0.8) 100%);
             z-index: 0;
         }
 
@@ -132,12 +133,8 @@ require_once '../dbcon.php';   // if needed
             text-decoration: none;
             color: white;
             height: 100%;
-            /* Dropdown animation */
             animation: dropdown 0.6s ease-out;
             animation-fill-mode: both;
-
-            /* Initial state hidden (animation-fill-mode: both applies from start state) */
-            /* We don't need opacity:0 initially because the keyframe handles it */
         }
 
         .service-select-card:nth-child(1) {

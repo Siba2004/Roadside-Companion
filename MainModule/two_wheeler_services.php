@@ -17,7 +17,7 @@ require_once '../dbcon.php';
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* ── DESIGN TOKENS (exactly same as four-wheeler) ── */
+        /* ── DESIGN TOKENS ── */
         :root {
             --primary:   #0d6efd;
             --dark-blue: #0b5ed7;
@@ -28,13 +28,13 @@ require_once '../dbcon.php';
             --light-bg:  transparent;
             --border:    rgba(255,255,255,0.2);
             --icon-bg:   rgba(13,110,253,0.1);
-             --dark-overlay: rgba(6, 6, 6, 0.95);
         }
 
         * { font-family: 'Poppins', sans-serif; }
         
+        /* ── BASE - Solid dark background + subtle gradient overlay ── */
         body { 
-            background: url('vehiclebg.png') no-repeat center center/cover;
+            background: #0a0a0f;            /* solid near‑black */
             background-attachment: fixed;
             min-height: 100vh;
             margin: 0;
@@ -49,7 +49,7 @@ require_once '../dbcon.php';
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--dark-overlay);
+            background: linear-gradient(135deg, rgba(13,110,253,0.03) 0%, rgba(0,0,0,0.8) 100%);
             z-index: 0;
         }
 
@@ -490,7 +490,6 @@ require_once '../dbcon.php';
             color: white;
         }
 
-
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-8px); }
@@ -573,7 +572,7 @@ require_once '../dbcon.php';
             </div>
         </section>
 
-        <!-- ALL TWO WHEELER SERVICES (3 rows, 9 cards, with 2-3 different from four-wheeler) -->
+        <!-- ALL TWO WHEELER SERVICES -->
         <section>
             <div class="container">
                 <div class="text-center" data-aos="fade-up">
@@ -583,9 +582,9 @@ require_once '../dbcon.php';
                 
                 <!-- Row 1 -->
                 <div class="row g-4 mb-4">
-                    <!-- Card 1: Emergency Roadside Repair (different from four-wheeler) -->
+                    <!-- Card 1: Emergency Roadside Repair -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <a href="service-puncture-repair.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Emergency+Roadside+Repair&price=99" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/roadside.jpeg" alt="Roadside Repair">
@@ -602,7 +601,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 34%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
                                     </div>
                                 </div>
@@ -610,9 +609,9 @@ require_once '../dbcon.php';
                         </a>
                     </div>
                     
-                    <!-- Card 2: Puncture Repair (different from four-wheeler) -->
+                    <!-- Card 2: Puncture Repair -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <a href="service-puncture-repair.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Puncture+Repair&price=99" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/flattyre.jpeg" alt="Puncture Repair">
@@ -629,7 +628,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 34%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
                                     </div>
                                 </div>
@@ -637,9 +636,9 @@ require_once '../dbcon.php';
                         </a>
                     </div>
                     
-                    <!-- Card 3: Chain Lubrication (different) -->
+                    <!-- Card 3: BrokenChain Repair -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                        <a href="service-chain-lube.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Broken+Chain+Repair&price=199" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/chain.jpeg" alt="Chain Repair">
@@ -656,7 +655,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 43%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.7</span>
                                     </div>
                                 </div>
@@ -667,9 +666,9 @@ require_once '../dbcon.php';
 
                 <!-- Row 2 -->
                 <div class="row g-4 mb-4">
-                    <!-- Card 4: Brake & Clutch Adjustment (different) -->
+                    <!-- Card 4: Brake & Clutch Adj. -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <a href="service-brake-adjust.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Brake+&+Clutch+Adj.&price=199" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/bikepart.jpeg" alt="Brake Adjustment">
@@ -686,7 +685,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 34%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
                                     </div>
                                 </div>
@@ -694,9 +693,9 @@ require_once '../dbcon.php';
                         </a>
                     </div>
                     
-                    <!-- Card 5: Battery Jump-Start (two-wheeler specific) -->
+                    <!-- Card 5: Battery Jump-Start -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <a href="service-bike-jump.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Battery+Jump-Start&price=249" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/spark.jpeg" alt="Bike Jump Start">
@@ -713,7 +712,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 17%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
                                     </div>
                                 </div>
@@ -721,9 +720,9 @@ require_once '../dbcon.php';
                         </a>
                     </div>
                     
-                    <!-- Card 6: Towing for bikes (different) -->
+                    <!-- Card 6: Bike Towing -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                        <a href="service-bike-towing.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Bike+Towing&price=450" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/towbike.jpeg" alt="Bike Towing">
@@ -740,7 +739,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 25%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
                                     </div>
                                 </div>
@@ -753,7 +752,7 @@ require_once '../dbcon.php';
                 <div class="row g-4">
                     <!-- Card 7: Oil Change (two-wheeler) -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <a href="service-bike-oil.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Oil+Change&price=550" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/oil.jpeg" alt="Bike Oil Change">
@@ -770,7 +769,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 21%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span>
                                     </div>
                                 </div>
@@ -778,9 +777,9 @@ require_once '../dbcon.php';
                         </a>
                     </div>
                     
-                     <!-- Card 8: Fuel Delivery (same concept, but two-wheeler pricing) -->
+                     <!-- Card 8: Fuel Delivery (bike) -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <a href="service-fuel-delivery-bike.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Fuel+Delivery&price=120" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/fueldelivery.jpeg" alt="Fuel Delivery Bike">
@@ -797,7 +796,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 8%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
                                     </div>
                                 </div>
@@ -805,9 +804,9 @@ require_once '../dbcon.php';
                         </a>
                     </div>
                     
-                    <!-- Card 9: Spark Plug Replacement (different) -->
+                    <!-- Card 9: Spark Plug Replacement -->
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                        <a href="service-spark-plug.html" style="text-decoration: none; display: block; height: 100%;">
+                        <a href="book_service.php?service=Spark+Plug+Replacement&price=199" style="text-decoration: none; display: block; height: 100%;">
                             <div class="service-card clickable-card">
                                 <div class="service-card-image">
                                     <img src="services_pics/two_wheeler_services_pics/sparkplug.jpeg" alt="Spark Plug">
@@ -824,7 +823,7 @@ require_once '../dbcon.php';
                                         <span class="discount-badge">SAVE 34%</span>
                                     </div>
                                     <div class="service-card-footer">
-                                        <span class="service-link">View Details <i class="fas fa-arrow-right"></i></span>
+                                        <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
                                         <span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span>
                                     </div>
                                 </div>
