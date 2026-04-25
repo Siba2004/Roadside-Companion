@@ -294,16 +294,20 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                             </select>
                             <label class="error" id="accountError"></label>
                     </div>
-                <div class="mb-3 text-start password-box">
+                <div class="mb-3 text-start">
                     <label>Password</label>
-                    <input type="password" id="password" name="password" class="form-control">
-                    <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" class="form-control">
+                        <i class="bi bi-eye-slash" onclick="togglePassword()" id="eye"></i>
+                    </div>
                     <label class="error" id="passwordError"></label>
                 </div>
-                <div class="mb-3 text-start password-box">
+                <div class="mb-3 text-start">
                     <label>Confirm Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
-                    <i class="bi bi-eye-slash" onclick="toggleConfirmPassword()" id="eye2"></i>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+                        <i class="bi bi-eye-slash" onclick="toggleConfirmPassword()" id="eye2"></i>
+                    </div>
                     <label class="error" id="confirmPasswordError"></label>
                 </div>
                 
