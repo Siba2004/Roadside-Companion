@@ -11,31 +11,27 @@ require_once '../dbcon.php';
 
     <link href="../bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts - Matching login/register -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* ── DESIGN TOKENS - Matching login/register ── */
         :root {
             --primary:   #0d6efd;
             --dark-blue: #0b5ed7;
             --accent:    #0d6efd;
             --success:   #20B2AA;
             --warning:   #FFA500;
-            --gray:      #rgba(255,255,255,0.8);
+            --gray:      rgba(255,255,255,0.8);
             --light-bg:  transparent;
             --border:    rgba(255,255,255,0.2);
             --icon-bg:   rgba(13,110,253,0.1);
-            --dark-overlay: rgba(6, 6, 6, 0.95);
+            --card-bg:   rgba(20, 20, 30, 0.85);
         }
 
-        /* ── BASE - Solid dark background + gradient overlay ── */
         * { font-family: 'Poppins', sans-serif; }
         
         body { 
-            /* Changed from image background to solid dark base */
-            background: #0a0a0f;            /* solid near‑black */
+            background: #0a0a0f;
             background-attachment: fixed;
             min-height: 100vh;
             margin: 0;
@@ -43,7 +39,6 @@ require_once '../dbcon.php';
             position: relative;
         }
         
-        /* Dark overlay – subtle diagonal blue‑to‑black gradient */
         body::before {
             content: "";
             position: fixed;
@@ -55,7 +50,6 @@ require_once '../dbcon.php';
             z-index: 0;
         }
 
-        /* Main container */
         .home-container {
             position: relative;
             z-index: 1;
@@ -63,7 +57,7 @@ require_once '../dbcon.php';
             color: white;
         }
 
-        /* ── BUTTONS - Matching login/register ── */
+        /* ── BUTTONS ── */
         .btn-primary { 
             background: var(--primary); 
             border: none; 
@@ -118,7 +112,6 @@ require_once '../dbcon.php';
             transition: transform .3s ease-in-out; 
         }
 
-        /* Each slide */
         .slide { 
             min-width: 100%; 
             position: relative; 
@@ -130,31 +123,16 @@ require_once '../dbcon.php';
             display: block; 
         }
 
-        /* For Emergency slide */
-        .slide:nth-child(1) img {
-            object-position: 60% center;
-        }
-        /* For Battery slide */
-        .slide:nth-child(2) img {
-            object-position: 80% center;
-        }
-        /* For Fuel slide */
-        .slide:nth-child(3) img {
-            object-position: 55% center;
-        }
-        /* For Flat Tyre slide */
-        .slide:nth-child(4) img {
-            object-position: 90% center;
-        }
-        /* For Towing slide */
-        .slide:nth-child(5) img {
-            object-position: 60% center;
-        }
+        .slide:nth-child(1) img { object-position: 60% center; }
+        .slide:nth-child(2) img { object-position: 80% center; }
+        .slide:nth-child(3) img { object-position: 55% center; }
+        .slide:nth-child(4) img { object-position: 90% center; }
+        .slide:nth-child(5) img { object-position: 60% center; }
+        
         .slide-overlay {
             position: absolute; 
             inset: 0;
             background: rgba(0,0,0,0.45);
-            backdrop-filter: blur(0px);
             color: white; 
             display: flex; 
             align-items: center; 
@@ -206,18 +184,6 @@ require_once '../dbcon.php';
             color: white;
         }
 
-        /* Decorative icon */
-        .slide-icon { 
-            position: absolute; 
-            right: 60px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            font-size: 10rem; 
-            color: rgba(255,255,255,.1); 
-            pointer-events: none; 
-        }
-
-        /* Dots, arrows, progress */
         .slider-dots { 
             position: absolute; 
             bottom: 15px; 
@@ -248,7 +214,6 @@ require_once '../dbcon.php';
             width: 38px; 
             height: 38px; 
             background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
             border-radius: 50%; 
             display: flex; 
             align-items: center; 
@@ -320,15 +285,14 @@ require_once '../dbcon.php';
             color: var(--primary); 
         }
 
-        /* ── SERVICE CARDS ── */
+        /* ── SERVICE CARDS (Our Popular Services) ── */
         .service-card { 
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg);
             padding: 35px; 
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
             height: 100%; 
-            transition: .3s; 
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; 
             position: relative; 
             box-shadow: 0 0 30px rgba(0,0,0,0.8);
         }
@@ -338,7 +302,25 @@ require_once '../dbcon.php';
             transform: translateY(-5px);
         }
 
-        /* Service Image*/
+        /* Explicit white text for card title inside service cards */
+        .service-card .card-title {
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        /* Check list inside service cards */
+        .service-card .check-list li {
+            color: rgba(255,255,255,0.9);   /* white text */
+            font-size: .9rem;
+        }
+
+        .service-card .check-list li i {
+            color: var(--primary);           /* blue bullet icons */
+        }
+
         .service-image {
             max-height: 300px;
             width: auto;
@@ -357,70 +339,10 @@ require_once '../dbcon.php';
             justify-content: center;
             margin-bottom: 15px;
         }
-        .service-header .icon-box {
-            margin-right: 10px;
-        }
 
-        .clickable-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-        .clickable-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary) !important;
-            box-shadow: 0 0 30px rgba(181, 184, 188, 0.4);
-        }
-        a .card-title,
-        a .check-list li,
-        a .check-list li i {
-            color: white;
-        }
-        a .check-list li i {
-            color: var(--primary);
-        }
-        .clickable-card::after {
-            content: '↗';
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.2rem;
-            color: var(--primary);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .clickable-card:hover::after {
-            opacity: 0.7;
-        }
-
-        .card-title { 
-            color: white; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            font-size: 1rem; 
-            letter-spacing: 1px; 
-            margin-bottom: 15px; 
-        }
-        .check-list { 
-            list-style: none; 
-            padding: 0; 
-        }
-        .check-list li { 
-            padding: 5px 0; 
-            display: flex; 
-            align-items: center; 
-            font-size: .9rem; 
-            color: rgba(255,255,255,0.9);
-        }
-        .check-list li i { 
-            color: var(--primary); 
-            margin-right: 10px; 
-        }
-
-        /* Enhanced Assist Card Styles with Images */
+        /* Enhanced Assist Card Styles (no blur, solid to keep performance) */
         .assist-card {
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
             overflow: hidden;
@@ -428,9 +350,6 @@ require_once '../dbcon.php';
             height: 100%;
             position: relative;
             box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
-        .assist-card.clickable-card {
-            cursor: pointer;
         }
         .assist-card:hover {
             transform: translateY(-8px);
@@ -484,20 +403,15 @@ require_once '../dbcon.php';
             position: relative;
             z-index: 3;
             background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
             transition: all 0.3s ease;
         }
         .assist-card:hover .assist-card-content .icon-box {
             background: var(--primary);
             transform: rotate(360deg);
         }
-        .assist-card:hover .assist-card-content .icon-box i {
-            color: white;
-        }
         .assist-card-content .icon-box i {
             font-size: 1.3rem;
             color: var(--primary);
-            transition: all 0.3s ease;
         }
         .assist-card-content .card-title {
             color: white;
@@ -522,49 +436,17 @@ require_once '../dbcon.php';
             color: var(--primary);
             font-weight: 600;
             font-size: 0.85rem;
-            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .assist-link i {
-            transition: transform 0.3s;
-        }
-        .assist-card:hover .assist-link i {
-            transform: translateX(5px);
-        }
 
-        @media (max-width: 768px) {
-            .assist-card-image {
-                height: 130px;
-            }
-            .assist-card-content {
-                padding: 15px 10px 10px;
-            }
-            .assist-card-content .icon-box {
-                width: 45px;
-                height: 45px;
-                margin-top: -35px;
-            }
-            .assist-card-content .icon-box i {
-                font-size: 1.1rem;
-            }
-            .assist-card-content .card-title {
-                font-size: 0.9rem;
-            }
-            .assist-card-content p {
-                font-size: 0.8rem;
-                min-height: 60px;
-            }
-        }
-
-        /* Why Choose Us - Card */
+        /* Why Choose Us - Card (solid) */
         .feature-card {
             text-align: center;
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
             height: 100%;
@@ -596,9 +478,10 @@ require_once '../dbcon.php';
             box-shadow: 0 0 30px rgba(13,110,253,0.3);
             transform: translateY(-6px);
         }
-        .card-title {
-            margin-bottom: 5px;
+        .feature-card .card-title {
             margin-top: 10px;
+            margin-bottom: 5px;
+            color: white;
         }
         .feature-card p {
             color: rgba(255,255,255,0.8);
@@ -608,8 +491,7 @@ require_once '../dbcon.php';
         
         /* ── REVIEW CARDS ── */
         .review-card { 
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg);
             padding: 30px; 
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
@@ -646,9 +528,7 @@ require_once '../dbcon.php';
             font-size: .8rem; 
             color: rgba(255,255,255,0.7); 
         }
-        .review-card p {
-            color: rgba(255,255,255,0.9);
-        }
+        .review-card p { color: rgba(255,255,255,0.9); }
 
         /* ── SOS BUTTON ── */
         .sos-btn { 
@@ -685,40 +565,14 @@ require_once '../dbcon.php';
             box-shadow: 0 0 30px rgba(220,38,38,0.6);
         }
 
-        /* About section text */
-        .text-muted {
-            color: rgba(255,255,255,0.8) !important;
-        }
-        .lead {
-            color: white;
-        }
-        .position-absolute small {
-            color: rgba(255,255,255,0.8) !important;
-        }
+        .text-muted { color: rgba(255,255,255,0.8) !important; }
+        .lead { color: white; }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             .slide img     { height: 200px; }
             .slide-overlay { padding: 20px; }
             .slide-text    { max-width: 100%; }
             .slide-text h2 { font-size: 1.4rem; }
-            .slide-icon    { display: none; }
-        }
-
-        /* Animation for logo */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-        .navbar-brand i {
-            animation: float 3s ease-in-out infinite;
-        }
-        .shadow-lg {
-            box-shadow: 0 0 30px rgba(0,0,0,0.8) !important;
-        }
-        .fw-bold {
-            color: white;
         }
     </style>
 </head>
@@ -729,11 +583,9 @@ require_once '../dbcon.php';
 <div class="banner-wrap">
     <div class="container-fluid px-5">
         <div class="slider">
-
             <div class="slider-track" id="sliderTrack">
-
                 <div class="slide">
-                    <img src="pic\image-2.jpg" alt="Emergency Service">
+                    <img src="pic/image-2.jpg" alt="Emergency Service">
                     <div class="slide-overlay">
                         <div class="slide-text">
                             <span class="badge-offer">🎉 FLAT 30% OFF</span>
@@ -743,9 +595,8 @@ require_once '../dbcon.php';
                         </div>
                     </div>
                 </div>
-
                 <div class="slide">
-                    <img src="pic\battery.jpg" alt="Battery Service">
+                    <img src="pic/battery.jpg" alt="Battery Service">
                     <div class="slide-overlay">
                         <div class="slide-text">
                             <span class="badge-offer">⚡ 20% OFF</span>
@@ -755,7 +606,6 @@ require_once '../dbcon.php';
                         </div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <img src="pic/fuel.jpg" alt="Fuel Delivery">
                     <div class="slide-overlay">
@@ -767,7 +617,6 @@ require_once '../dbcon.php';
                         </div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <img src="pic/f2.jpg" alt="Flat Tyre">
                     <div class="slide-overlay">
@@ -779,7 +628,6 @@ require_once '../dbcon.php';
                         </div>
                     </div>
                 </div>
-
                 <div class="slide">
                     <img src="pic/tow.jpg" alt="Towing">
                     <div class="slide-overlay">
@@ -791,25 +639,14 @@ require_once '../dbcon.php';
                         </div>
                     </div>
                 </div>
-
-            </div><!-- /slider-track -->
-
-            <div class="slider-dots" id="sliderDots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
             </div>
-
+            <div class="slider-dots" id="sliderDots">
+                <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
             <div class="slider-arrow left"  id="prevSlide"><i class="fas fa-chevron-left"></i></div>
             <div class="slider-arrow right" id="nextSlide"><i class="fas fa-chevron-right"></i></div>
-
-            <div class="slider-progress">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-
-        </div><!-- /slider -->
+            <div class="slider-progress"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
     </div>
 </div>
 
@@ -821,9 +658,9 @@ require_once '../dbcon.php';
             <p class="section-subtitle">Comprehensive roadside assistance for all vehicle types</p>
         </div>
         <div class="row g-4 align-items-stretch">
-            <div class="col-lg-6" data-aos="fade-right">
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                 <a href="four_wheeler_services.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="service-card clickable-card">
+                    <div class="service-card">
                         <div class="text-center">
                             <img src="pic/car.jpeg" alt="Four Wheeler" class="service-image">
                             <div class="service-header">
@@ -847,10 +684,9 @@ require_once '../dbcon.php';
                     </div>
                 </a>
             </div>
-
-            <div class="col-lg-6" data-aos="fade-left">
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
                 <a href="two_wheeler_services.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="service-card clickable-card">
+                    <div class="service-card">
                         <div class="text-center">
                             <img src="pic/bike.jpeg" alt="Two Wheeler" class="service-image">
                             <div class="service-header">
@@ -886,10 +722,9 @@ require_once '../dbcon.php';
             <p class="section-subtitle">Rapid on-ground help when you need it most — day or night</p>
         </div>
         <div class="row g-4">
-
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
                 <a href="service-on-site-repairs.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="assist-card clickable-card">
+                    <div class="assist-card">
                         <div class="assist-card-image">
                             <img src="Emergency_roadside_pics/onsite.jpeg" alt="On-Site Repairs">
                             <div class="assist-badge">24/7</div>
@@ -897,68 +732,47 @@ require_once '../dbcon.php';
                         <div class="assist-card-content">
                             <h4 class="card-title">On-Site Repairs</h4>
                             <p class="small">Minor mechanical issues fixed right at your breakdown spot — no garage visit needed.</p>
-                            <div class="assist-card-footer">
-                                <span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span>
-                            </div>
+                            <div class="assist-card-footer"><span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span></div>
                         </div>
                     </div>
                 </a>
             </div>
-
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
                 <a href="service-towing.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="assist-card clickable-card">
-                        <div class="assist-card-image">
-                            <img src="Emergency_roadside_pics/tow.jpeg" alt="Towing Service">
-                            <div class="assist-badge">Fast</div>
-                        </div>
+                    <div class="assist-card">
+                        <div class="assist-card-image"><img src="Emergency_roadside_pics/tow.jpeg" alt="Towing Service"><div class="assist-badge">Fast</div></div>
                         <div class="assist-card-content">
                             <h4 class="card-title">Towing Service</h4>
                             <p class="small">Safe and swift towing to the nearest verified garage or your preferred service centre.</p>
-                            <div class="assist-card-footer">
-                                <span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span>
-                            </div>
+                            <div class="assist-card-footer"><span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span></div>
                         </div>
                     </div>
                 </a>
             </div>
-
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
                 <a href="service-battery-jump.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="assist-card clickable-card">
-                        <div class="assist-card-image">
-                            <img src="Emergency_roadside_pics/jumpsark.jpeg" alt="Battery Jump Start">
-                            <div class="assist-badge">Instant</div>
-                        </div>
+                    <div class="assist-card">
+                        <div class="assist-card-image"><img src="Emergency_roadside_pics/jumpsark.jpeg" alt="Battery Jump Start"><div class="assist-badge">Instant</div></div>
                         <div class="assist-card-content">
                             <h4 class="card-title">Battery Jump Start</h4>
                             <p class="small">Instant battery boosting or on-spot replacement so you're back on the road in minutes.</p>
-                            <div class="assist-card-footer">
-                                <span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span>
-                            </div>
+                            <div class="assist-card-footer"><span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span></div>
                         </div>
                     </div>
                 </a>
             </div>
-
             <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
                 <a href="service-fuel-delivery.php" style="text-decoration: none; display: block; height: 100%;">
-                    <div class="assist-card clickable-card">
-                        <div class="assist-card-image">
-                            <img src="Emergency_roadside_pics/fuel.jpeg" alt="Fuel Delivery">
-                            <div class="assist-badge">24/7</div>
-                        </div>
+                    <div class="assist-card">
+                        <div class="assist-card-image"><img src="Emergency_roadside_pics/fuel.jpeg" alt="Fuel Delivery"><div class="assist-badge">24/7</div></div>
                         <div class="assist-card-content">
                             <h4 class="card-title">Fuel Delivery</h4>
                             <p class="small">Stranded with an empty tank? We deliver fuel directly to your location — fast and hassle-free.</p>
-                            <div class="assist-card-footer">
-                                <span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span>
-                            </div>
+                            <div class="assist-card-footer"><span class="assist-link">Get Help <i class="fas fa-arrow-right"></i></span></div>
                         </div>
                     </div>
                 </a>
             </div>
-
         </div>
     </div>
 </section>
@@ -971,38 +785,30 @@ require_once '../dbcon.php';
             <p class="section-subtitle">We provide the best roadside assistance experience</p>
         </div>
         <div class="row g-4">
-            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="100">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
                 <div class="feature-card">
-                    <div class="card-image-wrapper">
-                        <img src="pic/why-choose/fast.jpeg" alt="Faster Service" class="feature-image">
-                    </div>
+                    <div class="card-image-wrapper"><img src="pic/why-choose/fast.jpeg" alt="Faster Service" class="feature-image"></div>
                     <h4 class="card-title">Faster Service</h4>
                     <p class="small">Average response time under 20 minutes with real-time tracking</p>
                 </div>
             </div>
-            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
                 <div class="feature-card">
-                    <div class="card-image-wrapper">
-                        <img src="pic/why-choose/quality.jpeg" alt="Quality Services" class="feature-image">
-                    </div>
+                    <div class="card-image-wrapper"><img src="pic/why-choose/quality.jpeg" alt="Quality Services" class="feature-image"></div>
                     <h4 class="card-title">Quality Services</h4>
                     <p class="small">Certified mechanics and verified service providers</p>
                 </div>
             </div>
-            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="300">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
                 <div class="feature-card">
-                    <div class="card-image-wrapper">
-                        <img src="pic/why-choose/parts.jpeg" alt="Genuine Parts" class="feature-image">
-                    </div>
+                    <div class="card-image-wrapper"><img src="pic/why-choose/parts.jpeg" alt="Genuine Parts" class="feature-image"></div>
                     <h4 class="card-title">Genuine Parts</h4>
                     <p class="small">100% authentic spare parts with warranty</p>
                 </div>
             </div>
-            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="400">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
                 <div class="feature-card">
-                    <div class="card-image-wrapper">
-                        <img src="pic/why-choose/affordable.jpeg" alt="Affordable Prices" class="feature-image">
-                    </div>
+                    <div class="card-image-wrapper"><img src="pic/why-choose/affordable.jpeg" alt="Affordable Prices" class="feature-image"></div>
                     <h4 class="card-title">Affordable Prices</h4>
                     <p class="small">Transparent pricing with no hidden charges</p>
                 </div>
@@ -1064,32 +870,21 @@ require_once '../dbcon.php';
                 <div class="row g-3">
                     <div class="col-6 d-flex align-items-center">
                         <i class="fas fa-users fa-2x text-primary me-3"></i>
-                        <div>
-                            <h3 class="h2 fw-bold mb-0">10K+</h3>
-                            <small class="text-muted">Happy Customers</small>
-                        </div>
+                        <div><h3 class="h2 fw-bold mb-0">10K+</h3><small class="text-muted">Happy Customers</small></div>
                     </div>
                     <div class="col-6 d-flex align-items-center">
                         <i class="fas fa-tools fa-2x text-primary me-3"></i>
-                        <div>
-                            <h3 class="h2 fw-bold mb-0">500+</h3>
-                            <small class="text-muted">Service Providers</small>
-                        </div>
+                        <div><h3 class="h2 fw-bold mb-0">500+</h3><small class="text-muted">Service Providers</small></div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6" data-aos="fade-left">
                 <div class="position-relative">
-                    <img src="pic/why-choose/bottom.jpeg" alt="About Us" class="img-fluid rounded-4 shadow-lg" style="border: 1px solid rgba(255,255,255,0.1);">
-                    <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow m-3" style="background: rgba(0,0,0,0.8) !important; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                    <img src="pic/why-choose/bottom.jpeg" alt="About Us" class="img-fluid rounded-4 shadow-lg" style="border:1px solid rgba(255,255,255,0.1);">
+                    <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow m-3" style="background: rgba(0,0,0,0.8) !important; backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.1);">
                         <div class="d-flex align-items-center">
-                            <div style="width:45px;height:45px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;" class="me-3">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block">24/7 Emergency</small>
-                                <strong style="color: white;">1800-123-4567</strong>
-                            </div>
+                            <div style="width:45px;height:45px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;" class="me-3"><i class="fas fa-phone-alt"></i></div>
+                            <div><small class="text-muted d-block">24/7 Emergency</small><strong style="color:white;">1800-123-4567</strong></div>
                         </div>
                     </div>
                 </div>
@@ -1109,13 +904,24 @@ require_once '../dbcon.php';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    AOS.init({ duration: 900, once: true, offset: 80 });
+    // Smooth AOS with throttle
+    document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+            duration: 900,
+            once: true,
+            offset: 80,
+            throttleDelay: 50
+        });
+        window.addEventListener('load', AOS.refresh);
+    });
 
+    // Navbar shadow on scroll
     window.addEventListener('scroll', () => {
         document.querySelector('.navbar').style.boxShadow =
             window.scrollY > 50 ? '0 2px 20px rgba(0,0,0,0.8)' : '0 2px 15px rgba(0,0,0,0.5)';
     });
 
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', e => {
             const target = document.querySelector(link.getAttribute('href'));
@@ -1123,6 +929,7 @@ require_once '../dbcon.php';
         });
     });
 
+    // SOS
     document.getElementById('sosBtn').addEventListener('click', () => {
         if (confirm('🚨 EMERGENCY SOS 🚨\n\nDo you need immediate roadside assistance?'))
             alert('Emergency services have been notified! Help is on the way.');
@@ -1159,27 +966,19 @@ require_once '../dbcon.php';
     document.getElementById('prevSlide').addEventListener('click', () => { stopAuto(); goTo(current - 1); startAuto(); });
     dots.forEach((dot, i) => dot.addEventListener('click', () => { stopAuto(); goTo(i); startAuto(); }));
 
-    let touchX = 0;
-    let touchActive = false;
-
-    track.addEventListener('touchstart', e => { 
-        touchX = e.touches[0].clientX; 
-        touchActive = true;
-        stopAuto();
-    });
+    let touchX = 0, touchActive = false;
+    track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; touchActive = true; stopAuto(); });
     track.addEventListener('touchmove', e => { e.preventDefault(); });
     track.addEventListener('touchend', e => {
         if (touchActive) {
             const diff = touchX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) {
-                goTo(diff > 0 ? current + 1 : current - 1);
-            }
+            if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
             touchActive = false;
             startAuto();
         }
     });
 
-    document.querySelectorAll('.slide').forEach((slide, index) => {
+    document.querySelectorAll('.slide').forEach(slide => {
         slide.addEventListener('click', function(e) {
             if (e.target.closest('.slider-dots') || e.target.closest('.slider-arrow')) return;
             window.location.href = '/services.php';
@@ -1190,26 +989,21 @@ require_once '../dbcon.php';
     goTo(0);
     startAuto();
 
+    // Location (unchanged)
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition, showError);
-        } else {
-            alert("Geolocation not supported.");
-        }
+        } else { alert("Geolocation not supported."); }
     }
-
     function showPosition(position) {
-        var lat = position.coords.latitude;
-        var lon = position.coords.longitude;
-        fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + lat + "&lon=" + lon)
-        .then(response => response.json())
+        fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude)
+        .then(r => r.json())
         .then(data => {
             var area = data.address.suburb || data.address.neighbourhood || "";
             var city = data.address.city || data.address.town || data.address.village || "";
             document.getElementById("locationText").innerHTML = "📍 " + area + ", " + city;
         });
     }
-
     function showError(error) {
         if(error.code == 1) alert("Location permission denied.");
         else if(error.code == 2) alert("Location unavailable.");
