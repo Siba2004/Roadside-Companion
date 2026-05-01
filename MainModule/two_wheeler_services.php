@@ -1,6 +1,19 @@
 <?php
 include_once 'navbar.php';
 require_once '../dbcon.php';
+
+// Fetch all active two wheeler services
+$query = "SELECT * FROM two_wheeler_services WHERE status = 'active' ORDER BY display_order ASC, id ASC";
+$result = mysqli_query($conn, $query);
+$services = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $services[] = $row;
+    }
+}
+
+// Group services into rows of 3 for better display
+$services_chunks = array_chunk($services, 3);
 ?>
 
 <!DOCTYPE html>
@@ -26,12 +39,11 @@ require_once '../dbcon.php';
             --light-bg:  transparent;
             --border:    rgba(255,255,255,0.2);
             --icon-bg:   rgba(13,110,253,0.1);
-            --card-bg:   rgba(20, 20, 30, 0.85);   /* solid, no blur */
+            --card-bg:   rgba(20, 20, 30, 0.85);
         }
 
         * { font-family: 'Poppins', sans-serif; }
 
-        /* ── BASE - Solid dark background + gradient overlay ── */
         body {
             background: #0a0a0f;
             background-attachment: fixed;
@@ -93,9 +105,8 @@ require_once '../dbcon.php';
             transform: scale(1.05);
         }
 
-        /* ── PAGE HEADER ── */
         .page-header {
-            margin-top: 80px;
+            margin-top: 20px;
             padding: 30px 0;
             text-align: center;
         }
@@ -140,7 +151,6 @@ require_once '../dbcon.php';
         }
         .section-subtitle { color: rgba(255,255,255,0.8); margin-bottom: 30px; }
 
-        /* ── SERVICE CARDS (solid, no blur) ── */
         .service-card {
             background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
@@ -171,7 +181,8 @@ require_once '../dbcon.php';
         .service-card:hover .service-card-image img { transform: scale(1.1); }
         .service-badge {
             position: absolute;
-            top: 15px; right: 15px;
+            top: 15px;
+            right: 15px;
             background: var(--primary);
             color: white;
             padding: 5px 12px;
@@ -232,16 +243,17 @@ require_once '../dbcon.php';
             color: var(--primary);
             font-weight: 600;
             font-size: 0.9rem;
+            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            text-decoration: none;
         }
         .service-link i { transition: transform 0.3s; }
         .service-card:hover .service-link i { transform: translateX(5px); }
         .service-rating { color: rgba(255,255,255,0.8); font-size: 0.85rem; }
         .service-rating i { margin-right: 3px; }
 
-        /* ── DETAIL CARD (solid, no blur) ── */
         .service-detail-card {
             background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
@@ -260,7 +272,8 @@ require_once '../dbcon.php';
             margin-bottom: 30px;
         }
         .service-icon-large {
-            width: 80px; height: 80px;
+            width: 80px;
+            height: 80px;
             background: rgba(13,110,253,0.1);
             border: 2px solid var(--primary);
             border-radius: 50%;
@@ -271,7 +284,6 @@ require_once '../dbcon.php';
         }
         .service-icon-large i { font-size: 2.5rem; color: var(--primary); }
 
-        /* ── FEATURE BOXES (solid, no blur) ── */
         .feature-box {
             background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
@@ -290,7 +302,6 @@ require_once '../dbcon.php';
         .feature-box h4 { color: white; font-weight: 600; font-size: 1.2rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .feature-box p { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-bottom: 0; }
 
-        /* ── TESTIMONIAL CARDS (solid, no blur) ── */
         .testimonial-card {
             background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
@@ -307,7 +318,8 @@ require_once '../dbcon.php';
         .testimonial-text { color: rgba(255,255,255,0.9); font-style: italic; margin-bottom: 20px; line-height: 1.6; }
         .testimonial-author { display: flex; align-items: center; }
         .testimonial-author img {
-            width: 50px; height: 50px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             margin-right: 15px;
             border: 2px solid var(--primary);
@@ -315,7 +327,6 @@ require_once '../dbcon.php';
         .author-info h5 { color: white; font-weight: 600; margin-bottom: 5px; font-size: 1rem; }
         .author-info p { color: rgba(255,255,255,0.7); font-size: 0.8rem; margin-bottom: 0; }
 
-        /* ── CTA BOX (solid, no blur) ── */
         .cta-box {
             background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
@@ -327,12 +338,28 @@ require_once '../dbcon.php';
         .cta-box h2 { font-family: 'Orbitron', sans-serif; color: white; font-size: 2.2rem; margin-bottom: 20px; }
         .cta-box p { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 30px; }
 
+        .admin-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .admin-buttons .btn {
+            margin: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
         @media (max-width: 768px) {
             .page-header h1 { font-size: 1.8rem; }
             .section-title { font-size: 1.6rem; }
             .service-detail-card { padding: 25px; }
             .cta-box { padding: 30px 20px; }
             .cta-box h2 { font-size: 1.6rem; }
+            .service-card-image { height: 160px; }
+            .service-card-title { font-size: 1rem; }
+            .service-card-desc { font-size: 0.8rem; min-height: 50px; }
+            .offer-price { font-size: 1.2rem; }
+            .original-price { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -369,10 +396,30 @@ require_once '../dbcon.php';
                                 – all at transparent prices. Certified mechanics with bike-specific tools.
                             </p>
                             <div class="row g-3">
-                                <div class="col-6"><div class="d-flex align-items-center"><i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i><span style="color:white;">15 Min Response</span></div></div>
-                                <div class="col-6"><div class="d-flex align-items-center"><i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i><span style="color:white;">Two-Wheeler Pros</span></div></div>
-                                <div class="col-6"><div class="d-flex align-items-center"><i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i><span style="color:white;">Original Spares</span></div></div>
-                                <div class="col-6"><div class="d-flex align-items-center"><i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i><span style="color:white;">Roadside & Workshop</span></div></div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i>
+                                        <span style="color:white;">15 Min Response</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i>
+                                        <span style="color:white;">Two-Wheeler Pros</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i>
+                                        <span style="color:white;">Original Spares</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i>
+                                        <span style="color:white;">Roadside & Workshop</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -380,139 +427,57 @@ require_once '../dbcon.php';
             </div>
         </section>
 
-        <!-- ALL TWO WHEELER SERVICES (cards are now solid) -->
+        <!-- ALL TWO WHEELER SERVICES (Dynamic from Database) -->
         <section>
             <div class="container">
                 <div class="text-center" data-aos="fade-up">
                     <h2 class="section-title">All Two Wheeler Services</h2>
                     <p class="section-subtitle">Everything your bike or scooter needs, on the go</p>
                 </div>
-                <!-- Row 1 -->
-                <div class="row g-4 mb-4">
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <a href="book_service.php?service=Emergency+Roadside+Repair&price=99" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/roadside.jpeg" alt="Roadside Repair"><div class="service-badge">Popular</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Emergency Roadside Repair</h3>
-                                    <p class="service-card-desc">Immediate on-spot repairs for unknown breakdowns, engine issues, and mechanical failures</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹150</span><span class="offer-price">₹99</span></div><span class="discount-badge">SAVE 34%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span></div>
+                
+                <?php if (empty($services)): ?>
+                    <div class="alert alert-info text-center">No services available at the moment. Please check back later.</div>
+                <?php else: ?>
+                    <?php foreach ($services_chunks as $chunk): ?>
+                        <div class="row g-4 mb-4">
+                            <?php foreach ($chunk as $service): ?>
+                                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                                    <a href="book_service.php?service=<?php echo urlencode($service['service_name']); ?>&price=<?php echo $service['offer_price']; ?>&type=two_wheeler" style="text-decoration: none; display: block; height: 100%;">
+                                        <div class="service-card clickable-card">
+                                            <div class="service-card-image">
+                                                <img src="<?php echo htmlspecialchars($service['image_path'] ?: 'services_pics/two_wheeler_services_pics/default.jpg'); ?>" alt="<?php echo htmlspecialchars($service['service_name']); ?>">
+                                                <?php if ($service['badge_text']): ?>
+                                                    <div class="service-badge"><?php echo htmlspecialchars($service['badge_text']); ?></div>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="service-card-content">
+                                                <h3 class="service-card-title"><?php echo htmlspecialchars($service['service_name']); ?></h3>
+                                                <p class="service-card-desc"><?php echo htmlspecialchars($service['description']); ?></p>
+                                                <div class="service-price-row">
+                                                    <div>
+                                                        <?php if ($service['original_price'] > 0): ?>
+                                                            <span class="original-price">₹<?php echo number_format($service['original_price']); ?></span>
+                                                        <?php endif; ?>
+                                                        <span class="offer-price">₹<?php echo number_format($service['offer_price']); ?></span>
+                                                    </div>
+                                                    <?php if ($service['discount_percent'] > 0): ?>
+                                                        <span class="discount-badge">SAVE <?php echo $service['discount_percent']; ?>%</span>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="service-card-footer">
+                                                    <span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span>
+                                                    <span class="service-rating">
+                                                        <i class="fas fa-star text-warning"></i> <?php echo number_format($service['rating'], 1); ?>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <a href="book_service.php?service=Puncture+Repair&price=99" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/flattyre.jpeg" alt="Puncture Repair"><div class="service-badge">Popular</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Puncture Repair</h3>
-                                    <p class="service-card-desc">On-spot tyre puncture fix, tube or tubeless, using professional tools.</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹150</span><span class="offer-price">₹99</span></div><span class="discount-badge">SAVE 34%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                        <a href="book_service.php?service=Broken+Chain+Repair&price=199" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/chain.jpeg" alt="Chain Repair"><div class="service-badge">Essential</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">BrokenChain Repair</h3>
-                                    <p class="service-card-desc">Complete chain repairing,cleaning and lubrication for smooth ride.</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹350</span><span class="offer-price">₹199</span></div><span class="discount-badge">SAVE 43%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.7</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Row 2 -->
-                <div class="row g-4 mb-4">
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <a href="book_service.php?service=Brake+&+Clutch+Adj.&price=199" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/bikepart.jpeg" alt="Brake Adjustment"><div class="service-badge">Safety</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Brake & Clutch Adj.</h3>
-                                    <p class="service-card-desc">Adjust brakes, clutch free play, and cable lubrication.</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹300</span><span class="offer-price">₹199</span></div><span class="discount-badge">SAVE 34%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <a href="book_service.php?service=Battery+Jump-Start&price=249" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/spark.jpeg" alt="Bike Jump Start"><div class="service-badge">Instant</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Battery Jump-Start</h3>
-                                    <p class="service-card-desc">Quick boost for dead battery – portable jump-starter.</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹300</span><span class="offer-price">₹249</span></div><span class="discount-badge">SAVE 17%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                        <a href="book_service.php?service=Bike+Towing&price=450" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/towbike.jpeg" alt="Bike Towing"><div class="service-badge">24/7</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Bike Towing</h3>
-                                    <p class="service-card-desc">Reliable towing to nearest garage or home.</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹600</span><span class="offer-price">₹450</span></div><span class="discount-badge">SAVE 25%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Row 3 -->
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <a href="book_service.php?service=Oil+Change&price=550" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/oil.jpeg" alt="Bike Oil Change"><div class="service-badge">Maintenance</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Oil Change</h3>
-                                    <p class="service-card-desc">Engine oil replacement with premium grade oil.</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹700</span><span class="offer-price">₹550</span></div><span class="discount-badge">SAVE 21%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.9</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <a href="book_service.php?service=Fuel+Delivery&price=120" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/fueldelivery.jpeg" alt="Fuel Delivery Bike"><div class="service-badge">24/7</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Fuel Delivery</h3>
-                                    <p class="service-card-desc">Emergency petrol/diesel delivery for bikes & scooters.</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹130/L</span><span class="offer-price">₹120/L</span></div><span class="discount-badge">SAVE 8%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                        <a href="book_service.php?service=Spark+Plug+Replacement&price=199" style="text-decoration:none; display:block; height:100%;">
-                            <div class="service-card clickable-card">
-                                <div class="service-card-image"><img src="services_pics/two_wheeler_services_pics/sparkplug.jpeg" alt="Spark Plug"><div class="service-badge">Quick Fix</div></div>
-                                <div class="service-card-content">
-                                    <h3 class="service-card-title">Spark Plug Replacement</h3>
-                                    <p class="service-card-desc">Diagnose and replace faulty spark plug.</p>
-                                    <div class="service-price-row"><div><span class="original-price">₹300</span><span class="offer-price">₹199</span></div><span class="discount-badge">SAVE 34%</span></div>
-                                    <div class="service-card-footer"><span class="service-link">Book Now <i class="fas fa-arrow-right"></i></span><span class="service-rating"><i class="fas fa-star text-warning"></i> 4.8</span></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </section>
 
@@ -525,13 +490,25 @@ require_once '../dbcon.php';
                 </div>
                 <div class="row g-4">
                     <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="feature-box"><i class="fas fa-motorcycle"></i><h4>Bike Specialists</h4><p>Mechanics trained specifically for two-wheelers – from scooters to superbikes.</p></div>
+                        <div class="feature-box">
+                            <i class="fas fa-motorcycle"></i>
+                            <h4>Bike Specialists</h4>
+                            <p>Mechanics trained specifically for two-wheelers – from scooters to superbikes.</p>
+                        </div>
                     </div>
                     <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="feature-box"><i class="fas fa-tachometer-alt"></i><h4>Quick Turnaround</h4><p>Average 20-minute response, most repairs done on the spot.</p></div>
+                        <div class="feature-box">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <h4>Quick Turnaround</h4>
+                            <p>Average 20-minute response, most repairs done on the spot.</p>
+                        </div>
                     </div>
                     <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="feature-box"><i class="fas fa-hand-holding-heart"></i><h4>Genuine Spares</h4><p>We use authentic parts with 3-month warranty.</p></div>
+                        <div class="feature-box">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <h4>Genuine Spares</h4>
+                            <p>We use authentic parts with 3-month warranty.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -547,29 +524,90 @@ require_once '../dbcon.php';
                 <div class="row g-4">
                     <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                         <div class="testimonial-card">
-                            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
                             <p class="testimonial-text">"Chain snapped on highway. They arrived in 15 mins with tools and fixed it temporarily, then towed to workshop. Lifesavers!"</p>
-                            <div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Arjun Raj"><div class="author-info"><h5>Arjun Raj</h5><p>Royal Enfield Rider</p></div></div>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Arjun Raj">
+                                <div class="author-info">
+                                    <h5>Arjun Raj</h5>
+                                    <p>Royal Enfield Rider</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                         <div class="testimonial-card">
-                            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
                             <p class="testimonial-text">"Fuel delivery at midnight – reasonable price and the guy even checked my tyre pressure. Highly recommended!"</p>
-                            <div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Neha Sharma"><div class="author-info"><h5>Neha Sharma</h5><p>Activa Scooter</p></div></div>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Neha Sharma">
+                                <div class="author-info">
+                                    <h5>Neha Sharma</h5>
+                                    <p>Activa Scooter</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                         <div class="testimonial-card">
-                            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
                             <p class="testimonial-text">"Regular service at home – oil change, chain lube, brake check. Saved me a trip to the garage. Professional work."</p>
-                            <div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vikram Joshi"><div class="author-info"><h5>Vikram Joshi</h5><p>Pulsar Owner</p></div></div>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Vikram Joshi">
+                                <div class="author-info">
+                                    <h5>Vikram Joshi</h5>
+                                    <p>Pulsar Owner</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- CALL TO ACTION -->
+        <section>
+            <div class="container">
+                <div class="cta-box" data-aos="zoom-in">
+                    <h2>Need Emergency Assistance?</h2>
+                    <p>Our team is ready 24/7 to help you get back on the road</p>
+                    <a href="tel:+911234567890" class="btn btn-primary btn-lg">
+                        <i class="fas fa-phone-alt"></i> Call Now: +91 1234567890
+                    </a>
+                </div>
+            </div>
+        </section>
     </div>
+
+    <!-- Admin Quick Actions (Visible only to admin users) -->
+    <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+    <div class="admin-buttons">
+        <a href="admin/add_service.php?type=two_wheeler" class="btn btn-primary rounded-pill">
+            <i class="fas fa-plus"></i> Add Service
+        </a>
+        <a href="admin/manage_services.php?type=two_wheeler" class="btn btn-outline-primary rounded-pill">
+            <i class="fas fa-edit"></i> Manage Services
+        </a>
+    </div>
+    <?php endif; ?>
 
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -586,14 +624,19 @@ require_once '../dbcon.php';
         });
 
         window.addEventListener('scroll', () => {
-            document.querySelector('.navbar').style.boxShadow =
-                window.scrollY > 50 ? '0 2px 20px rgba(0,0,0,0.8)' : '0 2px 15px rgba(0,0,0,0.5)';
+            const navbar = document.querySelector('.navbar');
+            if (navbar) {
+                navbar.style.boxShadow = window.scrollY > 50 ? '0 2px 20px rgba(0,0,0,0.8)' : '0 2px 15px rgba(0,0,0,0.5)';
+            }
         });
 
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', e => {
                 const target = document.querySelector(link.getAttribute('href'));
-                if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+                if (target) { 
+                    e.preventDefault(); 
+                    target.scrollIntoView({ behavior: 'smooth' }); 
+                }
             });
         });
     </script>

@@ -94,7 +94,7 @@ require_once '../dbcon.php';
 
         /* ── BANNER SLIDER ── */
         .banner-wrap { 
-            margin-top: 65px; 
+            margin-top: 20px; 
             background: transparent; 
             padding: 40px 0; 
         }
