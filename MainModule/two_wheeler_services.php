@@ -106,8 +106,8 @@ $services_chunks = array_chunk($services, 3);
         }
 
         .page-header {
-            margin-top: 20px;
-            padding: 30px 0;
+            margin-top: 10px;
+            padding: 2px 0;
             text-align: center;
         }
         .page-header h1 {
@@ -117,7 +117,7 @@ $services_chunks = array_chunk($services, 3);
             color: white;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 8px;
+            margin-bottom: 2px;
             text-shadow: 0 0 15px rgba(13,110,253,0.5);
         }
         .page-header p {
@@ -130,14 +130,14 @@ $services_chunks = array_chunk($services, 3);
         .breadcrumb {
             background: transparent;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         .breadcrumb-item { color: rgba(255,255,255,0.7); }
         .breadcrumb-item a { color: var(--primary); text-decoration: none; }
         .breadcrumb-item.active { color: white; }
         .breadcrumb-item + .breadcrumb-item::before { color: rgba(255,255,255,0.4); }
 
-        section { padding: 40px 0; position: relative; }
+        section { padding: 10px 0; position: relative; }
 
         .section-title {
             font-family: 'Orbitron', sans-serif;
@@ -149,7 +149,7 @@ $services_chunks = array_chunk($services, 3);
             margin-bottom: 2px;
             text-shadow: 0 0 10px rgba(13,110,253,0.3);
         }
-        .section-subtitle { color: rgba(255,255,255,0.8); margin-bottom: 30px; }
+        .section-subtitle { color: rgba(255,255,255,0.8); margin-bottom: 40px; }
 
         .service-card {
             background: var(--card-bg);
@@ -370,12 +370,6 @@ $services_chunks = array_chunk($services, 3);
             <div class="container">
                 <h1 data-aos="fade-down">Two Wheeler Services</h1>
                 <p data-aos="fade-down" data-aos-delay="100">Specialized care for bikes & scooters – from puncture repair to performance tuning</p>
-                <nav aria-label="breadcrumb" data-aos="fade-down" data-aos-delay="200">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Two Wheeler Services</li>
-                    </ol>
-                </nav>
             </div>
         </div>
 
@@ -456,9 +450,10 @@ $services_chunks = array_chunk($services, 3);
                                                 <div class="service-price-row">
                                                     <div>
                                                         <?php if ($service['original_price'] > 0): ?>
-                                                            <span class="original-price">₹<?php echo number_format($service['original_price']); ?></span>
+                                                            <span class="offer-price">₹<?php echo number_format($service['offer_price']); ?></span>
+                                                            
                                                         <?php endif; ?>
-                                                        <span class="offer-price">₹<?php echo number_format($service['offer_price']); ?></span>
+                                                        <span class="original-price">₹<?php echo number_format($service['original_price']); ?></span>
                                                     </div>
                                                     <?php if ($service['discount_percent'] > 0): ?>
                                                         <span class="discount-badge">SAVE <?php echo $service['discount_percent']; ?>%</span>

@@ -20,51 +20,15 @@ $services_chunks = array_chunk($services, 3);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Four Wheeler Services - RoadSide Companion</title>
 
-    <!-- CRITICAL INLINE STYLES - PREVENT WHITE FLICKER -->
-    <style>
-        /* Force immediate dark background - eliminates white flash completely */
-        html, body {
-            margin: 0;
-            padding: 0;
-            background-color: #0a0a0f !important;
-            min-height: 100vh;
-        }
-        
-        body {
-            background: #0a0a0f !important;
-            background-attachment: fixed;
-            color: white;
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Hide content briefly but maintain dark background - prevents FOUC */
-        .page-container {
-            opacity: 0;
-            animation: fadeInContent 0.25s ease-out forwards;
-        }
-        
-        @keyframes fadeInContent {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-        
-        /* Ensure all cards have opaque background immediately */
-        .service-card, .service-detail-card, .feature-box, .testimonial-card {
-            background: rgba(20, 20, 30, 0.95) !important;
-        }
-    </style>
-
-    <link href="../bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* Your existing CSS styles remain the same */
         :root {
             --primary:   #0d6efd;
             --dark-blue: #0b5ed7;
@@ -75,12 +39,12 @@ $services_chunks = array_chunk($services, 3);
             --light-bg:  transparent;
             --border:    rgba(255,255,255,0.2);
             --icon-bg:   rgba(13,110,253,0.1);
-            --card-bg:   rgba(20, 20, 30, 0.95);
+            --card-bg:   rgba(20, 20, 30, 0.85);
         }
 
         * { font-family: 'Poppins', sans-serif; }
 
-        body { 
+        body {
             background: #0a0a0f;
             background-attachment: fixed;
             min-height: 100vh;
@@ -98,7 +62,6 @@ $services_chunks = array_chunk($services, 3);
             height: 100%;
             background: linear-gradient(135deg, rgba(13,110,253,0.03) 0%, rgba(0,0,0,0.8) 100%);
             z-index: 0;
-            pointer-events: none;
         }
 
         .page-container {
@@ -108,43 +71,43 @@ $services_chunks = array_chunk($services, 3);
             color: white;
         }
 
-        .btn-primary { 
-            background: var(--primary); 
-            border: none; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            font-size: .85rem; 
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: .85rem;
             letter-spacing: 1px;
             padding: 8px 20px;
             border-radius: 5px;
             transition: 0.3s;
         }
-        .btn-primary:hover { 
-            background: var(--dark-blue); 
+        .btn-primary:hover {
+            background: var(--dark-blue);
             box-shadow: 0 0 15px var(--primary);
             transform: scale(1.05);
         }
-        .btn-outline-primary { 
-            border: 2px solid var(--primary); 
-            color: white; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            font-size: .85rem; 
+        .btn-outline-primary {
+            border: 2px solid var(--primary);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: .85rem;
             letter-spacing: 1px;
             background: transparent;
             border-radius: 5px;
             transition: 0.3s;
         }
-        .btn-outline-primary:hover { 
-            background: var(--primary); 
-            color: white; 
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
             box-shadow: 0 0 15px var(--primary);
             transform: scale(1.05);
         }
 
         .page-header {
-            margin-top: 0px;
-            padding: 30px 0;
+            margin-top: 10px;
+            padding: 2px 0;
             text-align: center;
         }
         .page-header h1 {
@@ -154,7 +117,7 @@ $services_chunks = array_chunk($services, 3);
             color: white;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 8px;
+            margin-bottom: 2px;
             text-shadow: 0 0 15px rgba(13,110,253,0.5);
         }
         .page-header p {
@@ -167,29 +130,29 @@ $services_chunks = array_chunk($services, 3);
         .breadcrumb {
             background: transparent;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         .breadcrumb-item { color: rgba(255,255,255,0.7); }
         .breadcrumb-item a { color: var(--primary); text-decoration: none; }
         .breadcrumb-item.active { color: white; }
         .breadcrumb-item + .breadcrumb-item::before { color: rgba(255,255,255,0.4); }
 
-        section { padding: 40px 0; position: relative; }
+        section { padding: 10px 0; position: relative; }
 
-        .section-title { 
+        .section-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 2rem; 
-            font-weight: 700; 
-            color: white; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            margin-bottom: 2px; 
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
             text-shadow: 0 0 10px rgba(13,110,253,0.3);
         }
-        .section-subtitle { color: rgba(255,255,255,0.8); margin-bottom: 30px; }
+        .section-subtitle { color: rgba(255,255,255,0.8); margin-bottom: 40px; }
 
         .service-card {
-            background: rgba(20, 20, 30, 0.95);
+            background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
             overflow: hidden;
@@ -208,7 +171,6 @@ $services_chunks = array_chunk($services, 3);
             position: relative;
             height: 200px;
             overflow: hidden;
-            background: #1a1a2a;
         }
         .service-card-image img {
             width: 100%;
@@ -219,7 +181,8 @@ $services_chunks = array_chunk($services, 3);
         .service-card:hover .service-card-image img { transform: scale(1.1); }
         .service-badge {
             position: absolute;
-            top: 15px; right: 15px;
+            top: 15px;
+            right: 15px;
             background: var(--primary);
             color: white;
             padding: 5px 12px;
@@ -271,7 +234,11 @@ $services_chunks = array_chunk($services, 3);
             font-weight: 600;
             border: 1px solid rgba(255,193,7,0.3);
         }
-        .service-card-footer { display: flex; justify-content: space-between; align-items: center; }
+        .service-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
         .service-link {
             color: var(--primary);
             font-weight: 600;
@@ -280,6 +247,7 @@ $services_chunks = array_chunk($services, 3);
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            text-decoration: none;
         }
         .service-link i { transition: transform 0.3s; }
         .service-card:hover .service-link i { transform: translateX(5px); }
@@ -287,7 +255,7 @@ $services_chunks = array_chunk($services, 3);
         .service-rating i { margin-right: 3px; }
 
         .service-detail-card {
-            background: rgba(20, 20, 30, 0.95);
+            background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 15px;
             padding: 40px;
@@ -304,7 +272,8 @@ $services_chunks = array_chunk($services, 3);
             margin-bottom: 30px;
         }
         .service-icon-large {
-            width: 80px; height: 80px;
+            width: 80px;
+            height: 80px;
             background: rgba(13,110,253,0.1);
             border: 2px solid var(--primary);
             border-radius: 50%;
@@ -316,7 +285,7 @@ $services_chunks = array_chunk($services, 3);
         .service-icon-large i { font-size: 2.5rem; color: var(--primary); }
 
         .feature-box {
-            background: rgba(20,20,30,0.95);
+            background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 10px;
             padding: 25px 20px;
@@ -334,7 +303,7 @@ $services_chunks = array_chunk($services, 3);
         .feature-box p { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-bottom: 0; }
 
         .testimonial-card {
-            background: rgba(20,20,30,0.95);
+            background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 10px;
             padding: 25px;
@@ -349,14 +318,25 @@ $services_chunks = array_chunk($services, 3);
         .testimonial-text { color: rgba(255,255,255,0.9); font-style: italic; margin-bottom: 20px; line-height: 1.6; }
         .testimonial-author { display: flex; align-items: center; }
         .testimonial-author img {
-            width: 50px; height: 50px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             margin-right: 15px;
             border: 2px solid var(--primary);
-            object-fit: cover;
         }
         .author-info h5 { color: white; font-weight: 600; margin-bottom: 5px; font-size: 1rem; }
         .author-info p { color: rgba(255,255,255,0.7); font-size: 0.8rem; margin-bottom: 0; }
+
+        .cta-box {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 50px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .cta-box h2 { font-family: 'Orbitron', sans-serif; color: white; font-size: 2.2rem; margin-bottom: 20px; }
+        .cta-box p { color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 30px; }
 
         .admin-buttons {
             position: fixed;
@@ -369,16 +349,12 @@ $services_chunks = array_chunk($services, 3);
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        /* Prevent any white flash from images loading */
-        img {
-            background-color: #1a1a2a;
-            color: #1a1a2a;
-        }
-
         @media (max-width: 768px) {
             .page-header h1 { font-size: 1.8rem; }
             .section-title { font-size: 1.6rem; }
             .service-detail-card { padding: 25px; }
+            .cta-box { padding: 30px 20px; }
+            .cta-box h2 { font-size: 1.6rem; }
             .service-card-image { height: 160px; }
             .service-card-title { font-size: 1rem; }
             .service-card-desc { font-size: 0.8rem; min-height: 50px; }
@@ -392,57 +368,50 @@ $services_chunks = array_chunk($services, 3);
         <!-- PAGE HEADER -->
         <div class="page-header">
             <div class="container">
-                <h1 data-aos="fade-down" data-aos-duration="600">Four Wheeler Services</h1>
-                <p data-aos="fade-down" data-aos-delay="100" data-aos-duration="600">Complete care for your car - from emergency repairs to routine maintenance</p>
-                <nav aria-label="breadcrumb" data-aos="fade-down" data-aos-delay="200" data-aos-duration="600">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="home.php">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Four Wheeler Services</li>
-                    </ol>
-                </nav>
+                <h1 data-aos="fade-down">Four Wheeler Services</h1>
+                <p data-aos="fade-down" data-aos-delay="100">Specialized care for cars & SUVs – from puncture repair to engine diagnostics</p>
             </div>
         </div>
 
         <!-- MAIN SERVICE DETAIL SECTION -->
         <section>
             <div class="container">
-                <div class="service-detail-card" data-aos="fade-up" data-aos-duration="700">
-                    <div class="row align-items-center">
+                <div class="service-detail-card" data-aos="fade-up">
+                    <div class="row">
                         <div class="col-lg-6">
-                            <img src="pic/car.jpeg" alt="Four Wheeler Service" class="service-main-image" loading="eager">
+                            <img src="https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&w=600&q=80" alt="Four Wheeler Service" class="service-main-image">
                         </div>
                         <div class="col-lg-6">
                             <div class="service-icon-large"><i class="fas fa-car"></i></div>
-                            <h2 class="section-title text-center mb-4">Complete Car Care</h2>
+                            <h2 class="section-title text-center mb-4">Complete Car & SUV Care</h2>
                             <p style="color: rgba(255,255,255,0.9); line-height: 1.8; margin-bottom: 25px;">
-                                Our four wheeler services are designed to provide comprehensive care for your vehicle. 
-                                From emergency roadside assistance to routine maintenance, our certified mechanics ensure 
-                                your car stays in top condition. We use genuine parts and provide transparent pricing with 
-                                no hidden charges.
+                                From roadside breakdowns to regular maintenance, our four-wheeler experts have you covered. 
+                                We offer quick puncture repair, engine diagnostics, brake servicing, and emergency fuel delivery 
+                                – all at transparent prices. Certified mechanics with car-specific tools.
                             </p>
                             <div class="row g-3">
                                 <div class="col-6">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-check-circle text-primary me-2" style="font-size: 1.2rem;"></i>
-                                        <span style="color: white;">24/7 Availability</span>
+                                        <i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i>
+                                        <span style="color:white;">30 Min Response</span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-check-circle text-primary me-2" style="font-size: 1.2rem;"></i>
-                                        <span style="color: white;">Certified Mechanics</span>
+                                        <i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i>
+                                        <span style="color:white;">Car Specialists</span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-check-circle text-primary me-2" style="font-size: 1.2rem;"></i>
-                                        <span style="color: white;">Genuine Parts</span>
+                                        <i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i>
+                                        <span style="color:white;">Genuine Spares</span>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="d-flex align-items-center">
-                                        <i class="fas fa-check-circle text-primary me-2" style="font-size: 1.2rem;"></i>
-                                        <span style="color: white;">30 Min Response</span>
+                                        <i class="fas fa-check-circle text-primary me-2" style="font-size:1.2rem;"></i>
+                                        <span style="color:white;">Roadside & Workshop</span>
                                     </div>
                                 </div>
                             </div>
@@ -455,9 +424,9 @@ $services_chunks = array_chunk($services, 3);
         <!-- ALL FOUR WHEELER SERVICES (Dynamic from Database) -->
         <section>
             <div class="container">
-                <div class="text-center" data-aos="fade-up" data-aos-duration="600">
+                <div class="text-center" data-aos="fade-up">
                     <h2 class="section-title">All Four Wheeler Services</h2>
-                    <p class="section-subtitle">Comprehensive list of services we offer for your car</p>
+                    <p class="section-subtitle">Everything your car or SUV needs, on the go</p>
                 </div>
                 
                 <?php if (empty($services)): ?>
@@ -465,12 +434,12 @@ $services_chunks = array_chunk($services, 3);
                 <?php else: ?>
                     <?php foreach ($services_chunks as $chunk): ?>
                         <div class="row g-4 mb-4">
-                            <?php foreach ($chunk as $index => $service): ?>
-                                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<?php echo 100 + ($index * 50); ?>" data-aos-duration="600">
-                                    <a href="book_service.php?service=<?php echo urlencode($service['service_name']); ?>&price=<?php echo $service['offer_price']; ?>" style="text-decoration: none; display: block; height: 100%;">
+                            <?php foreach ($chunk as $service): ?>
+                                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                                    <a href="book_service.php?service=<?php echo urlencode($service['service_name']); ?>&price=<?php echo $service['offer_price']; ?>&type=four_wheeler" style="text-decoration: none; display: block; height: 100%;">
                                         <div class="service-card clickable-card">
                                             <div class="service-card-image">
-                                                <img src="<?php echo htmlspecialchars($service['image_path'] ?: 'services_pics/four_wheeler_services_pics/default.jpg'); ?>" alt="<?php echo htmlspecialchars($service['service_name']); ?>" loading="lazy">
+                                                <img src="<?php echo htmlspecialchars($service['image_path'] ?: 'services_pics/four_wheeler_services_pics/default.jpg'); ?>" alt="<?php echo htmlspecialchars($service['service_name']); ?>">
                                                 <?php if ($service['badge_text']): ?>
                                                     <div class="service-badge"><?php echo htmlspecialchars($service['badge_text']); ?></div>
                                                 <?php endif; ?>
@@ -481,9 +450,9 @@ $services_chunks = array_chunk($services, 3);
                                                 <div class="service-price-row">
                                                     <div>
                                                         <?php if ($service['original_price'] > 0): ?>
-                                                            <span class="original-price">₹<?php echo number_format($service['original_price']); ?></span>
+                                                            <span class="offer-price">₹<?php echo number_format($service['offer_price']); ?></span>
                                                         <?php endif; ?>
-                                                        <span class="offer-price">₹<?php echo number_format($service['offer_price']); ?></span>
+                                                        <span class="original-price">₹<?php echo number_format($service['original_price']); ?></span>
                                                     </div>
                                                     <?php if ($service['discount_percent'] > 0): ?>
                                                         <span class="discount-badge">SAVE <?php echo $service['discount_percent']; ?>%</span>
@@ -509,53 +478,114 @@ $services_chunks = array_chunk($services, 3);
         <!-- KEY FEATURES -->
         <section>
             <div class="container">
-                <div class="text-center" data-aos="fade-up" data-aos-duration="600">
-                    <h2 class="section-title">Why Choose Our Car Services</h2>
-                    <p class="section-subtitle">We provide the best care for your vehicle</p>
+                <div class="text-center" data-aos="fade-up">
+                    <h2 class="section-title">Why Car Owners Trust Us</h2>
+                    <p class="section-subtitle">We speak car & SUV language</p>
                 </div>
                 <div class="row g-4">
-                    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100" data-aos-duration="600">
-                        <div class="feature-box"><i class="fas fa-clock"></i><h4>24/7 Emergency</h4><p>Round-the-clock assistance for any car emergency, anytime, anywhere.</p></div>
+                    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="feature-box">
+                            <i class="fas fa-car"></i>
+                            <h4>Car Specialists</h4>
+                            <p>Mechanics trained specifically for four-wheelers – from hatchbacks to SUVs.</p>
+                        </div>
                     </div>
-                    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="600">
-                        <div class="feature-box"><i class="fas fa-user-cog"></i><h4>Expert Mechanics</h4><p>Certified professionals with years of experience in car repair.</p></div>
+                    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="feature-box">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <h4>Quick Turnaround</h4>
+                            <p>Average 30-minute response, most repairs done on the spot.</p>
+                        </div>
                     </div>
-                    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300" data-aos-duration="600">
-                        <div class="feature-box"><i class="fas fa-shield-alt"></i><h4>Warranty</h4><p>6-month warranty on all repairs and genuine parts used.</p></div>
+                    <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="feature-box">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <h4>Genuine Spares</h4>
+                            <p>We use authentic parts with 6-month warranty.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CUSTOMER TESTIMONIALS -->
+        <!-- TESTIMONIALS -->
         <section>
             <div class="container">
-                <div class="text-center" data-aos="fade-up" data-aos-duration="600">
-                    <h2 class="section-title">What Car Owners Say</h2>
-                    <p class="section-subtitle">Trusted by thousands of satisfied customers</p>
+                <div class="text-center" data-aos="fade-up">
+                    <h2 class="section-title">Happy Drivers</h2>
+                    <p class="section-subtitle">Real stories from car owners</p>
                 </div>
                 <div class="row g-4">
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100" data-aos-duration="600">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
                         <div class="testimonial-card">
-                            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                            <p class="testimonial-text">"My car broke down on the highway at midnight. They reached within 20 minutes and fixed the issue. Amazing service!"</p>
-                            <div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Rahul Mehta"><div class="author-info"><h5>Rahul Mehta</h5><p>Honda City Owner</p></div></div>
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Engine overheated on the highway. They arrived in 20 mins with coolant and got me running. Lifesavers!"</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rajesh Kumar">
+                                <div class="author-info">
+                                    <h5>Rajesh Kumar</h5>
+                                    <p>Honda City Owner</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200" data-aos-duration="600">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
                         <div class="testimonial-card">
-                            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                            <p class="testimonial-text">"Great experience with battery replacement service. The mechanic was professional and the price was very reasonable."</p>
-                            <div class="testimonial-author"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Singh"><div class="author-info"><h5>Priya Singh</h5><p>Hyundai i20 Owner</p></div></div>
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Flat tyre at midnight – reasonable price and the guy even checked my spare tyre. Highly recommended!"</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Anita Desai">
+                                <div class="author-info">
+                                    <h5>Anita Desai</h5>
+                                    <p>Maruti Suzuki Swift</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300" data-aos-duration="600">
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
                         <div class="testimonial-card">
-                            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
-                            <p class="testimonial-text">"Towing service was quick and hassle-free. They took my car to the nearest service center. Highly recommended!"</p>
-                            <div class="testimonial-author"><img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Vikram Sharma"><div class="author-info"><h5>Vikram Sharma</h5><p>Ford EcoSport Owner</p></div></div>
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="testimonial-text">"Regular service at home – oil change, brake check, filter replacement. Saved me a trip to the garage. Professional work."</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Suresh Raina">
+                                <div class="author-info">
+                                    <h5>Suresh Raina</h5>
+                                    <p>Hyundai Creta Owner</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALL TO ACTION -->
+        <section>
+            <div class="container">
+                <div class="cta-box" data-aos="zoom-in">
+                    <h2>Need Emergency Assistance?</h2>
+                    <p>Our team is ready 24/7 to help you get back on the road</p>
+                    <a href="tel:+911234567890" class="btn btn-primary btn-lg">
+                        <i class="fas fa-phone-alt"></i> Call Now: +91 1234567890
+                    </a>
                 </div>
             </div>
         </section>
@@ -564,10 +594,10 @@ $services_chunks = array_chunk($services, 3);
     <!-- Admin Quick Actions (Visible only to admin users) -->
     <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
     <div class="admin-buttons">
-        <a href="admin/manage_four_wheeler_services.php" class="btn btn-primary rounded-pill">
+        <a href="admin/add_service.php?type=four_wheeler" class="btn btn-primary rounded-pill">
             <i class="fas fa-plus"></i> Add Service
         </a>
-        <a href="admin/manage_four_wheeler_services.php" class="btn btn-outline-primary rounded-pill">
+        <a href="admin/manage_services.php?type=four_wheeler" class="btn btn-outline-primary rounded-pill">
             <i class="fas fa-edit"></i> Manage Services
         </a>
     </div>
@@ -577,37 +607,29 @@ $services_chunks = array_chunk($services, 3);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        (function() {
-            // Initialize AOS with optimized settings
+        document.addEventListener('DOMContentLoaded', function() {
             AOS.init({
-                duration: 700,
+                duration: 900,
                 once: true,
-                offset: 60,
-                throttleDelay: 50,
-                disable: false
+                offset: 80,
+                throttleDelay: 50
             });
-            
-            // Ensure page container becomes visible after a very short delay
-            setTimeout(function() {
-                document.querySelector('.page-container').style.opacity = '1';
-            }, 10);
-        })();
+            window.addEventListener('load', AOS.refresh);
+        });
 
-        // Navbar shadow on scroll with null check
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
             if (navbar) {
                 navbar.style.boxShadow = window.scrollY > 50 ? '0 2px 20px rgba(0,0,0,0.8)' : '0 2px 15px rgba(0,0,0,0.5)';
             }
         });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', e => {
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) { 
+                    e.preventDefault(); 
+                    target.scrollIntoView({ behavior: 'smooth' }); 
                 }
             });
         });

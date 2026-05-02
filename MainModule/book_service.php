@@ -83,11 +83,36 @@ if ($service_details) {
 
 // Generate time slots (24h, every 30 minutes)
 $time_slots = [];
+$current_hour = (int)date('H');
+$current_minute = (int)date('i');
+$current_time_slot = '';
+
+// Generate all time slots
 for ($h = 0; $h < 24; $h++) {
     $hour = str_pad($h, 2, '0', STR_PAD_LEFT);
     $time_slots[] = "$hour:00";
     $time_slots[] = "$hour:30";
 }
+
+// Determine current time slot for pre-selection
+if ($current_minute < 30) {
+    $current_time_slot = str_pad($current_hour, 2, '0', STR_PAD_LEFT) . ":00";
+} else {
+    $current_time_slot = str_pad($current_hour, 2, '0', STR_PAD_LEFT) . ":30";
+}
+
+// Add some buffer (optional: show next time slot if current time has passed)
+// Uncomment below if you want to show next slot when current time is past 30min mark
+/*
+$current_timestamp = time();
+$current_slot_timestamp = strtotime(date('Y-m-d ') . $current_time_slot);
+if ($current_timestamp > $current_slot_timestamp && $current_minute > 30) {
+    $next_hour = $current_hour + 1;
+    if ($next_hour < 24) {
+        $current_time_slot = str_pad($next_hour, 2, '0', STR_PAD_LEFT) . ":00";
+    }
+}
+*/
 
 // Get user data for pre-filling
 $user_data = null;
@@ -677,21 +702,25 @@ include_once 'navbar.php';
                             <div class="form-section-title">
                                 <i class="fas fa-calendar-alt"></i> Schedule
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label required"><i class="fas fa-calendar-day"></i> Date</label>
-                                    <input type="date" name="booking_date" class="form-control" min="<?= date('Y-m-d') ?>" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label required"><i class="fas fa-clock"></i> Time</label>
-                                    <select name="time_slot" class="form-select" required>
-                                        <option value="">Select Time</option>
-                                        <?php foreach (array_slice($time_slots, 0, 24) as $slot): ?>
-                                            <option value="<?= $slot ?>"><?= $slot ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
+                             <div class="row">
+    <div class="col-md-6 mb-3">
+        <label class="form-label required"><i class="fas fa-calendar-day"></i> Date</label>
+        <input type="date" name="booking_date" class="form-control" min="<?= date('Y-m-d') ?>" value="<?= date('Y-m-d') ?>" required>
+    </div>
+    <div class="col-md-6 mb-3">
+    <label class="form-label required"><i class="fas fa-clock"></i> Time</label>
+    <select name="time_slot" class="form-select" required>
+        <?php 
+        $selected_set = false;
+        foreach ($time_slots as $slot): 
+            $is_selected = ($slot == $current_time_slot && !$selected_set);
+            if($is_selected) $selected_set = true;
+        ?>
+            <option value="<?= $slot ?>" <?= $is_selected ? 'selected' : '' ?>><?= $slot ?></option>
+        <?php endforeach; ?>
+    </select>
+</div>
+</div>
                         </div>
                         
                         <!-- Location Section -->
@@ -797,6 +826,99 @@ include_once 'navbar.php';
             alert('Please fill all required fields (*)');
         }
     });
+
+     // Set default date to today and auto-select current time slot
+document.addEventListener('DOMContentLoaded', function() {
+    // Set date to today
+    const dateField = document.querySelector('input[name="booking_date"]');
+    if (dateField && !dateField.value) {
+        const today = new Date().toISOString().split('T')[0];
+        dateField.value = today;
+    }
+    
+    // Auto-select current time slot
+    const timeSelect = document.querySelector('select[name="time_slot"]');
+    if (timeSelect) {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        
+        // Format hours with leading zero
+        const formattedHour = hours.toString().padStart(2, '0');
+        
+        // Determine nearest slot
+        let targetSlot;
+        if (minutes < 30) {
+            targetSlot = `${formattedHour}:00`;
+        } else {
+            targetSlot = `${formattedHour}:30`;
+        }
+        
+        // Try to find and select the matching slot
+        let found = false;
+        for (let i = 0; i < timeSelect.options.length; i++) {
+            if (timeSelect.options[i].value === targetSlot) {
+                timeSelect.selectedIndex = i;
+                found = true;
+                break;
+            }
+        }
+        
+        // If current time slot not found (like after 23:30), select first available
+        if (!found && timeSelect.options.length > 0) {
+            timeSelect.selectedIndex = 0;
+        }
+        
+        // Optional: Disable past time slots for today's date
+        function disablePastTimeSlots() {
+            const selectedDate = dateField ? dateField.value : '';
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (selectedDate === today) {
+                const now = new Date();
+                const currentHour = now.getHours();
+                const currentMinute = now.getMinutes();
+                const currentTimeInMinutes = currentHour * 60 + currentMinute;
+                
+                for (let i = 0; i < timeSelect.options.length; i++) {
+                    const option = timeSelect.options[i];
+                    const [hour, minute] = option.value.split(':');
+                    const optionTimeInMinutes = parseInt(hour) * 60 + parseInt(minute);
+                    
+                    if (optionTimeInMinutes < currentTimeInMinutes) {
+                        option.disabled = true;
+                        option.style.color = '#666';
+                    } else {
+                        option.disabled = false;
+                        option.style.color = '';
+                    }
+                }
+                
+                // Re-select valid time if current selection is disabled
+                if (timeSelect.options[timeSelect.selectedIndex]?.disabled) {
+                    for (let i = 0; i < timeSelect.options.length; i++) {
+                        if (!timeSelect.options[i].disabled) {
+                            timeSelect.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                // Enable all options for future dates
+                for (let i = 0; i < timeSelect.options.length; i++) {
+                    timeSelect.options[i].disabled = false;
+                    timeSelect.options[i].style.color = '';
+                }
+            }
+        }
+        
+        // Disable past time slots when date changes
+        if (dateField) {
+            dateField.addEventListener('change', disablePastTimeSlots);
+            disablePastTimeSlots(); // Run initially
+        }
+    }
+});
     
     // Remove red border on input
     document.querySelectorAll('.form-control, .form-select').forEach(field => {

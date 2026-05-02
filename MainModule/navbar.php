@@ -271,7 +271,8 @@ if (session_status() === PHP_SESSION_NONE) {
 <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
         <a class="navbar-brand" href="home.php">
-            <i class="fas fa-tools me-2"></i>RoadSide Companion
+            <img src="../image/logo.jpg.jpeg" alt="Roadside Companion Logo" style="height: 50px; width: auto; margin-right: 7px; margin-top: -10px; margin-bottom: -10px;">
+        RoadSide Companion
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -327,7 +328,6 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </nav>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>

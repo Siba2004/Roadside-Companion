@@ -94,9 +94,9 @@ require_once '../dbcon.php';
 
         /* ── BANNER SLIDER ── */
         .banner-wrap { 
-            margin-top: 20px; 
+            margin-top: 6px; 
             background: transparent; 
-            padding: 40px 0; 
+            padding: 30px 0; 
         }
         .slider { 
             position: relative; 
@@ -585,59 +585,69 @@ require_once '../dbcon.php';
         <div class="slider">
             <div class="slider-track" id="sliderTrack">
                 <div class="slide">
-                    <img src="pic/image-2.jpg" alt="Emergency Service">
-                    <div class="slide-overlay">
-                        <div class="slide-text">
-                            <span class="badge-offer">🎉 FLAT 30% OFF</span>
-                            <h2>Emergency<br>Roadside Service</h2>
-                            <p>24/7 assistance at your fingertips. First service at 30% off!</p>
-                            <button class="btn-slide">Book Now <i class="fas fa-arrow-right ms-1"></i></button>
+                    <a href="book_service.php?service=Emergency+Roadside+Repairs&price=400.00" class="slide-link">
+                        <img src="pic/image-2.jpg" alt="Emergency Service">
+                        <div class="slide-overlay">
+                            <div class="slide-text">
+                                <span class="badge-offer">🎉 FLAT 30% OFF</span>
+                                <h2>Emergency<br>Roadside Service</h2>
+                                <p>24/7 assistance at your fingertips. First service at 30% off!</p>
+                                <span class="btn-slide">Book Now <i class="fas fa-arrow-right ms-1"></i></span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="pic/battery.jpg" alt="Battery Service">
-                    <div class="slide-overlay">
-                        <div class="slide-text">
-                            <span class="badge-offer">⚡ 20% OFF</span>
-                            <h2>Battery<br>Boosting Service</h2>
-                            <p>Jump start or replace battery. Get 20% off on battery service.</p>
-                            <button class="btn-slide">Avail Offer <i class="fas fa-arrow-right ms-1"></i></button>
+                    <a href="book_service.php?service=Battery+Services&price=450.00" class="slide-link">
+                        <img src="pic/battery.jpg" alt="Battery Service">
+                        <div class="slide-overlay">
+                            <div class="slide-text">
+                                <span class="badge-offer">⚡ 20% OFF</span>
+                                <h2>Battery<br>Boosting Service</h2>
+                                <p>Jump start or replace battery. Get 20% off on battery service.</p>
+                                <span class="btn-slide">Avail Offer <i class="fas fa-arrow-right ms-1"></i></span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="pic/fuel.jpg" alt="Fuel Delivery">
-                    <div class="slide-overlay">
-                        <div class="slide-text">
-                            <span class="badge-offer">⛽ FREE DELIVERY</span>
-                            <h2>Emergency<br>Fuel Delivery</h2>
-                            <p>Running out of fuel? Get free delivery on your first order.</p>
-                            <button class="btn-slide">Order Now <i class="fas fa-arrow-right ms-1"></i></button>
+                    <a href="book_service.php?service=Fuel+Delivery&price=105.00" class="slide-link">
+                        <img src="pic/fuel.jpg" alt="Fuel Delivery">
+                        <div class="slide-overlay">
+                            <div class="slide-text">
+                                <span class="badge-offer">⛽ FREE DELIVERY</span>
+                                <h2>Emergency<br>Fuel Delivery</h2>
+                                <p>Running out of fuel? Get free delivery on your first order.</p>
+                                <span class="btn-slide">Order Now <i class="fas fa-arrow-right ms-1"></i></span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="pic/f2.jpg" alt="Flat Tyre">
-                    <div class="slide-overlay">
-                        <div class="slide-text">
-                            <span class="badge-offer">🛞 25% OFF</span>
-                            <h2>Flat Tyre<br>Assistance</h2>
-                            <p>Quick tyre change or repair. Special discount for members.</p>
-                            <button class="btn-slide">Get Help <i class="fas fa-arrow-right ms-1"></i></button>
+                    <a href="book_service.php?service=Flat+Tyre+Assistance&price=200.00" class="slide-link">
+                        <img src="pic/f2.jpg" alt="Flat Tyre">
+                        <div class="slide-overlay">
+                            <div class="slide-text">
+                                <span class="badge-offer">🛞 25% OFF</span>
+                                <h2>Flat Tyre<br>Assistance</h2>
+                                <p>Quick tyre change or repair. Special discount for members.</p>
+                                <span class="btn-slide">Get Help <i class="fas fa-arrow-right ms-1"></i></span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="slide">
-                    <img src="pic/tow.jpg" alt="Towing">
-                    <div class="slide-overlay">
-                        <div class="slide-text">
-                            <span class="badge-offer">🚛 SAVE 40%</span>
-                            <h2>Towing<br>Services</h2>
-                            <p>Professional towing at best prices. Limited period offer.</p>
-                            <button class="btn-slide">Call Now <i class="fas fa-arrow-right ms-1"></i></button>
+                    <a href="book_service.php?service=Towing+Services&price=800.00" class="slide-link">
+                        <img src="pic/tow.jpg" alt="Towing">
+                        <div class="slide-overlay">
+                            <div class="slide-text">
+                                <span class="badge-offer">🚛 SAVE 40%</span>
+                                <h2>Towing<br>Services</h2>
+                                <p>Professional towing at best prices. Limited period offer.</p>
+                                <span class="btn-slide">Call Now <i class="fas fa-arrow-right ms-1"></i></span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             <div class="slider-dots" id="sliderDots">
@@ -649,7 +659,6 @@ require_once '../dbcon.php';
         </div>
     </div>
 </div>
-
 <!-- SERVICES -->
 <section id="services">
     <div class="container">
